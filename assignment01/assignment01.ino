@@ -14,19 +14,7 @@
 #include "game.h"
 #include "screen.h"
 
-#define __MILLISECONDS 1000
-#define __MICROSECONDS 1000000
-
-#define WAITING_TIME 10 * __MICROSECONDS
-#define INITIAL_ROUND_TIME 15 * __MILLISECONDS
-#define MINIMUM_ROUND_TIME 5 * __MILLISECONDS
-
-#define b1 5
-#define b2 4
-#define b3 3
-#define b4 2
-
-void setup(){  
+void setup(){
   Serial.begin(9600);
   randomSeed(analogRead(0));
 
@@ -58,48 +46,57 @@ void setup(){
 }
 
 void loop(){
-  if(start) {
-    if(!__welcome_printed) {
-      welcomeScreen();
+  switch(getGameState()) {
+    case STATE_SETUP_GAME: {
+      if(!__welcome_printed)
+        welcomeScreen();
+      
+      fade();
+      
+      break;
     }
-
-    fade();
-
-    if(flagSleep) {
-      clearScreen();
-      deepSleep();
-    }
-  }
-  if(chooseLevel) {
-    if (!b1Pressed) {
+    case STATE_CHOOSING_LEVEL: {
       if(digitalRead(RED_LED_PIN) == HIGH) digitalWrite(RED_LED_PIN, LOW);
       updateLevelToBeChosen();
+
+      break;
     }
-    if (b1Pressed && !levelSet) {
+    case STATE_SETUP_LEVEL: {
       level = writeLevel(analogRead(POT_PIN));
       deltaF = level*500;
       chosenLevelScreen();
 
       levelSet = true;
       chooseLevel = false;
-    }
-  }
-  else if(!chooseLevel && levelSet) {
-    if(!__round_started) {
-      generatedNumber = random(0, 16);
-      roundScreen();
-      startTime = millis();
-    }
-    if(millis() - startTime > roundTime) {
-      if(!cd2ba(generatedNumber)) return;
 
-      if(checkPlayerBinaryInput()) {
-        updateRoundTimeAndScore();
-        correctChoice();
-        
-        __round_started = false;
-      }
-      else gameOver();
+      break;
     }
+    case STATE_PLAYING: {
+      if(!__round_started) {
+        generatedNumber = random(0, 16);
+        roundScreen();
+        startTime = millis();
+      }
+      if(millis() - startTime > roundTime) {
+        if(!cd2ba(generatedNumber)) return;
+
+        if(checkPlayerBinaryInput()) {
+          updateRoundTimeAndScore();
+          correctChoice();
+          
+          __round_started = false;
+        }
+        else gameOver();
+      }
+      break;
+    }
+    case STATE_SLEEPING: {
+      clearScreen();
+      deepSleep();
+      __welcome_printed = false;
+
+      break;
+    }
+    default: return;
   }
 }

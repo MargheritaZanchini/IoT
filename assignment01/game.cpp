@@ -1,16 +1,17 @@
 #include <TimerOne.h>
 #include <avr/sleep.h>
 
-#include "game.h"
 #include "Arduino.h"
 
-static int fadeAmount = 5;
-static int currIntensity = 0;
+#include "game.h"
+
+static int fadeAmount = 5; // Fade Step Amount 
+static int currIntensity = 0; // Current Red LED Intensity
 
 bool flagSleep = false;
 
 int ledArray[4] = { l1, l2, l3, l4 };
-int binaryArray[4] = {0, 0, 0, 0};
+int binaryArray[4] = { 0, 0, 0, 0 };
 
 int generatedNumber = -1;
 
@@ -18,15 +19,6 @@ int current, level;
 int score;
 bool start, chooseLevel, levelSet, __welcome_printed, __round_started, b1Pressed;
 long deltaF, roundTime, startTime;
-
-void printBinaryArray() {
-  for(int i=0; i<=3; i++) {
-  	Serial.print(binaryArray[i]);
-    Serial.print(" ");
-  }
-  
-  Serial.print("\n");
-}
 
 bool checkPlayerBinaryInput() {
   for(int i=0; i<=3; i++) {
@@ -75,11 +67,8 @@ void fade() {
 
 void setFlagSleep() {
   flagSleep = !flagSleep;
+  
   if(flagSleep) digitalWrite(RED_LED_PIN, LOW);
-}
-
-void wakeUp() {
-  if(flagSleep) flagSleep = false;
 }
 
 void deepSleep() {
@@ -92,12 +81,10 @@ void deepSleep() {
   Serial.println("WAKE UP");
 }
 
-// > Game
 void ledSwitch(int __led) {
   digitalWrite(__led, !digitalRead(__led));
 }
 
-// > Game
 void b1Handler() {
   if(chooseLevel) b1Pressed = true;
   else if(start) {
@@ -114,48 +101,41 @@ void b1Handler() {
   }
 }
 
-// > Game
 void b2Handler() {
   if(flagSleep) flagSleep = false;
   else if(!flagSleep && !start && !chooseLevel && levelSet) ledSwitch(l2);
 }
 
-// > Game
 void b3Handler() {
   if(flagSleep) flagSleep = false;
   else if(!flagSleep && !start && !chooseLevel && levelSet) ledSwitch(l3);
 }
 
-// > Game
 void b4Handler() {
   if(flagSleep) flagSleep = false;
   else if(!flagSleep && !start && !chooseLevel && levelSet) ledSwitch(l4);
 }
 
-// > Game
 int writeLevel(int val) {
   return (val/256)+1;
 }
 
-// > Game
 void updateRoundTimeAndScore() {
   long temp = roundTime-deltaF;
   roundTime = temp < 5000 ? 5000 : temp;
   score++;
 }
 
-// > Game
 void gameOverLed() {
   digitalWrite(RED_LED_PIN, HIGH);
   delay(1000);
   digitalWrite(RED_LED_PIN, LOW);
 }
 
-// > Game
 void restartGame() {
   randomSeed(analogRead(0));
 
-  current = -1;
+  current = -256; // Initialized as -1 for First Use
 
   __welcome_printed = false;
   __round_started = false;
@@ -179,4 +159,21 @@ void restartGame() {
   Serial.println("[GMTBC] Game Restarted");
 
   flagSleep = false;
+}
+
+int getGameState() {
+  if(start) {
+    return flagSleep ? STATE_SLEEPING : STATE_SETUP_GAME;
+  }
+  if(chooseLevel) {
+    if (!b1Pressed) {
+      return STATE_CHOOSING_LEVEL;
+    }
+    if (b1Pressed && !levelSet) {
+      return STATE_SETUP_LEVEL;
+    }
+  }
+  else if(!chooseLevel && levelSet) {
+    return STATE_PLAYING;
+  }
 }

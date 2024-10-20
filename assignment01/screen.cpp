@@ -1,9 +1,12 @@
-#include "screen.h"
-#include "game.h"
-#include "Arduino.h"
 #include <avr/sleep.h>
 #include <LiquidCrystal_I2C.h>
 
+#include "Arduino.h"
+
+#include "screen.h"
+#include "game.h"
+
+// The Liquid Crystal I2C Screen
 static LiquidCrystal_I2C lcd(0x27, 20, 4);
 
 void initLCD() {
@@ -11,15 +14,11 @@ void initLCD() {
   lcd.backlight();
 }
 
-// > Screen
 void clearScreen() {
   lcd.clear();
   lcd.setCursor(0, 0);
-
-  __welcome_printed = false;
 }
 
-// > Screen
 void welcomeScreen() {
   clearScreen();
 
@@ -30,15 +29,13 @@ void welcomeScreen() {
   __welcome_printed = true;
 }
 
-// > Screen
 void updateLevelToBeChosen() {
-  if(current == -1) {
+  if(current == -256) {
     clearScreen();
     lcd.setCursor(0, 0);
     lcd.print("Choose Level: ");
     lcd.setCursor(0, 2);
     lcd.print("Press B1 to Select.");
-    current = -2; // deve diventare FLAG
   }
 
   int newValue = analogRead(POT_PIN);
@@ -52,7 +49,6 @@ void updateLevelToBeChosen() {
   lcd.print("Press B1 to Select.");
 }
 
-// > Screen
 void chosenLevelScreen() {
   clearScreen();
 
@@ -65,7 +61,6 @@ void chosenLevelScreen() {
   delay(3000);
 }
 
-// > Screen
 void roundScreen() {
   clearScreen();
   lcd.print("To Convert: ");
@@ -75,7 +70,6 @@ void roundScreen() {
   __round_started = true;
 }
 
-// > Screen
 void correctChoice() {
   clearScreen();
   turnOffLeds();
@@ -89,7 +83,6 @@ void correctChoice() {
   delay(4000);
 }
 
-// > Screen
 void gameOver() {
   clearScreen();
   turnOffLeds();
