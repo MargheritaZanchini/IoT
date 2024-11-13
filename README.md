@@ -2,9 +2,9 @@
 ![Arduino](https://img.shields.io/badge/-Arduino-00979D?style=for-the-badge&logo=Arduino&logoColor=white)
 
 ## Assignments
-- Assignment 01: Give me the Binary Code! ([specifications](https://docs.google.com/document/d/1eBfmD2Z_LnENrw2ycnXRVqfvKuFERK_plsfLIBfGQ4w/));
-- Assignment 02: To be Defined;
-- Assignment 03: To be Defined.
+- **Assignment #01**: Give me the Binary Code! ([specifications](https://docs.google.com/document/d/1eBfmD2Z_LnENrw2ycnXRVqfvKuFERK_plsfLIBfGQ4w/));
+- **Assignment #02**: FSMs and Task-based Architectures: Smart Waste Disposal System ([specifications](https://docs.google.com/document/d/1iFXGmo7RVZMpJ5bxUN5ms_qFqg2B-wecRc0sfas9rQ4/));
+- **Assignment #03**: _To be Defined_.
 
 ## Group Members
 - margherita.zanchini@studio.unibo.it
