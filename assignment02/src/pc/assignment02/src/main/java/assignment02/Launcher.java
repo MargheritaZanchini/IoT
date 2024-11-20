@@ -47,7 +47,7 @@ public class Launcher extends Application {
         primaryStage.setOnCloseRequest((closeRequest) -> CLOSE_FUNCTION.apply(0));
     
         controller.setWasteLevel(0.5);
-        controller.setTemperature(3);
+        controller.setTemperature(30);
 
         // controller.setToxicWasteLevel(0.90);
 

@@ -70,6 +70,6 @@ public class Controller {
     }
     
     public void setTemperature(double temp) {
-        temperatureValue.set(temp / 100);
+        temperatureValue.set(temp/100);
     }
 }

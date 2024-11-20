@@ -1,62 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox fx:controller="assignment02.Controller" prefHeight="400.0" prefWidth="640.0" spacing="20" 
-      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment02.Controller">
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets bottom="15.0" left="25.0" right="25.0" top="15.0" />
     </padding>
     <children>
         <!-- Header -->
-        <Label text="Operator Dashboard" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+        <Label style="-fx-font-size: 24px; -fx-font-weight: bold" text="Operator Dashboard" />
         
         <!-- Main Content -->
-        <HBox spacing="80" alignment="CENTER">
+        <HBox alignment="CENTER" spacing="150.0">
             <!-- Waste Level Section -->
-            <VBox spacing="10" alignment="CENTER">
-                <Label text="Waste Level" style="-fx-font-size: 16px"/>
-                <ProgressBar fx:id="toxicWasteLevel" 
-                           prefHeight="200.0" 
-                           prefWidth="30.0"
-                           progress="0"/>
-                <Label fx:id="wasteLevelLabel" text="0%" style="-fx-font-size: 14px"/>
+            <VBox alignment="CENTER" spacing="10">
+                <Label style="-fx-font-size: 16px" text="Waste Level" />
+                <AnchorPane prefHeight="200.0" prefWidth="30.0">
+                    <ProgressBar fx:id="toxicWasteLevel" prefHeight="30.0" prefWidth="200.0" rotate="-90" AnchorPane.leftAnchor="-85.0" AnchorPane.topAnchor="85.0" />
+                </AnchorPane>
+                <Label fx:id="wasteLevelLabel" style="-fx-font-size: 14px" text="0%" />
             </VBox>
             
             <!-- Temperature Section -->
-            <VBox spacing="10" alignment="CENTER">
-                <Label text="Temperature" style="-fx-font-size: 16px"/>
-                <ProgressBar fx:id="temperatureLevel" 
-                           prefHeight="200.0" 
-                           prefWidth="30.0"
-                           progress="0"/>
-                <Label fx:id="temperatureLabel" text="0°C" style="-fx-font-size: 14px"/>
+            <VBox alignment="CENTER" spacing="10">
+                <Label style="-fx-font-size: 16px" text="Temperature" />
+                <AnchorPane prefHeight="200.0" prefWidth="30.0">
+                    <ProgressBar fx:id="temperatureLevel" layoutX="-83.0" layoutY="85.0" prefHeight="30.0" prefWidth="200.0" rotate="-90.0" AnchorPane.rightAnchor="-85.0" AnchorPane.topAnchor="85.0" />
+                </AnchorPane>
+                <Label fx:id="temperatureLabel" style="-fx-font-size: 14px" text="0°C" />
             </VBox>
         </HBox>
         
         <!-- Control Buttons -->
-        <HBox spacing="20" alignment="CENTER">
-            <Button fx:id="emptyButton" 
-                    text="EMPTY"
-                    focusTraversable="false"
-                    style="-fx-font-size: 14px; -fx-min-width: 100px; -fx-min-height: 40px"/>
-            <Button fx:id="restoreButton" 
-                    text="RESTORE"
-                    focusTraversable="false"
-                    style="-fx-font-size: 14px; -fx-min-width: 100px; -fx-min-height: 40px"/>
+        <HBox alignment="CENTER" spacing="90.0">
+            <Button fx:id="emptyButton" focusTraversable="false" style="-fx-font-size: 14px; -fx-min-width: 100px; -fx-min-height: 40px" text="EMPTY" />
+            <Button fx:id="restoreButton" focusTraversable="false" style="-fx-font-size: 14px; -fx-min-width: 100px; -fx-min-height: 40px" text="RESTORE" />
         </HBox>
         
         <!-- Status Label -->
-        <Label fx:id="statusLabel" 
-               text="System Status: Normal" 
-               style="-fx-font-size: 14px"
-               alignment="CENTER"/>
+        <Label fx:id="statusLabel" alignment="CENTER" style="-fx-font-size: 14px" text="System Status: Normal" />
     </children>
 </VBox>
