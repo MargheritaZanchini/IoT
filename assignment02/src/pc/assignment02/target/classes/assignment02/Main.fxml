@@ -1,15 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
 
-<VBox fx:controller="assignment02.Controller" prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-         <children>
-            <ProgressBar fx:id="toxicWasteLevel" layoutX="-148.0" layoutY="188.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="350.0" progress="0" rotate="-90.0" />
-         </children>
-    </AnchorPane>
-  </children>
+<VBox fx:controller="assignment02.Controller" prefHeight="400.0" prefWidth="640.0" spacing="20" 
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <children>
+        <!-- Header -->
+        <Label text="Operator Dashboard" style="-fx-font-size: 24px; -fx-font-weight: bold"/>
+        
+        <!-- Main Content -->
+        <HBox spacing="80" alignment="CENTER">
+            <!-- Waste Level Section -->
+            <VBox spacing="10" alignment="CENTER">
+                <Label text="Waste Level" style="-fx-font-size: 16px"/>
+                <ProgressBar fx:id="toxicWasteLevel" 
+                           prefHeight="200.0" 
+                           prefWidth="30.0"
+                           progress="0"/>
+                <Label fx:id="wasteLevelLabel" text="0%" style="-fx-font-size: 14px"/>
+            </VBox>
+            
+            <!-- Temperature Section -->
+            <VBox spacing="10" alignment="CENTER">
+                <Label text="Temperature" style="-fx-font-size: 16px"/>
+                <ProgressBar fx:id="temperatureLevel" 
+                           prefHeight="200.0" 
+                           prefWidth="30.0"
+                           progress="0"/>
+                <Label fx:id="temperatureLabel" text="0°C" style="-fx-font-size: 14px"/>
+            </VBox>
+        </HBox>
+        
+        <!-- Control Buttons -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button fx:id="emptyButton" 
+                    text="EMPTY"
+                    focusTraversable="false"
+                    style="-fx-font-size: 14px; -fx-min-width: 100px; -fx-min-height: 40px"/>
+            <Button fx:id="restoreButton" 
+                    text="RESTORE"
+                    focusTraversable="false"
+                    style="-fx-font-size: 14px; -fx-min-width: 100px; -fx-min-height: 40px"/>
+        </HBox>
+        
+        <!-- Status Label -->
+        <Label fx:id="statusLabel" 
+               text="System Status: Normal" 
+               style="-fx-font-size: 14px"
+               alignment="CENTER"/>
+    </children>
 </VBox>

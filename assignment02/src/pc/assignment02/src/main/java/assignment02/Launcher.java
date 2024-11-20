@@ -46,7 +46,10 @@ public class Launcher extends Application {
         primaryStage.setResizable(APPLICATION_RESIZABLE);
         primaryStage.setOnCloseRequest((closeRequest) -> CLOSE_FUNCTION.apply(0));
     
-        controller.setToxicWasteLevel(0.90);
+        controller.setWasteLevel(0.5);
+        controller.setTemperature(3);
+
+        // controller.setToxicWasteLevel(0.90);
 
         primaryStage.show();
     }
