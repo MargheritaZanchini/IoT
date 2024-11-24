@@ -8,17 +8,16 @@ public:
     virtual ~Sensor() = default;
     
     virtual float read() {
-        return analogRead(_pin);
+        return digitalRead(_pin);
     }
 
     Sensor() = default;
-    Sensor(int pin, int mode = INPUT) : _pin(pin), _mode(mode) {
-        pinMode(_pin, _mode);
+    Sensor(int pin) : _pin(pin) {
+        pinMode(_pin, INPUT);
     }
     
-private:
+protected:
     int _pin;
-    int _mode;
 };
 
 #endif

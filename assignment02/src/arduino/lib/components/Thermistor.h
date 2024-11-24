@@ -5,8 +5,8 @@
 
 class Thermistor : public Sensor {
 public:
-    Thermistor(int pin, int mode = INPUT);
-    
+    Thermistor(int pin) : Sensor(pin) { }
+
     /***
      * Read the Temperature from the Thermistor
      * 
@@ -20,8 +20,8 @@ public:
         return temperature;
     }
 
-private:
-    int _pin;
+// private:
+//     int _pin;
 };
 
 #endif

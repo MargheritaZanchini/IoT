@@ -4,6 +4,10 @@
 #include "Task.h"
 #include "../components/ServoMotor.h"
 
+#define MSG_PRESS_CLOSE "Press Close when done"
+#define MSG_WASTE_RECEIVED "Waste received"
+#define DELTA_T2 3000
+
 #define USER_DOOR_OPENED 90
 #define OPERATOR_DOOR_OPENED -90
 #define USER_DOOR_CLOSED 0

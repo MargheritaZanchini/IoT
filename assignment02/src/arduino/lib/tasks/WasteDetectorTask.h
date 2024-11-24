@@ -4,7 +4,9 @@
 #include "Task.h"
 #include "../components/Sonar.h"
 
-class WasteDetectorTask : Task {
+#define MSG_FULL "Container full"
+
+class WasteDetectorTask : public Task {
 public:
     WasteDetectorTask(Sonar& sonar);
     void init(int period);

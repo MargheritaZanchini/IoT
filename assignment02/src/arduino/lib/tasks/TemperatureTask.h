@@ -4,10 +4,12 @@
 #include "Task.h"
 #include "../components/Thermistor.h"
 
+#define MSG_PROBLEM "Problem detected"
+
 #define MAX_TEMP
 #define MAX_TEMP_TIME
 
-class TemperatureTask: public Task {
+class TemperatureTask : public Task {
 public:
     bool alarm;
     TemperatureTask(Thermistor& thermistor);  

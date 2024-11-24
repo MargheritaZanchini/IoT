@@ -5,14 +5,7 @@
 
 class PIR : public Sensor {
 public:
-    PIR(int pin, int mode = INPUT);
-    float read();
-    const bool getValue() {
-        return bool(this->read());
-    }
-
-private:
-    int _pin;
+    PIR(int pin) : Sensor(pin) { }
 };
 
 #endif
