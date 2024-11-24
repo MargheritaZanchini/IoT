@@ -1,6 +1,6 @@
 #include "LCD.h"
-#include <Arduino.h>
-#include <LiquidCrystal_I2C.h>
+#include "Arduino.h"
+#include "LiquidCrystal_I2C.h"
 
 LCD::LCD(int address) : _lcd(address, LCD_COLS, LCD_ROWS) {
     this->_address = address;

@@ -1,7 +1,7 @@
 #ifndef __LCD_I2C_DISPLAY__
 #define __LCD_I2C_DISPLAY__
 
-#include <LiquidCrystal_I2C.h>
+#include "LiquidCrystal_I2C.h"
 
 #define LCD_COLS 20
 #define LCD_ROWS 4

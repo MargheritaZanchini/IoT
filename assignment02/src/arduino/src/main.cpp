@@ -6,7 +6,7 @@
 #include "../lib/tasks/LedsTask.h"
 #include "../lib/tasks/TemperatureTask.h"
 
-#include <Arduino.h>
+#include "Arduino.h"
 
 Scheduler sched;
 

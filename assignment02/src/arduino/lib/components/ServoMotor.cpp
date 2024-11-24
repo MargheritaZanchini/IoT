@@ -1,5 +1,5 @@
 #include "ServoMotor.h"
-#include <Arduino.h>
+#include "Arduino.h"
 
 ServoMotor::ServoMotor(int pin) {
     this->_pin = pin;
