@@ -2,15 +2,16 @@
 #define __LEDS_TASK__
 
 #include "Task.h"
+#include "../components/Led.h"
 
 class LedsTask: public Task {
 public:
-    LedsTask(int pin1, int pin2);  
+    LedsTask(Led& L1, Led& L2);  
     void init(int period);  
     void tick();
 
 private:
-    int _pin1, _pin2;
+    Led* _L1, _L2;
     bool _alarm;
     enum State { L1_ON, L2_ON};
     State _state;

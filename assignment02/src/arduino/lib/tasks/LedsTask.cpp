@@ -1,8 +1,8 @@
 #include "LedsTask.h"
 
-LedsTask::LedsTask(int pin1, int pin2) {
-    this->_pin1 = pin1;
-    this->_pin2 = pin2;
+LedsTask::LedsTask(Led& L1, Led& L2) {
+    _L1 = &L1;
+    _L2 = &L2;
 }
 
 void LedsTask::init(int period) {

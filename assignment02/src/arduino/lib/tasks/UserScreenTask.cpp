@@ -1,7 +1,7 @@
 #include "UserScreenTask.h"
 
-UserScreenTask::UserScreenTask(int pin) {
-    this->_pin = pin;
+UserScreenTask::UserScreenTask(LCD& lcd) {
+    _lcd = &lcd;
 }
 
 void UserScreenTask::init(int period) {
