@@ -6,8 +6,9 @@ UserScreenTask::UserScreenTask(LCD& lcd) {
 
 void UserScreenTask::init(int period) {
     Task::init(period);
-    // alarm = true;
-    // _state = L1_ON;
+    msg = DEFAULT_MSG;
+    time = 0;
+    clear = false;
 }
 
 void UserScreenTask::tick() {

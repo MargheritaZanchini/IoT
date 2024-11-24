@@ -1,12 +1,12 @@
 #include "TemperatureTask.h"
 
-TemperatureTask::TemperatureTask(int pin) {
-    this->_pin = pin;
+TemperatureTask::TemperatureTask(Thermistor& thermistor) {
+    _thermistor = &thermistor;
 }
 
 void TemperatureTask::init(int period) {
     Task::init(period);
-    alarm = true;
+    alarm = false;
     _state = NORMAL;
 }
 

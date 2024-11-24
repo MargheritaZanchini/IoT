@@ -2,17 +2,20 @@
 #define __WASTE_DETECTOR_TASK__
 
 #include "Task.h"
+#include "../components/Sonar.h"
 
 class WasteDetectorTask : Task {
 public:
-    WasteDetectorTask(int pin);
+    WasteDetectorTask(Sonar& sonar);
     void init(int period);
     void tick();
+    bool full;
 
 private:
     int _pin;
-    enum State { EMPTY, FULL};
+    enum State { NOT_FULL, FULL};
     State _state;
+    Sonar* _sonar;
 };
 
 #endif

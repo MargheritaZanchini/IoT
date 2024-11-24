@@ -4,11 +4,16 @@
 #include "Task.h"
 #include "../components/LCD.h"
 
+#define DEFAULT_MSG "Press Open to enter waste"
+
 class UserScreenTask: public Task {
 public:
     UserScreenTask(LCD& lcd);  
     void init(int period);  
     void tick();
+    String msg;
+    long time;
+    bool clear;
 
 private:
     int _pin;

@@ -20,7 +20,7 @@ void DoorTask::tick() {
             /* code */
             break;
             
-        case OPERATOR_DOOR_OPENED:
+        case OPERATOR_OPENED:
             /* code */
             break;
     }
