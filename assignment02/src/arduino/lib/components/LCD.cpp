@@ -4,6 +4,8 @@
 
 LCD::LCD(int address) : _lcd(address, LCD_COLS, LCD_ROWS) {
     this->_address = address;
+
+    this->init();
 }
 
 void LCD::init() {

@@ -7,11 +7,9 @@ public:
     void on();
     void off();
     void toggle();
-    bool isOn() const;
 
 private:
     int _pin;
-    bool _isOn;
 };
 
 #endif

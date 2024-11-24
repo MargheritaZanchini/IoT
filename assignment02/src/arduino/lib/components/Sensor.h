@@ -12,7 +12,7 @@ public:
     }
 
     Sensor() = default;
-    Sensor(int pin, int mode) : _pin(pin), _mode(mode) {
+    Sensor(int pin, int mode = INPUT) : _pin(pin), _mode(mode) {
         pinMode(_pin, _mode);
     }
     

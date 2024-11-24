@@ -1,9 +1,13 @@
 #include "Arduino.h"
 #include "Button.h"
 
+
+Button::Button(int pin) : _pin(pin), _state(LOW), _previous(0) {
+    pinMode(pin, INPUT);
+}
+
 /***
  * Button Constructor
-*/
 Button::Button(int pin) {
     _pin = pin;
     _state = LOW;
@@ -11,6 +15,7 @@ Button::Button(int pin) {
 
     pinMode(pin, INPUT);
 }
+*/
 
 /***
  * Checks if Button is Pressed

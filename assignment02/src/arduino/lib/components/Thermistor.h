@@ -5,7 +5,7 @@
 
 class Thermistor : public Sensor {
 public:
-    Thermistor(int pin, int mode);
+    Thermistor(int pin, int mode = INPUT);
     
     /***
      * Read the Temperature from the Thermistor

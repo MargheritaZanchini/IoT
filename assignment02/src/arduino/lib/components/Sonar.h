@@ -3,11 +3,13 @@
 
 #include "Sensor.h"
 
-/* Supposing to run this test 
-   in an environment with 20 °C 
-  ì https://en.wikipedia.org/wiki/Speed_of_sound
-   */
-
+/*** 
+ * Sonar Class 
+ * 
+ * Sonar used to Measure Distance
+ * 
+ * @cite https://en.wikipedia.org/wiki/Speed_of_sound
+*/
 class Sonar : public Sensor {
 public:
     Sonar(int trig, int echo) : Sensor() {
