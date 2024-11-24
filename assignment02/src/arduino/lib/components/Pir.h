@@ -6,6 +6,9 @@
 class PIR : public Sensor {
 public:
     PIR(int pin) : Sensor(pin) { }
+    const bool getValue() {
+        return bool(this->read());
+    }
 };
 
 #endif
