@@ -9,7 +9,7 @@ class UserDetectorTask : public Task{
 public:
     void init(int period);
     void tick();
-    UserDetectorTask(PIR pir);
+    UserDetectorTask(PIR& pir);
 private:
     bool _sleep;
     int _deltaTime;
@@ -17,7 +17,7 @@ private:
     long _lastDetectedTime;
     enum State {NOT_DETECTED, DETECTED, SLEEP};
     State _state;
-    PIR _pir;
+    PIR* _pir;
 };
 
 

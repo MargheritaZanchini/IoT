@@ -5,11 +5,12 @@
 
 class PIR : public Sensor {
 public:
-    PIR(int pin); 
+    PIR() : PIR(-1) {}
+    PIR(int pin);
     float read() override;
 
 private:
-    int _pin;
+    int _pin;    
 };
 
 #endif

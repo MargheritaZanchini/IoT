@@ -1,7 +1,8 @@
 #include "PIR.h"
 #include "Arduino.h"
 
-PIR::PIR(int pin){
+PIR::PIR(int pin) {
+    if(pin == -1) return;
     this->_pin = pin;
 }
 
