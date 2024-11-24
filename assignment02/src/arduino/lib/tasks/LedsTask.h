@@ -11,10 +11,10 @@ public:
     void tick();
 
 private:
-    Led* _L1, _L2;
-    bool _alarm;
     enum State { L1_ON, L2_ON};
     State _state;
+    Led* _L1;
+    Led* _L2;
 };
 
 #endif

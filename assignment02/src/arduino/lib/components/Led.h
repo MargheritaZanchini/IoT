@@ -3,6 +3,7 @@
 
 class Led {
 public:
+    Led() = default;
     Led(int pin);
     void on();
     void off();
