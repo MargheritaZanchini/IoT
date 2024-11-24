@@ -1,10 +1,24 @@
-#ifndef __SENSOR_H__
-#define __SENSOR_H__
+#ifndef __SENSOR__
+#define __SENSOR__
+
+#include "Arduino.h"
 
 class Sensor {
 public:
     virtual ~Sensor() = default;
-    virtual float read() = 0;
+    
+    virtual float read() {
+        return analogRead(_pin);
+    }
+
+    Sensor() = default;
+    Sensor(int pin, int mode) : _pin(pin), _mode(mode) {
+        pinMode(_pin, _mode);
+    }
+    
+private:
+    int _pin;
+    int _mode;
 };
 
 #endif
