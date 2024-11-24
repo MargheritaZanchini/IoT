@@ -11,6 +11,7 @@ public:
 
 private:
     int _pin1, _pin2;
+    bool _alarm;
     enum State { L1_ON, L2_ON};
     State _state;
 };

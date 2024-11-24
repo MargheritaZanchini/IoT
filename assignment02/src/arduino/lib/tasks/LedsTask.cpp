@@ -7,7 +7,7 @@ LedsTask::LedsTask(int pin1, int pin2) {
 
 void LedsTask::init(int period) {
     Task::init(period);
-    alarm = true;
+    _alarm = true;
     _state = L1_ON;
 }
 
