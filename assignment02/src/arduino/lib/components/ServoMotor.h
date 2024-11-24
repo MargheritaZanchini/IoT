@@ -5,15 +5,15 @@
 
 class ServoMotor {
 public:
-  ServoMotor(int pin);
+    ServoMotor(int pin);
 
-  void on();
-  void setPosition(int angle);
-  void off();
+    void on();
+    void setPosition(int angle);
+    void off();
     
 private:
-  int pin; 
-  Servo servo; 
+    int _pin;
+    Servo _servo;
 };
 
 #endif

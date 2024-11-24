@@ -1,16 +1,15 @@
-#ifndef __USERDETECTOR__
-#define __USERDETECTOR__
+#ifndef __USER_DETECTOR_TASK__
+#define __USER_DETECTOR_TASK__
 
 #include "Task.h"
-#include "components/Pir.h"
+#include "../components/PIR.h"
 
-class UserDetector : public Task{
+class UserDetectorTask : public Task{
 
 public:
     void init(int period);
     void tick();
-    UserDetector(/* args */);
-
+    UserDetectorTask(PIR pir);
 private:
     bool _sleep;
     int _deltaTime;
@@ -18,7 +17,7 @@ private:
     long _lastDetectedTime;
     enum State {NOT_DETECTED, DETECTED, SLEEP};
     State _state;
-    Pir _pir;
+    PIR _pir;
 };
 
 

@@ -1,22 +1,24 @@
-#include "UserDetector.h"
+#include "UserDetectorTask.h"
 #include "Arduino.h"
 
-
-UserDetector::UserDetector(Pir pir){
+//Il pir viene creato nel main e poi passato al costruttore
+UserDetectorTask::UserDetectorTask(PIR pir) {
     this->_pir = pir;
 }
 
-void UserDetector::init(0){
-    _state = NOT_DETECTED;
-    _lastDetectedTime = 0;
+void UserDetectorTask::init(int period){
+    Task::init(period);
+    _state = NOT_DETECTED; //inizialmente non c'è nessuno user
+    _lastDetectedTime = 0; //
     _deltaTime = 5000;
 }
 
-void UserDetector::tick(){
+void UserDetectorTask::tick(){
     switch (_state){
     case NOT_DETECTED:
         _userDetected = _pir.read();
         if(_userDetected == HIGH){
+            _lastDetectedTime = 0;
             _state = DETECTED; 
         }else{
             if(_lastDetectedTime == 0){
@@ -30,8 +32,8 @@ void UserDetector::tick(){
     
     case DETECTED:
         _userDetected = _pir.read();
-        if(_userDetected == HIGH){
-            _state = DETECTED; 
+        if(_userDetected == LOW){
+            _state = NOT_DETECTED; 
         }
         break;
     

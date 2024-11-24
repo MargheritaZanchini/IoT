@@ -1,5 +1,5 @@
-#ifndef __TEMPERATURETASK__
-#define __TEMPERATURETASK__
+#ifndef __TEMPERATURE_TASK__
+#define __TEMPERATURE_TASK__
 
 #include "Task.h"
 

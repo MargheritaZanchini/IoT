@@ -2,17 +2,17 @@
 #include <Arduino.h>
 
 ServoMotor::ServoMotor(int pin) {
-  this->pin = pin;
+    this->_pin = pin;
 } 
 
 void ServoMotor::on(){
-  servo.attach(pin);    
+    _servo.attach(_pin);    
 }
 
 void ServoMotor::setPosition(int angle){
-  servo.write(angle);              
+    _servo.write(angle);              
 }
 
 void ServoMotor::off(){
-  servo.detach();    
+    _servo.detach();    
 }

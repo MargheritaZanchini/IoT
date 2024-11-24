@@ -1,10 +1,10 @@
-#include "Pir.h"
+#include "PIR.h"
 #include <Arduino.h>
 
-Pir::Pir(int pin){
-    _pin = pin;
+PIR::PIR(int pin){
+    this->_pin = pin;
 }
 
-void Pir::read(){
+float PIR::read() {
     return digitalRead(_pin);
 }

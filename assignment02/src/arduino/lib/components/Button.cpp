@@ -5,11 +5,11 @@
  * Button Constructor
 */
 Button::Button(int pin) {
-  _pin = pin;
-  _state = LOW;
-  _previous = 0;
+    _pin = pin;
+    _state = LOW;
+    _previous = 0;
 
-  pinMode(pin, INPUT);
+    pinMode(pin, INPUT);
 }
 
 /***

@@ -1,14 +1,15 @@
 #ifndef __PIR__
 #define __PIR__
 
-class Pir {
+#include "Sensor.h"
+
+class PIR : public Sensor {
 public:
-  Pir(int pin); 
-  int read(); //funzione che legge il valore del pir
-    
+    PIR(int pin); 
+    float read() override;
+
 private:
-  int _pin; 
-  
+    int _pin;
 };
 
 #endif
