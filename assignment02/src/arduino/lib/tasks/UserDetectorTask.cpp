@@ -26,7 +26,7 @@ void UserDetectorTask::tick(){
             if(_lastDetectedTime == 0){ 
                 _lastDetectedTime = millis();
             }else if(millis() - _lastDetectedTime > _deltaTime){
-                   // _state = SLEEP;
+                // ...
             }
         }
 
@@ -47,7 +47,6 @@ void UserDetectorTask::tick(){
         power_twi_disable();
         power_timer1_disable();
         sleep_mode();
-        //re-enable all periphelas
         power_all_enable();
         break;
     }

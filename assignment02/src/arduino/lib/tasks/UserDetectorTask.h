@@ -13,8 +13,8 @@ public:
 private:
     bool _sleep;
     int _userDetected;
-    long _deltaTime;
-    long _lastDetectedTime;
+    unsigned long _deltaTime;
+    unsigned long _lastDetectedTime;
     enum State {NOT_DETECTED, DETECTED, SLEEP};
     State _state;
     PIR* _pir;

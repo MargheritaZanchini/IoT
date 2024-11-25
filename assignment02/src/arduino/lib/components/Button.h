@@ -1,7 +1,7 @@
 #ifndef __BUTTON__
 #define __BUTTON__
 
-#define BUTTON_DEBOUNCE_TIME 100
+#define BUTTON_DEBOUNCE_TIME 100 /** Debounce Time for the Button */
 
 /**
  * @brief Button Component Helper Class
