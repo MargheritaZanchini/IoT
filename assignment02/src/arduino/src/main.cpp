@@ -14,6 +14,7 @@
 #include "../lib/tasks/TemperatureTask.h"
 
 #include "Arduino.h"
+//#include "EnableInterrupt.h"
 
 #define SERVO_PIN 2
 #define PIR_PIN 5
@@ -25,6 +26,7 @@
 #define SONAR_ECHO_PIN 13
 #define THERMO_PIN A0
 #define LCD_ADDRESS 0x27
+#
 
 Scheduler sched;
 
@@ -48,7 +50,7 @@ void setup() {
     Task* t1 = new WasteDetectorTask(sonar);
     t1->init(500);
 
-    Task* t2 = new DoorTask(servoMotor);
+    Task* t2 = new DoorTask(servoMotor, closeButton, openButton);
     t2->init(500);
 
     Task* t3 = new UserScreenTask(lcd);

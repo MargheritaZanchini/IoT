@@ -12,7 +12,7 @@ void UserDetectorTask::init(int period){
     Task::init(period);
     _state = NOT_DETECTED; //inizialmente non c'è nessuno user
     _lastDetectedTime = 0; //per calcolare il tempo in cui nessun user è rilevato   
-    _deltaTime = 5000; //tempo dopo il quale nessun user è rilevato e il sistema va in sleep
+    _deltaTime = 6000; //tempo dopo il quale nessun user è rilevato e il sistema va in sleep
 }
 
 void UserDetectorTask::tick(){
@@ -26,7 +26,7 @@ void UserDetectorTask::tick(){
             if(_lastDetectedTime == 0){ 
                 _lastDetectedTime = millis();
             }else if(millis() - _lastDetectedTime >_deltaTime){
-                    _state = SLEEP;
+                   // _state = SLEEP;
             }
         }
 
@@ -40,23 +40,15 @@ void UserDetectorTask::tick(){
         break;
     
     case SLEEP:
-        /*set_sleep_mode(SLEEP_MODE_IDLE);
-        sleep_enable();*/
-
-        /* Disable all of the unused peripherals. This will reduce power
-        * consumption further and, more importantly, some of these
-        * peripherals may generate interrupts that will wake our Arduino from
-        * sleep!
-        */
-        /*power_adc_disable();
+        set_sleep_mode(SLEEP_MODE_IDLE);
+        sleep_enable();
+        power_adc_disable();
         power_spi_disable();
-        power_twi_disable();  
-        /* Now enter sleep mode. */
-       // sleep_mode();  
-        /* The program will continue from here after the timer timeout*/
-        //sleep_disable(); /* First thing to do is disable sleep. */
-        /* Re-enable the peripherals. */
-        //power_all_enable();
+        power_twi_disable();
+        power_timer1_disable();
+        sleep_mode();
+        //re-enable all periphelas
+        power_all_enable();
         break;
     }
 }

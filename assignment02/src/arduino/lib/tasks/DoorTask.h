@@ -4,6 +4,7 @@
 #include "Task.h"
 #include "UserScreenTask.h"
 #include "../components/ServoMotor.h"
+#include "../components/Button.h"
 
 #define MSG_PRESS_CLOSE "Press Close when done"
 #define MSG_WASTE_RECEIVED "Waste received"
@@ -15,7 +16,7 @@
 
 class DoorTask : public Task {   
 public:
-  DoorTask(ServoMotor& servo);
+  DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton);
   void init(int period);
   void tick();
 
@@ -23,6 +24,8 @@ private:
   enum State { CLOSED, OPENED, OPERATOR_OPENED };
   State _state;
   ServoMotor* _servo;
+  Button* _closeButton;
+  Button* _openButton;
 };
 
 #endif
