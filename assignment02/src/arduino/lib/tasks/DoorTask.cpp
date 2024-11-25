@@ -12,11 +12,11 @@ void DoorTask::init(int period) {
 }
 
 void DoorTask::tick() {
+    bool closePressed = _closeButton->isPressed();
+    bool openPressed = _openButton->isPressed();
+
     switch (_state)
     {
-        bool closePressed = _closeButton->isPressed();
-        bool openPressed = _openButton->isPressed();
-
         case CLOSED:
             if(openPressed) {
                 /* msg = ... */
@@ -24,6 +24,9 @@ void DoorTask::tick() {
             break;
         
         case OPENED:
+            if(closePressed) {
+                /* msg = ... */
+            }
             /* code */
             break;
             

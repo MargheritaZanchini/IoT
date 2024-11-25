@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "Button.h"
 
-Button::Button(int pin) : _pin(pin), _state(LOW), _previous(0) {
+Button::Button(int pin) : _pin(pin), _previous(0), _state(LOW) {
     pinMode(pin, INPUT);
 }
 

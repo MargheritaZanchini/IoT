@@ -35,7 +35,7 @@ void LCD::clear() {
  * @param row=0 The row position.
  * @param col=0 The column position.
  */
-void LCD::print(const String& text, int row = 0, int col = 0) {
+void LCD::print(const String& text, int row, int col) {
     _lcd.setCursor(col, row);
     _lcd.print(text);
 }
