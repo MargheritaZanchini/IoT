@@ -3,15 +3,18 @@
 
 #include "Sensor.h"
 
-/*** 
- * Sonar Class 
- * 
- * Sonar used to Measure Distance
- * 
- * @cite https://en.wikipedia.org/wiki/Speed_of_sound
-*/
+/**
+ * @brief Sonar Component Helper Class
+ * @implements Sensor
+ * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
+ */
 class Sonar : public Sensor {
 public:
+    /**
+     * @brief Creates New Distance Sensor
+     * @param trig Output Pin for Trigger Signal
+     * @param echo Input Pin for Echo Signal
+     */
     Sonar(int trig, int echo) : Sensor() {
         _trig = trig;
         _echo = echo;
@@ -21,7 +24,7 @@ public:
     };
 
     /*** 
-     * Measure the Time in microseconds and Convert to Distance in Meters
+     * @brief Measure the Time in microseconds and Convert to Distance in Meters
      * Dividing by 1000000 to Convert to Seconds and
      * Dividing by 2 because the Sound Travels Back and Forth.
      * 
@@ -32,17 +35,16 @@ public:
         delayMicroseconds(5);
         digitalWrite(_trig, HIGH);
         delayMicroseconds(5);
-        digitalWrite(_trig, LOW);
+        digitalWrite(_trig, LOW); 
 
         return (pulseIn(_echo, HIGH) * _vs) / (2.0 * 1000000.0);
     }
 
 private:
-    int _trig;
-    int _echo;
-
-    const float _temperature = 20;
-    const float _vs = (331.45 + (0.62*_temperature));
+    int _trig; /** Trigger Signal Pin */
+    int _echo; /** Echo Signal Pin */
+    static constexpr float _temperature = 20; /** Temperature for Speed Calculation, @note https://en.wikipedia.org/wiki/Speed_of_sound */
+    static constexpr float _vs = 331.45 + (0.62 * _temperature); /** Current Sound Velocity */
 };
 
 #endif

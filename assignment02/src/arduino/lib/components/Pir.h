@@ -3,12 +3,24 @@
 
 #include "Sensor.h"
 
+/**
+ * @brief PIR Component Helper Class
+ * @implements Sensor
+ * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
+ */
 class PIR : public Sensor {
 public:
+    /**
+     * @brief Creates New PIR Instance
+     * @param pin Input Pin for the PIR Sensor
+     */
     PIR(int pin) : Sensor(pin) { }
-    const bool getValue() {
-        return bool(this->read());
-    }
+
+    /**
+     * @brief Reads Current Motion State
+     * @return true if Motion Detected, false Otherwise
+     */
+    const bool getValue();
 };
 
 #endif
