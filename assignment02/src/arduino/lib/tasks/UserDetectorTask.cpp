@@ -25,7 +25,7 @@ void UserDetectorTask::tick(){
         }else{  //se nessun utente viene rilevato si controlla da quanto tempo siamo nello stato NOT_DETECTED
             if(_lastDetectedTime == 0){ 
                 _lastDetectedTime = millis();
-            }else if(millis() - _lastDetectedTime >_deltaTime){
+            }else if(millis() - _lastDetectedTime > _deltaTime){
                    // _state = SLEEP;
             }
         }

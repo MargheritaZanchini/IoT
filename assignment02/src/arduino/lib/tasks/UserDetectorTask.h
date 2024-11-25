@@ -12,8 +12,8 @@ public:
     UserDetectorTask(PIR& pir);
 private:
     bool _sleep;
-    int _deltaTime;
     int _userDetected;
+    long _deltaTime;
     long _lastDetectedTime;
     enum State {NOT_DETECTED, DETECTED, SLEEP};
     State _state;
