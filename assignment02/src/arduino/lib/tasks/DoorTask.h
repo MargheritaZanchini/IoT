@@ -2,6 +2,7 @@
 #define __DOOR_TASK__
 
 #include "Task.h"
+#include "UserScreenTask.h"
 #include "../components/ServoMotor.h"
 
 #define MSG_PRESS_CLOSE "Press Close when done"

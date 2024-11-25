@@ -27,7 +27,7 @@ bool Scheduler::addTask(Task* task){
 }
   
 void Scheduler::schedule(){   
-  while (!timerFlag){}
+  while (!timerFlag){} //I wait for the period of the scheduler to elapse before checkig the tasks
   timerFlag = false;
 
   for (int i = 0; i < nTasks; i++){

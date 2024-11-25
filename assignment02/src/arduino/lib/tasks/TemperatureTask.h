@@ -2,6 +2,7 @@
 #define __TEMPERATURE_TASK__
 
 #include "Task.h"
+#include "UserScreenTask.h"
 #include "../components/Thermistor.h"
 
 #define MSG_PROBLEM "Problem detected"

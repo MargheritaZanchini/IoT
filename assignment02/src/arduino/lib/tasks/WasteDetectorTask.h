@@ -2,6 +2,7 @@
 #define __WASTE_DETECTOR_TASK__
 
 #include "Task.h"
+#include "UserScreenTask.h"
 #include "../components/Sonar.h"
 
 #define MSG_FULL "Container full"
