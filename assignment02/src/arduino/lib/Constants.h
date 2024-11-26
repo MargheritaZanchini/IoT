@@ -35,6 +35,7 @@ namespace Constants {
 
     namespace PIR {
         constexpr int PIN = 5; /** Pin Number for Passive Infrared Motion Sensor */
+        constexpr int CALIBRATION_TIME = 4000; /** Time in Seconds for the PIR to be Calibrated \see{Constants::SECOND} */
     }
 
     namespace Servo {
@@ -55,6 +56,8 @@ namespace Constants {
     namespace Thermistor {
         constexpr int PIN = A0; /** Pin Number for Thermistor Analog Input */
     }
+
+    constexpr unsigned long BAUD_RATE = 9600; /** Baud Rate for Serial Communication */
 }
 
 #endif

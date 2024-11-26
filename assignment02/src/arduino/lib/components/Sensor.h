@@ -1,7 +1,7 @@
 #ifndef __SENSOR__
 #define __SENSOR__
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 /**
  * @brief Generic Sensor Helper Base Class

@@ -1,7 +1,8 @@
 #ifndef __SERVO_MOTOR__
 #define __SERVO_MOTOR__
 
-#include <Servo.h>
+#include <Arduino.h>
+#include <ServoTimer2.h>
 
 /**
  * @brief Servo Component Helper Class
@@ -33,7 +34,7 @@ public:
     
 private:
     int _pin; /** Pin Number for PWM Output */
-    Servo _servo; /** Hardware Interface Instance */
+    ServoTimer2 _servo; /** Hardware Interface Instance */
 };
 
 #endif

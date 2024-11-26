@@ -1,5 +1,5 @@
 #include "UserDetectorTask.h"
-#include "Arduino.h"
+#include <Arduino.h>
 #include "avr/sleep.h"
 #include "avr/power.h"
 
@@ -18,36 +18,49 @@ void UserDetectorTask::init(int period){
 void UserDetectorTask::tick(){
     switch (_state){
     case NOT_DETECTED:
-        _userDetected = _pir->read();
-        if(_userDetected == HIGH){ //se rileva un utente cambia stato
-            _lastDetectedTime = 0;
+        Serial.println("Sono in NOT_DETECTED");
+        _userDetected = _pir->isUserDetected();
+        if(_userDetected){ //se rileva un utente cambia stato
             _state = DETECTED; 
         }else{  //se nessun utente viene rilevato si controlla da quanto tempo siamo nello stato NOT_DETECTED
             if(_lastDetectedTime == 0){ 
                 _lastDetectedTime = millis();
             }else if(millis() - _lastDetectedTime > _deltaTime){
-                // ...
+                _state = SLEEP;
             }
         }
 
         break;
     
     case DETECTED:
-        _userDetected = _pir->read();
-        if(_userDetected == LOW){
+        Serial.println("Sono in DETECTED");
+        _userDetected = _pir->isUserDetected();
+        _lastDetectedTime = 0;
+        if(!_userDetected){
             _state = NOT_DETECTED; 
         }
         break;
     
     case SLEEP:
+        Serial.println("Sono in SLEEP");
         set_sleep_mode(SLEEP_MODE_IDLE);
         sleep_enable();
+
         power_adc_disable();
         power_spi_disable();
-        power_twi_disable();
+        power_timer0_disable();
         power_timer1_disable();
-        sleep_mode();
+        power_timer2_disable();
+        power_twi_disable();  
+        /* Now enter sleep mode. */
+        sleep_mode();  
+        /* The program will continue from here after the timer timeout*/
+        sleep_disable(); /* First thing to do is disable sleep. */
+        /* Re-enable the peripherals. */
         power_all_enable();
+
+        _lastDetectedTime = 0;
+        _state = DETECTED;
         break;
     }
 }

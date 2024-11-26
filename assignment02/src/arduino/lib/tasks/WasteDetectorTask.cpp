@@ -1,7 +1,9 @@
 #include "WasteDetectorTask.h"
 
-WasteDetectorTask::WasteDetectorTask(Sonar& sonar) {
+WasteDetectorTask::WasteDetectorTask(Sonar& sonar, String& msg, bool& clear) {
     _sonar = &sonar;
+    _msg = &msg;
+    _clear = &clear;
 }
 
 void WasteDetectorTask::init(int period) {

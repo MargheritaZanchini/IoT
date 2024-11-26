@@ -6,7 +6,7 @@
 
 class LedsTask: public Task {
 public:
-    LedsTask(Led& L1, Led& L2);  
+    LedsTask(Led& L1, Led& L2, bool& full, bool& alarm);  
     void init(int period);  
     void tick();
 
@@ -15,6 +15,8 @@ private:
     State _state;
     Led* _L1;
     Led* _L2;
+    bool* _full;
+    bool* _alarm;
 };
 
 #endif

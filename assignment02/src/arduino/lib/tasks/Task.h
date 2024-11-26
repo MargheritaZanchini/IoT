@@ -14,15 +14,15 @@ public:
   virtual void tick() = 0;
 
   bool updateAndCheckTime(int basePeriod){
-    timeElapsed += basePeriod;
-    if (timeElapsed >= myPeriod){
-      timeElapsed = 0;
-      return true;
-    } else {
-      return false; 
+        timeElapsed += basePeriod;
+        if (timeElapsed >= myPeriod){
+            timeElapsed = 0;
+            return true;
+        }
+        else {
+            return false; 
+        }
     }
-  }
-  
 };
 
 #endif

@@ -2,12 +2,12 @@
 #define __DOOR_TASK__
 
 #include "Task.h"
-#include "UserScreenTask.h"
+
 #include "../components/ServoMotor.h"
 #include "../components/Button.h"
 
-#define MSG_PRESS_CLOSE "Press Close when done"
-#define MSG_WASTE_RECEIVED "Waste received"
+#define MSG_PRESS_CLOSE "Press Close When Done"
+#define MSG_WASTE_RECEIVED "Waste Received"
 #define DELTA_T2 3000
 
 #define USER_DOOR_OPENED 90
@@ -16,7 +16,7 @@
 
 class DoorTask : public Task {   
 public:
-  DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton);
+  DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton, bool& full, bool& alarm, String msg, long& time);
   void init(int period);
   void tick();
 
@@ -26,6 +26,10 @@ private:
   ServoMotor* _servo;
   Button* _closeButton;
   Button* _openButton;
+  bool* _full;
+  bool* _alarm;
+  String _msg;
+  long* _time;
 };
 
 #endif

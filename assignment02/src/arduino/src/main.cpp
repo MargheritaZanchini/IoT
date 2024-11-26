@@ -14,15 +14,19 @@
 #include "../lib/tasks/LedsTask.h"
 #include "../lib/tasks/TemperatureTask.h"
 
-#include "Arduino.h"
+#include <Arduino.h>
+#include "EnableInterrupt.h"
 
 #include "../lib/Constants.h"
-//#include "EnableInterrupt.h"
 
 Scheduler sched;
 
+void wakeUp(){
+
+}
+
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(Constants::BAUD_RATE);
     sched.init(50);
  
     Button closeButton(Constants::Button::Close::PIN);
@@ -35,24 +39,35 @@ void setup() {
     Sonar sonar(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
     Thermistor thermistor(Constants::Thermistor::PIN);
 
-    Task* t0 = new UserDetectorTask(pir);
+    //tempo per calibrare il PIR
+    Serial.println("Calibrating...");
+    delay(Constants::PIR::CALIBRATION_TIME);
+
+    Serial.println("prima di attaccare l'interrupt");
+
+    enableInterrupt(Constants::PIR::PIN, wakeUp, RISING); // Link the Interrupt to the wakeUp() Function
+
+    Serial.println("Interrupt attaccato");
+
+    UserDetectorTask* t0 = new UserDetectorTask(pir);
     t0->init(150);
 
-    Task* t1 = new WasteDetectorTask(sonar);
+    UserScreenTask* t1 = new UserScreenTask(lcd);
     t1->init(500);
 
-    Task* t2 = new DoorTask(servoMotor, closeButton, openButton);
+    WasteDetectorTask* t2 = new WasteDetectorTask(sonar, t1->msg, t1->clear);
     t2->init(500);
 
-    Task* t3 = new UserScreenTask(lcd);
+    TemperatureTask* t3 = new TemperatureTask(thermistor, t1->msg, t1->clear);
     t3->init(500);
 
-    Task* t4 = new LedsTask(greenLed, redLed);
+    // DoorTask* t4 = new DoorTask(servoMotor, closeButton, openButton, ((WasteDetectorTask*) t2)->full, ((TemperatureTask*) t3)->alarm);
+    DoorTask* t4 = new DoorTask(servoMotor, closeButton, openButton, t2->full, t3->alarm, t1->msg, t1->time);
     t4->init(500);
 
-    Task* t5 = new TemperatureTask(thermistor);
+    LedsTask* t5 = new LedsTask(greenLed, redLed, t2->full, t3->alarm);
     t5->init(500);
-  
+
     sched.addTask(t0);
     sched.addTask(t1);
     sched.addTask(t2);

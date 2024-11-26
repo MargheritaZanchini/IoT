@@ -13,7 +13,7 @@
 class TemperatureTask : public Task {
 public:
     bool alarm;
-    TemperatureTask(Thermistor& thermistor);  
+    TemperatureTask(Thermistor& thermistor, String& msg, bool& clear);  
     void init(int period);  
     void tick();
 
@@ -22,6 +22,8 @@ private:
     enum State { NORMAL, HIGH_TEMP, PROBLEM_DETECTED};
     State _state;
     Thermistor* _thermistor;
+    String* _msg;
+    bool* _clear;
 };
 
 #endif

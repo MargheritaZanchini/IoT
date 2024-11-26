@@ -1,9 +1,13 @@
 #include "DoorTask.h"
 
-DoorTask::DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton) {
+DoorTask::DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton, bool& full, bool& alarm, String msg, long& time) {
     _servo = &servo;
     _closeButton = &closeButton;
     _openButton = &openButton;
+    _full = &full;
+    _alarm = &alarm;
+    _msg = msg;
+    _time = &time;
 }
 
 void DoorTask::init(int period) {
@@ -19,7 +23,9 @@ void DoorTask::tick() {
     {
         case CLOSED:
             if(openPressed) {
-                /* msg = ... */
+                _servo->setPosition(USER_DOOR_OPENED);
+                _msg = MSG_PRESS_CLOSE;
+                _state = OPENED;
             }
             break;
         

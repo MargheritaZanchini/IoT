@@ -1,7 +1,9 @@
 #include "TemperatureTask.h"
 
-TemperatureTask::TemperatureTask(Thermistor& thermistor) {
+TemperatureTask::TemperatureTask(Thermistor& thermistor, String& msg, bool& clear) {
     _thermistor = &thermistor;
+    _msg = &msg;
+    _clear = &clear;
 }
 
 void TemperatureTask::init(int period) {
