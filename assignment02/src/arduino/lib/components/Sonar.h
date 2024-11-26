@@ -2,6 +2,7 @@
 #define __SONAR__
 
 #include "Sensor.h"
+#include "../Constants.h"
 
 /**
  * @brief Sonar Component Helper Class
@@ -37,14 +38,12 @@ public:
         delayMicroseconds(5);
         digitalWrite(_trig, LOW); 
 
-        return (pulseIn(_echo, HIGH) * _vs) / (2.0 * 1000000.0);
+        return (pulseIn(_echo, HIGH) * Constants::Sonar::SOUND_VELOCITY) / (2.0 * 1000000.0);
     }
 
 private:
     int _trig; /** Trigger Signal Pin */
     int _echo; /** Echo Signal Pin */
-    static constexpr float _temperature = 20; /** Temperature for Speed Calculation, @note https://en.wikipedia.org/wiki/Speed_of_sound */
-    static constexpr float _vs = 331.45 + (0.62 * _temperature); /** Current Sound Velocity */
 };
 
 #endif

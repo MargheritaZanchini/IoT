@@ -5,6 +5,7 @@
 #include "../lib/components/Pir.h"
 #include "../lib/components/ServoMotor.h"
 #include "../lib/components/Sonar.h"
+#include "../lib/components/Thermistor.h"
 
 #include "../lib/tasks/UserDetectorTask.h"
 #include "../lib/tasks/WasteDetectorTask.h"
@@ -14,19 +15,9 @@
 #include "../lib/tasks/TemperatureTask.h"
 
 #include "Arduino.h"
-//#include "EnableInterrupt.h"
 
-#define SERVO_PIN 2
-#define PIR_PIN 5
-#define CLOSE_BUTTON_PIN 6
-#define OPEN_BUTTON_PIN 7
-#define OK_LED_PIN 8
-#define ERROR_LED_PIN 9
-#define SONAR_TRIG_PIN 12
-#define SONAR_ECHO_PIN 13
-#define THERMO_PIN A0
-#define LCD_ADDRESS 0x27
-#
+#include "../lib/Constants.h"
+//#include "EnableInterrupt.h"
 
 Scheduler sched;
 
@@ -34,15 +25,15 @@ void setup() {
     Serial.begin(9600);
     sched.init(50);
  
-    Button closeButton(CLOSE_BUTTON_PIN);
-    Button openButton(OPEN_BUTTON_PIN);
-    LCD lcd(LCD_ADDRESS);
-    Led greenLed(OK_LED_PIN);
-    Led redLed(ERROR_LED_PIN);
-    PIR pir(PIR_PIN);
-    ServoMotor servoMotor(SERVO_PIN);
-    Sonar sonar(SONAR_TRIG_PIN, SONAR_ECHO_PIN);
-    Thermistor thermistor(THERMO_PIN);
+    Button closeButton(Constants::Button::Close::PIN);
+    Button openButton(Constants::Button::Open::PIN);
+    LCD lcd(Constants::LCD::ADDRESS);
+    Led greenLed(Constants::LED::OK::PIN);
+    Led redLed(Constants::LED::Error::PIN);
+    PIR pir(Constants::PIR::PIN);
+    ServoMotor servoMotor(Constants::Servo::PIN);
+    Sonar sonar(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
+    Thermistor thermistor(Constants::Thermistor::PIN);
 
     Task* t0 = new UserDetectorTask(pir);
     t0->init(150);
