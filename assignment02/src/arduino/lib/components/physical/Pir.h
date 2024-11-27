@@ -20,7 +20,7 @@ public:
      * @brief Reads Current Motion State
      * @return true if Motion Detected, false Otherwise
      */
-    const bool isUserDetected() {
+    const bool isDetected() {
         return digitalRead(_pin) == HIGH;
     }
 };

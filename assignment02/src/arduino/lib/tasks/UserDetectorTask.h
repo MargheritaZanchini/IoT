@@ -2,7 +2,7 @@
 #define __USER_DETECTOR_TASK__
 
 #include "Task.h"
-#include "../components/PIR.h"
+#include "../components/physical/Pir.h"
 
 class UserDetectorTask : public Task{
 
