@@ -2,19 +2,22 @@
 #define __WASTE_DETECTOR_TASK__
 
 #include "Task.h"
+#include "../components/logical/Display.h"
 #include "../components/logical/WasteDetector.h"
-
-#define MSG_FULL "Container full"
 
 class WasteDetectorTask : public Task {
 public:
-    WasteDetectorTask(WasteDetector& detector);
+    WasteDetectorTask(WasteDetector& detector, Display& lcd);
     void init(int period);
     void tick();
+    bool isFull();
 
 private:
     int _pin;
     WasteDetector* _detector;
+    LCD* _lcd;
+
+    bool _state;
 };
 
 #endif

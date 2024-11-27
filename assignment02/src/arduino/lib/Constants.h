@@ -62,8 +62,8 @@ namespace Constants {
 
     namespace Thermistor {
         constexpr int PIN = A0; /** Pin Number for Thermistor Analog Input */
-        constexpr int MAX_TEMP = 28; 
-        constexpr int MAX_TEMP_TIME = 4000; /**If the thermistor is in MAX_TEMP for MAX_TEMP_TIME there is a problem  */
+        constexpr int MAX_TEMPERATURE = 28; 
+        constexpr int MAX_TEMPERATURE_THRESHOLD = 4000; /**If the thermistor is in MAX_TEMP for MAX_TEMP_TIME there is a problem  */
     }
 
     constexpr unsigned long BAUD_RATE = 9600; /** Baud Rate for Serial Communication */

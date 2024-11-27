@@ -12,9 +12,7 @@ public:
      * @param trig Output pin for Trigger Signal
      * @param echo Input pin for Sonar Echo Signal
      */
-    WasteDetector(int trig, int echo) : Sonar(trig, echo) {
-        // _value = read();
-    }
+    WasteDetector(int trig, int echo) : Sonar(trig, echo) { }
     
     /**
      * @brief Map Value to Range
@@ -34,15 +32,4 @@ public:
     float formatLevel() {
         return mapValue(read())*100.0;
     }
-
-    /**
-     * @brief Check if Container is Full
-     * @return if Waste Level >= Alarm Threshold @see{Constants::Sonar::ALARM_THRESHOLD}
-     */
-    bool isFull() {
-        return (read() >= Constants::Sonar::ALARM_THRESHOLD);
-    }
-
-// private:
-//     float _value;
 };

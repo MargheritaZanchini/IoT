@@ -51,19 +51,24 @@ void setup() {
     // OK
     Task* t0 = new UserDetectorTask(pir);
     t0->init(400);
+ 
+    /*
+        Task* t1 = new UserDisplayTask(lcd, wasteDetector, temperatureDetector, door);
+    */
 
-
-    Task* t2 = new WasteDetectorTask(wasteDetector);
+    // NEEDS LCD
+    Task* t2 = new WasteDetectorTask(wasteDetector, lcd);
     t2->init(500);
 
-    Task* t3 = new TemperatureTask(thermistor, t1->msg, t1->clear);
+    // NEEDS LCD
+    Task* t3 = new TemperatureTask(temperatureDetector);
     t3->init(500);
 
-    // DoorTask* t4 = new DoorTask(servoMotor, closeButton, openButton, ((WasteDetectorTask*) t2)->full, ((TemperatureTask*) t3)->alarm);
-    Task* t4 = new DoorTask(servoMotor, closeButton, openButton, t2->full, t3->alarm, t1->msg, t1->time);
+    // NEEDS LCD
+    Task* t4 = new DoorTask(door, closeButton, openButton);
     t4->init(100);
 
-    Task* t5 = new LedsTask(greenLed, redLed, t2->full, t3->alarm);
+    Task* t5 = new LedsTask(greenLed, redLed);
     t5->init(100);
 
     

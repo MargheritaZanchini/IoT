@@ -8,6 +8,7 @@
  */
 class Display : public LCD {
 public:
+    bool alreadyPrinted;
     /**
      * @brief Creates new display
      * @param address I2C bus address
@@ -24,4 +25,6 @@ public:
         clear();
         print("Press Open to Enter Waste", 0, 0);
     } 
+
+// private:
 };

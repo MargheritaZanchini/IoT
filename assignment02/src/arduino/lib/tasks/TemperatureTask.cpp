@@ -1,9 +1,7 @@
 #include "TemperatureTask.h"
 
-TemperatureTask::TemperatureTask(TemperatureDetector& temperatureDetector, String& msg, bool& clear) {
+TemperatureTask::TemperatureTask(TemperatureDetector& temperatureDetector) {
     this->_temperatureDetector = &temperatureDetector;
-    _msg = &msg;
-    _clear = &clear;
 }
 
 void TemperatureTask::init(int period) {
@@ -18,21 +16,20 @@ void TemperatureTask::tick() {
     {
         case NORMAL:
             Serial.println("NORMAL");
-            if(_temperatureDetector->read() >= MAX_TEMP) {
+            if(_temperatureDetector->read() >= Constants::Thermistor::MAX_TEMPERATURE) {
                 _state = HIGH_TEMP;
             }
             break;
         case HIGH_TEMP:
-        Serial.println("HITGH");
-            if(_temperatureDetector->read() < MAX_TEMP) {
+        Serial.println("HIGH");
+            if(_temperatureDetector->read() < Constants::Thermistor::MAX_TEMPERATURE) {
                 _lastDetectedTime = 0;
                 _state = NORMAL;
             }
             if(_lastDetectedTime == 0){ 
                 _lastDetectedTime = millis();
-            }else if(millis() - _lastDetectedTime > MAX_TEMP_TIME){
+            }else if(millis() - _lastDetectedTime > Constants::Thermistor::MAX_TEMPERATURE_THRESHOLD){
                 _temperatureDetector->setAlarm(true);
-                *_msg = MSG_PROBLEM;
                 _state = PROBLEM_DETECTED;
             }
             break;
