@@ -2,7 +2,7 @@
 #define __LEDS_TASK__
 
 #include "Task.h"
-#include "../components/Led.h"
+#include "../components/physical/Led.h"
 
 class LedsTask: public Task {
 public:

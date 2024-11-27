@@ -2,7 +2,7 @@
 #define __USER_SCREEN_TASK__
 
 #include "Task.h"
-#include "../components/LCD.h"
+#include "../components/physical/LCD.h"
 
 //#define DEFAULT_MSG "Press Open to enter waste"
 
@@ -11,11 +11,11 @@ public:
     UserScreenTask(LCD& lcd);  
     void init(int period);  
     void tick();
+
+private:
     String msg;
     long time;
     bool clear;
-
-private:
     int _pin;
     enum State { PRINT_DEFAULT, PRINT};
     State _state;
