@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../physical/Sonar.h"
 
 /**

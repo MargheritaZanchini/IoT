@@ -1,5 +1,4 @@
-#ifndef __DOOR_TASK__
-#define __DOOR_TASK__
+#pragma once
 
 #include "Task.h"
 #include "../components/logical/Door.h"
@@ -22,5 +21,3 @@ private:
   String MSG_PRESS_CLOSE = "Press Close When Done";
   String MSG_WASTE_RECEIVED = "Waste Received";
 };
-
-#endif

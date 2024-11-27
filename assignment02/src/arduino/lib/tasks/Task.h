@@ -1,5 +1,4 @@
-#ifndef __TASK__
-#define __TASK__
+#pragma once
 
 class Task {
 int myPeriod;
@@ -24,5 +23,3 @@ public:
         }
     }
 };
-
-#endif

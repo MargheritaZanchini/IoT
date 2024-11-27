@@ -1,8 +1,8 @@
 #include "WasteDetectorTask.h"
 
-WasteDetectorTask::WasteDetectorTask(WasteDetector& detector, Display& lcd) {
+WasteDetectorTask::WasteDetectorTask(WasteDetector& detector) {
     _detector = &detector;
-    _lcd = &lcd;
+    //_lcd = &lcd;
 
     _state = false;
 }
@@ -15,10 +15,10 @@ void WasteDetectorTask::tick() {
     bool state = isFull(); /** @brief true = Full, false = Not Full */
 
     if(state) {
-        _lcd->print("Waste Full", 0, 0);
+        //_lcd->print("Waste Full", 0, 0);
     }
     else {
-        _lcd->clear();
+        //_lcd->clear();
     }
 }
 

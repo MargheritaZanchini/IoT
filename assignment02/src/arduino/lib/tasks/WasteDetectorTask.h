@@ -1,5 +1,4 @@
-#ifndef __WASTE_DETECTOR_TASK__
-#define __WASTE_DETECTOR_TASK__
+#pragma once
 
 #include "Task.h"
 #include "../components/logical/Display.h"
@@ -7,7 +6,7 @@
 
 class WasteDetectorTask : public Task {
 public:
-    WasteDetectorTask(WasteDetector& detector, Display& lcd);
+    WasteDetectorTask(WasteDetector& detector);
     void init(int period);
     void tick();
     bool isFull();
@@ -15,9 +14,6 @@ public:
 private:
     int _pin;
     WasteDetector* _detector;
-    LCD* _lcd;
 
     bool _state;
 };
-
-#endif

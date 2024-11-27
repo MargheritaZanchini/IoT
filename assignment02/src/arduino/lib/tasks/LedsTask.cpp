@@ -1,24 +1,22 @@
 #include "LedsTask.h"
 
-LedsTask::LedsTask(Led& L1, Led& L2, bool& full, bool& alarm) {
-    _L1 = &L1;
-    _L2 = &L2;
-    _full = &full;
-    _alarm = &alarm;
+LedsTask::LedsTask(Led& ok, Led& error) {
+    _ok = &ok;
+    _error = &error;
 }
 
 void LedsTask::init(int period) {
     Task::init(period);
-    _state = L1_ON;
+    _state = OK_ON;
 }
 
 void LedsTask::tick() {
     switch (_state)
     {
-        case L1_ON:
+        case OK_ON:
             /* code */
             break;
-        case L2_ON:
+        case ERROR_ON:
             /* code */
             break;
     }

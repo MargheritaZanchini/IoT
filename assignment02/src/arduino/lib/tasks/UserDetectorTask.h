@@ -1,5 +1,4 @@
-#ifndef __USER_DETECTOR_TASK__
-#define __USER_DETECTOR_TASK__
+#pragma once
 
 #include "Task.h"
 #include "../components/physical/Pir.h"
@@ -19,6 +18,3 @@ private:
     State _state;
     PIR* _pir;
 };
-
-
-#endif

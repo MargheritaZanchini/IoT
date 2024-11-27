@@ -1,5 +1,4 @@
-#ifndef __TEMPERATURE_DETECTOR__
-#define __TEMPERATURE_DETECTOR__
+#pragma once
 
 #include "../physical/Thermistor.h"
 
@@ -39,5 +38,3 @@ public:
 private:
     bool _alarm;
 };
-
-#endif

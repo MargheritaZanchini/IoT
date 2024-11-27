@@ -1,5 +1,4 @@
-#ifndef __TEMPERATURE_TASK__
-#define __TEMPERATURE_TASK__
+#pragma once
 
 #include "Task.h"
 #include "../components/logical/TemperatureDetector.h"
@@ -18,5 +17,3 @@ private:
     TemperatureDetector* _temperatureDetector;
     unsigned long _lastDetectedTime;
 };
-
-#endif

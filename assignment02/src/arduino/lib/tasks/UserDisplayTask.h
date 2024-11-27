@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Task.h"
 #include "../components/logical/Display.h"
 #include "../components/logical/WasteDetector.h"
@@ -6,12 +8,12 @@
 
 class UserDisplayTask : public Task {
 public:
-    UserDisplayTask(Display& lcd, WasteDetector& wasteDetector, TemperatureDetector& temperatureDetector, Door& door);
+    UserDisplayTask(Display& display, WasteDetector& wasteDetector, TemperatureDetector& temperatureDetector, Door& door);
     void init(int period);
     void tick();
 
 private:
-    Display* _lcd;
+    Display* _display;
     WasteDetector* _wasteDetector;
     TemperatureDetector* _temperatureDetector;
     Door* _door;

@@ -1,5 +1,4 @@
-#ifndef __DOOR_H__
-#define __DOOR_H__
+#pragma once
 
 #include "../physical/ServoMotor.h"
 #include "arduino/lib/Constants.h"
@@ -25,5 +24,3 @@ public:
 private:
     int _angle;
 };
-
-#endif

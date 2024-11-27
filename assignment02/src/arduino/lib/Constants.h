@@ -1,5 +1,6 @@
-#ifndef __ASSIGNMENT_02_CONSTANTS__
-#define __ASSIGNMENT_02_CONSTANTS__
+#pragma once
+
+#include <Arduino.h>
 
 /**
  * @brief Constants Namespace
@@ -68,5 +69,3 @@ namespace Constants {
 
     constexpr unsigned long BAUD_RATE = 9600; /** Baud Rate for Serial Communication */
 }
-
-#endif
