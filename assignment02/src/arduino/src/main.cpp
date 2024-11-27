@@ -27,7 +27,7 @@ void wakeUp(){
 
 void setup() {
     Serial.begin(Constants::BAUD_RATE);
-    sched.init(50);
+    sched.init(100);
  
     Button closeButton(Constants::Button::Close::PIN);
     Button openButton(Constants::Button::Open::PIN);
@@ -50,10 +50,10 @@ void setup() {
     Serial.println("Interrupt attaccato");
 
     UserDetectorTask* t0 = new UserDetectorTask(pir);
-    t0->init(150);
+    t0->init(400);
 
     UserScreenTask* t1 = new UserScreenTask(lcd);
-    t1->init(500);
+    t1->init(300);
 
     WasteDetectorTask* t2 = new WasteDetectorTask(sonar, t1->msg, t1->clear);
     t2->init(500);
@@ -63,11 +63,12 @@ void setup() {
 
     // DoorTask* t4 = new DoorTask(servoMotor, closeButton, openButton, ((WasteDetectorTask*) t2)->full, ((TemperatureTask*) t3)->alarm);
     DoorTask* t4 = new DoorTask(servoMotor, closeButton, openButton, t2->full, t3->alarm, t1->msg, t1->time);
-    t4->init(500);
+    t4->init(100);
 
     LedsTask* t5 = new LedsTask(greenLed, redLed, t2->full, t3->alarm);
-    t5->init(500);
+    t5->init(100);
 
+    
     sched.addTask(t0);
     sched.addTask(t1);
     sched.addTask(t2);

@@ -6,17 +6,17 @@
 #include "../components/ServoMotor.h"
 #include "../components/Button.h"
 
-#define MSG_PRESS_CLOSE "Press Close When Done"
-#define MSG_WASTE_RECEIVED "Waste Received"
+// #define MSG_PRESS_CLOSE "Press Close When Done"
+// #define MSG_WASTE_RECEIVED "Waste Received"
 #define DELTA_T2 3000
 
-#define USER_DOOR_OPENED 90
-#define OPERATOR_DOOR_OPENED -90
-#define USER_DOOR_CLOSED 0
+#define USER_DOOR_OPENED 180 //90°
+#define OPERATOR_DOOR_OPENED 0 //-90° 
+#define USER_DOOR_CLOSED 90 //0°
 
 class DoorTask : public Task {   
 public:
-  DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton, bool& full, bool& alarm, String msg, long& time);
+  DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton, bool& full, bool& alarm, String& msg, long& time);
   void init(int period);
   void tick();
 
@@ -28,8 +28,11 @@ private:
   Button* _openButton;
   bool* _full;
   bool* _alarm;
-  String _msg;
+  String* _msg;
   long* _time;
+
+  String MSG_PRESS_CLOSE = "Press Close When Done";
+  String MSG_WASTE_RECEIVED = "Waste Received";
 };
 
 #endif

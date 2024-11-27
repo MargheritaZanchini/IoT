@@ -5,10 +5,10 @@
 #include "UserScreenTask.h"
 #include "../components/Thermistor.h"
 
-#define MSG_PROBLEM "Problem detected"
+//#define MSG_PROBLEM "Problem detected"
 
-#define MAX_TEMP
-#define MAX_TEMP_TIME
+#define MAX_TEMP 28
+#define MAX_TEMP_TIME 4000
 
 class TemperatureTask : public Task {
 public:
@@ -24,6 +24,9 @@ private:
     Thermistor* _thermistor;
     String* _msg;
     bool* _clear;
+    unsigned long _lastDetectedTime;
+
+    String MSG_PROBLEM = "Problem detected";
 };
 
 #endif

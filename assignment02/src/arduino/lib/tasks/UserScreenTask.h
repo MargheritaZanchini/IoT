@@ -4,7 +4,7 @@
 #include "Task.h"
 #include "../components/LCD.h"
 
-#define DEFAULT_MSG "Press Open to enter waste"
+//#define DEFAULT_MSG "Press Open to enter waste"
 
 class UserScreenTask: public Task {
 public:
@@ -20,6 +20,7 @@ private:
     enum State { PRINT_DEFAULT, PRINT};
     State _state;
     LCD* _lcd;
+    String DEFAULT_MSG = "Press Open to enter waste";
 };
 
 #endif
