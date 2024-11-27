@@ -1,13 +1,10 @@
 #include "DoorTask.h"
+#include "../Constants.h"
 
-DoorTask::DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton, bool& full, bool& alarm, String& msg, long& time) {
-    _servo = &servo;
+DoorTask::DoorTask(Door& door, Button& closeButton, Button& openButton) {
+    _door = &door;
     _closeButton = &closeButton;
     _openButton = &openButton;
-    _full = &full;
-    _alarm = &alarm;
-    _msg = &msg;
-    _time = &time;
 }
 
 void DoorTask::init(int period) {
@@ -23,10 +20,8 @@ void DoorTask::tick() {
     {
         case CLOSED:
             if(openPressed) {
-                _servo->on();
-                _servo->setPosition(USER_DOOR_OPENED);
-                //_servo->off();
-                *_msg = MSG_PRESS_CLOSE;
+                _door->setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
+
                 _state = OPENED;
                 Serial.println("Closed->Open");
             }
@@ -34,10 +29,7 @@ void DoorTask::tick() {
         
         case OPENED:
             if(closePressed) {
-                //_servo->on();
-                _servo->setPosition(USER_DOOR_CLOSED);
-                //_servo->off();
-                *_msg = MSG_WASTE_RECEIVED;
+                _door->setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
                 _state = CLOSED;
                 Serial.println("Open->Closed");
             }

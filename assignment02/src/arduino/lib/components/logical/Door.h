@@ -2,27 +2,28 @@
 #define __DOOR_H__
 
 #include "../physical/ServoMotor.h"
+#include "arduino/lib/Constants.h"
 
-/**
- * @brief PIR Component Helper Class
- * @implements Sensor
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
- */
-class PIR : public Sensor {
+class Door : public ServoMotor {
 public:
-    /**
-     * @brief Creates New PIR Instance
-     * @param pin Input Pin for the PIR Sensor
-     */
-    PIR(int pin) : Sensor(pin) { }
 
-    /**
-     * @brief Reads Current Motion State
-     * @return true if Motion Detected, false Otherwise
-     */
-    const bool isUserDetected() {
-        return digitalRead(_pin) == HIGH;
+    Door(int pin) : ServoMotor(pin) {
+        setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
     }
+
+    void setDoorPosition(int angle) {
+        _angle = angle;
+        on();
+        setPosition(_angle);
+        off();
+    }
+
+    int getDoorPosition() {
+        return _angle;
+    }
+
+private:
+    int _angle;
 };
 
 #endif

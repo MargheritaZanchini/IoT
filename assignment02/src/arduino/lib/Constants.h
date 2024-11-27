@@ -40,6 +40,10 @@ namespace Constants {
 
     namespace Servo {
         constexpr int PIN = 2; /** Pin Number for Servo Motor Control Signal */
+        constexpr int USER_DOOR_OPENED = 180; //90°
+        constexpr int USER_DOOR_CLOSED =90; //0°
+        constexpr int OPERATOR_DOOR_OPENED = 0; //-90° 
+        constexpr unsigned long DELTA_T2 = 3000;
     }
 
     namespace Sonar {

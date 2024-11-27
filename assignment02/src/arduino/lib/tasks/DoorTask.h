@@ -2,34 +2,22 @@
 #define __DOOR_TASK__
 
 #include "Task.h"
-
-#include "../components/ServoMotor.h"
-#include "../components/Button.h"
-
-// #define MSG_PRESS_CLOSE "Press Close When Done"
-// #define MSG_WASTE_RECEIVED "Waste Received"
-#define DELTA_T2 3000
-
-#define USER_DOOR_OPENED 180 //90°
-#define OPERATOR_DOOR_OPENED 0 //-90° 
-#define USER_DOOR_CLOSED 90 //0°
+#include "../components/logical/Door.h"
+#include "../components/physical/Button.h"
+#include "../Constants.h"
 
 class DoorTask : public Task {   
 public:
-  DoorTask(ServoMotor& servo, Button& closeButton, Button& openButton, bool& full, bool& alarm, String& msg, long& time);
+  DoorTask(Door& door, Button& closeButton, Button& openButton);
   void init(int period);
   void tick();
 
 private:
   enum State { CLOSED, OPENED, OPERATOR_OPENED };
   State _state;
-  ServoMotor* _servo;
+  Door* _door;
   Button* _closeButton;
   Button* _openButton;
-  bool* _full;
-  bool* _alarm;
-  String* _msg;
-  long* _time;
 
   String MSG_PRESS_CLOSE = "Press Close When Done";
   String MSG_WASTE_RECEIVED = "Waste Received";
