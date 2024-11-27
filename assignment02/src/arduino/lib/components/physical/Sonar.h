@@ -2,11 +2,11 @@
 #define __SONAR__
 
 #include "Sensor.h"
-#include "../Constants.h"
+#include "../../Constants.h"
 
 /**
  * @brief Sonar Component Helper Class
- * @implements Sensor
+ * @implements{Sensor}
  * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
  */
 class Sonar : public Sensor {
@@ -29,7 +29,7 @@ public:
      * Dividing by 1000000 to Convert to Seconds and
      * Dividing by 2 because the Sound Travels Back and Forth.
      * 
-     * @return [float] Distance in Meters.
+     * @return Distance in Meters.
      */
     float read() override {
         digitalWrite(_trig, LOW);
