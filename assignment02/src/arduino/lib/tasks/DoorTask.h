@@ -17,7 +17,4 @@ private:
   Door* _door;
   Button* _closeButton;
   Button* _openButton;
-
-  String MSG_PRESS_CLOSE = "Press Close When Done";
-  String MSG_WASTE_RECEIVED = "Waste Received";
 };

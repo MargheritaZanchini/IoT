@@ -47,9 +47,9 @@ namespace Constants {
 
     namespace Servo {
         constexpr int PIN = 2; /** Pin Number for Servo Motor Control Signal */
-        constexpr int USER_DOOR_OPENED = 180; //90°
-        constexpr int USER_DOOR_CLOSED =90; //0°
-        constexpr int OPERATOR_DOOR_OPENED = 0; //-90° 
+        constexpr int USER_DOOR_OPENED = 750; //0°
+        constexpr int USER_DOOR_CLOSED = 1500; //90°
+        constexpr int OPERATOR_DOOR_OPENED = 2250; //180° 
         constexpr unsigned long CLOSING_MESSAGE_TIME = 3000;
     }
 
