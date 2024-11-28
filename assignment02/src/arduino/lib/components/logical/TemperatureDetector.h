@@ -14,6 +14,14 @@ public:
      */
     TemperatureDetector(int pin) : Thermistor(pin) { }
 
+    /*float mapValue(float value = -1) {
+        if (value == -1) value = read();
+        
+        if(value >= 30) return 1.0;
+        if(value <= 20) return 0.0;
+        return ((30-value) / (30-20));
+    }*/
+
     /**
      * @brief Read the Temperature from the Thermistor. 
      * 

@@ -14,7 +14,7 @@ void UserDisplayTask::init(int period) {
 }
 
 void UserDisplayTask::tick() {
-    Serial.println("[WasteLevel] " + (String) _wasteDetector->read());
+    Serial.println("[WasteLevel] " + (String) _wasteDetector->mapValue());
     Serial.println("[Temperature] " + (String) _temperatureDetector->read());
 
     switch (_state) {

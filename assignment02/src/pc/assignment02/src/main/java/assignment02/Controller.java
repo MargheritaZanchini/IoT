@@ -66,7 +66,7 @@ public class Controller {
     }
     
     public void setWasteLevel(double level) {
-        wasteValue.set(level / 100);
+        wasteValue.set(level);
     }
     
     public void setTemperature(double temp) {

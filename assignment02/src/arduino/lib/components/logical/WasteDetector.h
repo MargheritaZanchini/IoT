@@ -21,7 +21,9 @@ public:
      * @param value Value to Map
      * @return Mapped Value (0.00 - 1.00) Representing Fill Level
      */
-    float mapValue(float value) {
+    float mapValue(float value = -1) {
+        if (value == -1) value = read();
+        
         if(value >= Constants::Sonar::EMPTY_DISTANCE) return 0.0;
         if(value <= Constants::Sonar::FULL_DISTANCE) return 1.0;
         return ((Constants::Sonar::EMPTY_DISTANCE-value) / (Constants::Sonar::EMPTY_DISTANCE-Constants::Sonar::FULL_DISTANCE));
