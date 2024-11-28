@@ -18,6 +18,11 @@ private:
     TemperatureDetector* _temperatureDetector;
     Door* _door;
 
-    enum State { OK, DISPLAY_WASTE, DISPLAY_TEMPERATURE, DISPLAY_DOOR_STATUS };
+    unsigned long _lastDetectedTime;
+
+    enum State { OK, DISPLAY_WASTE, DISPLAY_TEMPERATURE, DISPLAY_DOOR_OPEN, DISPLAY_ON_DOOR_CLOSED };
     State _state;
+
+    void updateGUI();
+    void updateLCD();
 };

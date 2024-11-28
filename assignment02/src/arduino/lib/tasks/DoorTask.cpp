@@ -16,14 +16,12 @@ void DoorTask::tick() {
     bool closePressed = _closeButton->isPressed();
     bool openPressed = _openButton->isPressed();
 
-    switch (_state)
-    {
+    switch (_state) {
         case CLOSED:
             if(openPressed) {
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
 
                 _state = OPENED;
-                Serial.println("Closed->Open");
             }
             break;
         
@@ -31,7 +29,6 @@ void DoorTask::tick() {
             if(closePressed) {
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
                 _state = CLOSED;
-                Serial.println("Open->Closed");
             }
             break;
             

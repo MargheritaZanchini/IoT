@@ -12,15 +12,9 @@ public:
      * @brief Creates New Temperature Detector Instance
      * @param pin Analog Input for Thermistor
      */
-    TemperatureDetector(int pin) : Thermistor(pin) { }
-
-    /*float mapValue(float value = -1) {
-        if (value == -1) value = read();
-        
-        if(value >= 30) return 1.0;
-        if(value <= 20) return 0.0;
-        return ((30-value) / (30-20));
-    }*/
+    TemperatureDetector(int pin) : Thermistor(pin) {
+        _highTemperatureAlarm = false;
+    }
 
     /**
      * @brief Read the Temperature from the Thermistor. 
@@ -35,14 +29,22 @@ public:
         return temperature;
     }
 
-    bool getAlarm(){
-        return _alarm;
+    /**
+     * @brief Check if the temperature is overheated
+     * @return if the temperature is overheated
+     */
+    bool getTemperatureAlarm() {
+        return _highTemperatureAlarm;
     }
 
-    void setAlarm(bool alarm){
-        this-> _alarm = alarm;
+    /**
+     * @brief Set the alarm for the temperature
+     * @param alarm if the alarm is set
+     */
+    void setTemperatureAlarm(bool alarm) {
+        _highTemperatureAlarm = alarm;
     }
 
 private:
-    bool _alarm;
+    bool _highTemperatureAlarm;
 };

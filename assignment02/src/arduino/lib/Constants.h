@@ -23,6 +23,12 @@ namespace Constants {
         constexpr int ADDRESS = 0x27; /** Address of I2C LCD Display */
         constexpr int COLUMNS = 20; /** Number of Character Columns on LCD Display */
         constexpr int ROWS = 20; /** Number of Character Rows on LCD Display */
+
+        const String MSG_DEFAULT = "Press Open to Enter Waste"; /** Press Open to Enter Waste */
+        const String MSG_DOOR_OPEN = "Press Close When Done"; /** Press Close When Done */
+        const String MSG_DOOR_CLOSE = "Waste Received"; /** Waste Received */
+        const String MSG_CONTAINER_FULL = "Container Full"; /** Container Full */
+        const String MSG_TEMPERATURE_ALARM = "Problem Detected!"; /** Problem Detected! */
     }
 
     namespace LED {
@@ -44,7 +50,7 @@ namespace Constants {
         constexpr int USER_DOOR_OPENED = 180; //90°
         constexpr int USER_DOOR_CLOSED =90; //0°
         constexpr int OPERATOR_DOOR_OPENED = 0; //-90° 
-        constexpr unsigned long DELTA_T2 = 3000;
+        constexpr unsigned long CLOSING_MESSAGE_TIME = 3000;
     }
 
     namespace Sonar {
@@ -58,13 +64,13 @@ namespace Constants {
         constexpr float SOUND_VELOCITY = 331.45 + (0.62 * TEMPERATURE); /** Current Sound Velocity */
         constexpr float EMPTY_DISTANCE = 1.0; /** Empty Distance (in Meters) */
         constexpr float FULL_DISTANCE = 0.0; /** Full Distance (in Meters) */
-        constexpr float ALARM_THRESHOLD = 0.75*FULL_DISTANCE; /** Alarm Threshold (75% Full) */
+        constexpr float FULL_THRESHOLD = 0.25*EMPTY_DISTANCE; /** Alarm Threshold (75% Full) */
     }
 
     namespace Thermistor {
         constexpr int PIN = A0; /** Pin Number for Thermistor Analog Input */
         constexpr int MAX_TEMPERATURE = 28; 
-        constexpr int MAX_TEMPERATURE_THRESHOLD = 4000; /**If the thermistor is in MAX_TEMP for MAX_TEMP_TIME there is a problem  */
+        constexpr int MAX_TEMPERATURE_TIME = 4000; /**If the thermistor is in MAX_TEMP for MAX_TEMP_TIME there is a problem  */
     }
 
     constexpr unsigned long BAUD_RATE = 9600; /** Baud Rate for Serial Communication */

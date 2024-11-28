@@ -6,7 +6,7 @@ TemperatureTask::TemperatureTask(TemperatureDetector& temperatureDetector) {
 
 void TemperatureTask::init(int period) {
     Task::init(period);
-    _temperatureDetector->setAlarm(false);
+    _temperatureDetector->setTemperatureAlarm(false);
     _state = NORMAL;
     _lastDetectedTime = 0;
 }
@@ -28,8 +28,8 @@ void TemperatureTask::tick() {
             }
             if(_lastDetectedTime == 0){ 
                 _lastDetectedTime = millis();
-            }else if(millis() - _lastDetectedTime > Constants::Thermistor::MAX_TEMPERATURE_THRESHOLD){
-                _temperatureDetector->setAlarm(true);
+            }else if(millis() - _lastDetectedTime > Constants::Thermistor::MAX_TEMPERATURE_TIME){
+                _temperatureDetector->setTemperatureAlarm(true);
                 _state = PROBLEM_DETECTED;
             }
             break;

@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jssc.SerialPortList;
 
 import java.io.IOException;
 import java.util.function.Function;
@@ -27,7 +26,6 @@ public class Launcher extends Application {
     private Scene scene;
 
     private Controller controller;
-    private SerialCommChannel serialCommChannel;
 
     @Override
     public void start(final Stage primaryStage) {
@@ -48,31 +46,12 @@ public class Launcher extends Application {
         primaryStage.setOnCloseRequest((closeRequest) -> CLOSE_FUNCTION.apply(0));
     
         try {
-            String portName = findCorrectPort();
-            if (portName != null) {
-                serialCommChannel = new SerialCommChannel("COM8", 9600, controller); //new SerialCommChannel(portName, 9600, controller);
-            } else {
-                System.err.println("No suitable COM port found.");
-            }
+            new SerialCommChannel("COM8", 9600, controller);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error: " + e.getMessage());
+            CLOSE_FUNCTION.apply(-1);
         }
 
         primaryStage.show();
-    }
-
-    private String findCorrectPort() {
-        String[] portNames = SerialPortList.getPortNames();
-        for (String portName : portNames) {
-            try {
-                SerialCommChannel testChannel = new SerialCommChannel(portName, 9600, controller);
-                // If we reach here, the port is correct
-                testChannel.close();
-                return portName;
-            } catch (Exception e) {
-                // Ignore and try next port
-            }
-        }
-        return null; // No suitable port found
     }
 }

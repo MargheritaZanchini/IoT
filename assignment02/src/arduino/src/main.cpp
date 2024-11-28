@@ -55,18 +55,18 @@ void setup() {
     Task* doorManager = new DoorTask(door, closeButton, openButton);
     doorManager->init(100);
 
+    // Task* ledManager = new LedsTask(okIndicator, errorIndicator);
+    // ledManager->init(100);
+
     Task* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
     userDisplay->init(500);
-
-    Task* ledManager = new LedsTask(okIndicator, errorIndicator);
-    ledManager->init(100);
 
     scheduler.addTask(userDetecion);
     scheduler.addTask(wasteDetection);
     scheduler.addTask(temperatureDetection);
     scheduler.addTask(doorManager);
+    // scheduler.addTask(ledManager);
     scheduler.addTask(userDisplay);
-    scheduler.addTask(ledManager);
 }
 
 void loop() {

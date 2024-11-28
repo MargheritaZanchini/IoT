@@ -1,5 +1,4 @@
-#ifndef __SCHEDULER__
-#define __SCHEDULER__
+#pragma once
 
 #include "tasks/Task.h"
 
@@ -16,5 +15,3 @@ public:
   virtual bool addTask(Task* task);  
   virtual void schedule();
 };
-
-#endif

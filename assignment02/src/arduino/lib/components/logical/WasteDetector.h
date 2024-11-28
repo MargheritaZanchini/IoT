@@ -36,4 +36,23 @@ public:
     float formatLevel() {
         return mapValue(read())*100.0;
     }
+
+    /**
+     * @brief Check if Container is Full
+     * @return if Waste Level >= Alarm Threshold @see{Constants::Sonar::ALARM_THRESHOLD}
+     */
+    bool getFullnessAlarm() {
+        return _isFullAlarm;
+    }
+
+    /**
+     * @brief Set Container Fullness
+     * @param _isFullAlarm if Container is Full
+     */
+    void setFullnessAlarm(bool isFull) {
+        _isFullAlarm = isFull;
+    }
+
+private:
+    bool _isFullAlarm;
 };

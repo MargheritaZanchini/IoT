@@ -18,6 +18,7 @@ void LCD::clear() {
 }
 
 void LCD::print(const String& text, int row, int col) {
+    _lcd.clear();
     _lcd.setCursor(col, row);
     _lcd.print(text);
 }

@@ -7,7 +7,7 @@ class Door : public ServoMotor {
 public:
 
     Door(int pin) : ServoMotor(pin) {
-        setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
+        setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
     }
 
     void setDoorPosition(int angle) {
@@ -19,6 +19,14 @@ public:
 
     int getDoorPosition() {
         return _angle;
+    }
+
+    bool isOpen() {
+        return (_angle == Constants::Servo::USER_DOOR_OPENED);
+    }
+
+    bool isOperatorOpen() {
+        return (_angle == Constants::Servo::OPERATOR_DOOR_OPENED);
     }
 
 private:

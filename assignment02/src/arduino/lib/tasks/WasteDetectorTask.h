@@ -9,11 +9,9 @@ public:
     WasteDetectorTask(WasteDetector& detector);
     void init(int period);
     void tick();
-    bool isFull();
+    bool checkFullness();
 
 private:
     int _pin;
     WasteDetector* _detector;
-
-    bool _state;
 };

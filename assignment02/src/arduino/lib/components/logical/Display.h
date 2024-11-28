@@ -24,6 +24,6 @@ public:
      */
     void printDefaultMessage() {
         clear();
-        print("Press Open to Enter Waste", 0, 0);
+        print(Constants::LCD::MSG_DEFAULT, 0, 0);
     } 
 };
