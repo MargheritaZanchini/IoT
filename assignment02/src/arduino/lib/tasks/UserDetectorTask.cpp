@@ -18,7 +18,7 @@ void UserDetectorTask::init(int period){
 void UserDetectorTask::tick(){
     switch (_state){
     case NOT_DETECTED:
-        //_userDetected = _pir->isUserDetected();
+        _userDetected = _pir->isDetected();
         if(_userDetected){ //se rileva un utente cambia stato
             _state = DETECTED; 
         }else{  //se nessun utente viene rilevato si controlla da quanto tempo siamo nello stato NOT_DETECTED
@@ -32,7 +32,7 @@ void UserDetectorTask::tick(){
         break;
     
     case DETECTED:
-        //_userDetected = _pir->isUserDetected();
+        _userDetected = _pir->isDetected();
         _lastDetectedTime = 0;
         if(!_userDetected){
             _state = NOT_DETECTED; 

@@ -8,7 +8,6 @@ UserDisplayTask::UserDisplayTask(Display& display, WasteDetector& wasteDetector,
     _wasteDetector = &wasteDetector;
     _temperatureDetector = &temperatureDetector;
     _door = &door;
-
     _state = OK;
 }
 
@@ -17,35 +16,39 @@ void UserDisplayTask::init(int period) {
 }
 
 void UserDisplayTask::tick() {
+    bool isFull = _wasteDetector->getFullnessAlarm();
+    bool isInAlarm = _temperatureDetector->getTemperatureAlarm();
+    bool isOpen = _door->isOpen();
     switch (_state) {
         case OK:
             _display->print(Constants::LCD::MSG_DEFAULT);
 
-            if (_wasteDetector->getFullnessAlarm()) _state = DISPLAY_WASTE;
-            else if (_temperatureDetector->getTemperatureAlarm()) _state = DISPLAY_TEMPERATURE;
-            else if (_door->isOpen()) _state = DISPLAY_DOOR_OPEN;
+            if (isFull) _state = DISPLAY_WASTE;
+            else if (isInAlarm) _state = DISPLAY_TEMPERATURE;
+            else if (isOpen) _state = DISPLAY_DOOR_OPEN;
             break;
 
         case DISPLAY_WASTE:
             _display->print(Constants::LCD::MSG_CONTAINER_FULL);
 
-            if(!_wasteDetector->getFullnessAlarm()) _state = OK;
+            if(!isFull) _state = OK;
             break;
 
         case DISPLAY_TEMPERATURE:
             _display->print(Constants::LCD::MSG_TEMPERATURE_ALARM);
 
-            if(!_temperatureDetector->getTemperatureAlarm()) _state = OK;
+            if(!isInAlarm) _state = OK;
             break;
 
         case DISPLAY_DOOR_OPEN:
             _display->print(Constants::LCD::MSG_DOOR_OPEN);
             
-            if(!_door->isOpen()) {
+            if(!isOpen) {
                 _state = DISPLAY_ON_DOOR_CLOSED;
                 _lastDetectedTime = 0;
             }
             break;
+            
         case DISPLAY_ON_DOOR_CLOSED:
             _display->print(Constants::LCD::MSG_DOOR_CLOSE);
             

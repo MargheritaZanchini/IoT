@@ -26,7 +26,7 @@ void wakeUp(){ }
 
 void setup() {
     Serial.begin(Constants::BAUD_RATE);
-    scheduler.init(100);
+    scheduler.init(250);
 
     Button closeButton(Constants::Button::Close::PIN);
     Button openButton(Constants::Button::Open::PIN);
@@ -38,36 +38,32 @@ void setup() {
     WasteDetector wasteDetector(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
     TemperatureDetector temperatureDetector(Constants::Thermistor::PIN);
 
-    // Serial.println("Calibrating...");
-    // delay(Constants::PIR::CALIBRATION_TIME);
-    // Serial.println("prima di attaccare l'interrupt");
-    // enableInterrupt(Constants::PIR::PIN, wakeUp, RISING); // Link the Interrupt to the wakeUp() Function
-    // Serial.println("Interrupt attaccato");
+    enableInterrupt(Constants::PIR::PIN, wakeUp, RISING);
 
-    // Task* userDetecion = new UserDetectorTask(pir);
-    // userDetecion->init(100);
- 
-    Task* wasteDetection = new WasteDetectorTask(wasteDetector);
-    wasteDetection->init(1000);
+    Task* doorManager = new DoorTask(door, closeButton, openButton, temperatureDetector, wasteDetector);
+    doorManager->init(500);
+
+    Task* userDetecion = new UserDetectorTask(pir);
+    userDetecion->init(500);
 
     Task* temperatureDetection = new TemperatureTask(temperatureDetector);
-    temperatureDetection->init(1000);
+    temperatureDetection->init(500);
+ 
+    Task* wasteDetection = new WasteDetectorTask(wasteDetector);
+    wasteDetection->init(500);
 
-    // Task* doorManager = new DoorTask(door, closeButton, openButton);
-    // doorManager->init(100);
+    Task* ledManager = new LedsTask(okIndicator, errorIndicator);
+    ledManager->init(500);
 
-    // Task* ledManager = new LedsTask(okIndicator, errorIndicator);
-    // ledManager->init(100);
+    Task* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
+    userDisplay->init(1000);
 
-    // Task* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
-    // userDisplay->init(1000);
-
-    // scheduler.addTask(userDetecion);
-    scheduler.addTask(wasteDetection);
+    scheduler.addTask(doorManager);
+    scheduler.addTask(userDetecion);
     scheduler.addTask(temperatureDetection);
-    // scheduler.addTask(doorManager);
-    // scheduler.addTask(ledManager);
-    // scheduler.addTask(userDisplay);
+    scheduler.addTask(wasteDetection);
+    scheduler.addTask(ledManager);
+    scheduler.addTask(userDisplay);
 }
 
 void loop() {

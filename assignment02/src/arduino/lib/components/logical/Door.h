@@ -14,7 +14,7 @@ public:
         _angle = angle;
         on();
         setPosition(_angle);
-        delay(200);
+        delay(80);
         off();
     }
 

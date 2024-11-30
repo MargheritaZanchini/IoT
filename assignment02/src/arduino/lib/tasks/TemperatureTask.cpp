@@ -12,7 +12,7 @@ void TemperatureTask::init(int period) {
 }
 
 void TemperatureTask::tick() {
-    MsgService.sendMsg("[Value:Temperature]" + String(_temperatureDetector->read()));
+    //MsgService.sendMsg("[Value:Temperature]" + String(_temperatureDetector->read()));
 
     switch(_state) {
         case NORMAL:
