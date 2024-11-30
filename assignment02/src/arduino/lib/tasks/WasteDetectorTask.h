@@ -16,6 +16,9 @@ public:
 private:
     int _pin;
     WasteDetector* _detector;
+
+    enum State { NOT_FULL, FULL };
+    State _state;
 };
 
 #endif

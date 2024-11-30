@@ -35,6 +35,7 @@ void TemperatureTask::tick() {
             }
             break;
         case PROBLEM_DETECTED:
+            Serial.println("CALDOOOOOOOOOOOOOOOOO");
             if(MsgService.isMsgAvailable()) {
                 Msg* msg = MsgService.receiveMsg();    
 

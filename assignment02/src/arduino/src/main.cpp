@@ -52,7 +52,7 @@ void setup() {
     Task* wasteDetection = new WasteDetectorTask(wasteDetector);
     wasteDetection->init(500);
 
-    Task* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector);
+    Task* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector, wasteDetector);
     ledManager->init(500);
 
     //Task* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);

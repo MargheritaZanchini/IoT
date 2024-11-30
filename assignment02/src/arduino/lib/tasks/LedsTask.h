@@ -8,7 +8,7 @@
 
 class LedsTask: public Task {
 public:
-    LedsTask(Led& ok, Led& error, TemperatureDetector& temperatureDetector);  
+    LedsTask(Led& ok, Led& error, TemperatureDetector& temperatureDetector, WasteDetector& wasteDetector);  
     void init(int period);
     void tick();
 
@@ -17,6 +17,7 @@ private:
     Led* _error;
 
     TemperatureDetector* _temperatureDetector;
+    WasteDetector* _wasteDetector;
 
     enum State { OK_ON, ERROR_ON};
     State _state;
