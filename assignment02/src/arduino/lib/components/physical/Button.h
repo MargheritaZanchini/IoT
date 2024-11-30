@@ -1,7 +1,4 @@
-#ifndef __BUTTON__
-#define __BUTTON__
-
-// #define BUTTON_DEBOUNCE_TIME 100 /** Debounce Time for the Button */
+#pragma once
 
 /**
  * @brief Button Component Helper Class
@@ -26,5 +23,3 @@ private:
     long _previous; /** Last Time Reading for Debounce */
     bool _state; /** Current Button State Cache */
 };
-
-#endif

@@ -18,6 +18,7 @@
 #include "EnableInterrupt.h"
 
 #include "../lib/Constants.h"
+#include "../lib/communication/MsgService.h"
 
 Scheduler scheduler;
 
@@ -43,30 +44,30 @@ void setup() {
     // enableInterrupt(Constants::PIR::PIN, wakeUp, RISING); // Link the Interrupt to the wakeUp() Function
     // Serial.println("Interrupt attaccato");
 
-    Task* userDetecion = new UserDetectorTask(pir);
-    userDetecion->init(400);
+    // Task* userDetecion = new UserDetectorTask(pir);
+    // userDetecion->init(100);
  
     Task* wasteDetection = new WasteDetectorTask(wasteDetector);
-    wasteDetection->init(500);
+    wasteDetection->init(1000);
 
     Task* temperatureDetection = new TemperatureTask(temperatureDetector);
-    temperatureDetection->init(500);
+    temperatureDetection->init(1000);
 
-    Task* doorManager = new DoorTask(door, closeButton, openButton);
-    doorManager->init(100);
+    // Task* doorManager = new DoorTask(door, closeButton, openButton);
+    // doorManager->init(100);
 
     // Task* ledManager = new LedsTask(okIndicator, errorIndicator);
     // ledManager->init(100);
 
-    Task* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
-    userDisplay->init(500);
+    // Task* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
+    // userDisplay->init(1000);
 
-    scheduler.addTask(userDetecion);
+    // scheduler.addTask(userDetecion);
     scheduler.addTask(wasteDetection);
     scheduler.addTask(temperatureDetection);
-    scheduler.addTask(doorManager);
+    // scheduler.addTask(doorManager);
     // scheduler.addTask(ledManager);
-    scheduler.addTask(userDisplay);
+    // scheduler.addTask(userDisplay);
 }
 
 void loop() {

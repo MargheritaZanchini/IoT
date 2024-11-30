@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../physical/Thermistor.h"
+#include "../../communication/MsgService.h"
 
 /**
  * @brief Class for the temperature detector
@@ -43,6 +44,7 @@ public:
      */
     void setTemperatureAlarm(bool alarm) {
         _highTemperatureAlarm = alarm;
+        MsgService.sendMsg("[Alarm:Temperature]" + String(alarm ? "true" : "false"));
     }
 
 private:

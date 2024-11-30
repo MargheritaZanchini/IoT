@@ -5,6 +5,7 @@
 #include "../components/logical/WasteDetector.h"
 #include "../components/logical/TemperatureDetector.h"
 #include "../components/logical/Door.h"
+#include "../communication/MsgService.h"
 
 class UserDisplayTask : public Task {
 public:
@@ -22,7 +23,4 @@ private:
 
     enum State { OK, DISPLAY_WASTE, DISPLAY_TEMPERATURE, DISPLAY_DOOR_OPEN, DISPLAY_ON_DOOR_CLOSED };
     State _state;
-
-    void updateGUI();
-    void updateLCD();
 };

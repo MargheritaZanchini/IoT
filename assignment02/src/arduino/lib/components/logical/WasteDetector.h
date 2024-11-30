@@ -33,7 +33,7 @@ public:
      * @brief Get Waste Level as Percentage (%)
      * @return Mapped Value (0.0% - 100.0%) Representing Fill Level
      */
-    float formatLevel() {
+    float getFormattedValue() {
         return mapValue(read())*100.0;
     }
 

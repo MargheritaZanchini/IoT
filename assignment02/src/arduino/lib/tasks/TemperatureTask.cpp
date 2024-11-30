@@ -12,29 +12,40 @@ void TemperatureTask::init(int period) {
 }
 
 void TemperatureTask::tick() {
-    switch (_state)
-    {
+    MsgService.sendMsg("[Value:Temperature]" + String(_temperatureDetector->read()));
+
+    switch(_state) {
         case NORMAL:
-            Serial.println("NORMAL");
             if(_temperatureDetector->read() >= Constants::Thermistor::MAX_TEMPERATURE) {
                 _state = HIGH_TEMP;
             }
             break;
         case HIGH_TEMP:
-        Serial.println("HIGH");
             if(_temperatureDetector->read() < Constants::Thermistor::MAX_TEMPERATURE) {
                 _lastDetectedTime = 0;
                 _state = NORMAL;
             }
+
             if(_lastDetectedTime == 0){ 
                 _lastDetectedTime = millis();
-            }else if(millis() - _lastDetectedTime > Constants::Thermistor::MAX_TEMPERATURE_TIME){
+            }
+            else if(millis() - _lastDetectedTime > Constants::Thermistor::MAX_TEMPERATURE_TIME){
                 _temperatureDetector->setTemperatureAlarm(true);
                 _state = PROBLEM_DETECTED;
             }
             break;
         case PROBLEM_DETECTED:
-            /* code */
+            if(MsgService.isMsgAvailable()) {
+                Msg* msg = MsgService.receiveMsg();    
+
+                if(msg->getContent() == "[Action:Restore]") {
+                    _lastDetectedTime = 0;
+                    _temperatureDetector->setTemperatureAlarm(false);
+                    _state = NORMAL;
+                };
+
+                delete msg;
+            }
             break;
     }
 }

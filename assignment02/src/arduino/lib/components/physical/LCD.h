@@ -37,6 +37,11 @@ public:
     void print(const String& text, int row = 0, int col = 0);
 
     /**
+     * @brief Retrieves the Current Text Displayed on the LCD
+     */
+    String getCurrentText();
+
+    /**
      * @brief Provides Access to Hardware Interface
      * @return Reference Pointer to the I2C Display
      */
@@ -45,6 +50,7 @@ public:
 private:
     LiquidCrystal_I2C _lcd; /** Hardware Interface Instance */
     int _address; /** I2C Communication Address */
+    String _currentText; /** Stores the current text displayed on the LCD */
 };
 
 #endif

@@ -7,50 +7,28 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.function.Function;
-
 public class Launcher extends Application {
-    private static final String APPLICATION_NAME = "OPERATOR DASHBOARD";
-    private static final String APPLICATION_LAYOUT = "Main.fxml";
-    private static final boolean APPLICATION_RESIZABLE = false;
+    public static final String APPLICATION_NAME = "OPERATOR DASHBOARD";
+    public static final String APPLICATION_LAYOUT = "Main.fxml";
+    public static final boolean APPLICATION_RESIZABLE = false;
 
-    private final Function<Integer, Void> CLOSE_FUNCTION = (input) -> {
-        Platform.exit();
-        System.exit(input);
-        return null;
-    };
+    public static final String SERIAL_PORT = "COM8";
+    public static final int BAUD_RATE = 9600;
 
-    private final FXMLLoader LOADER = new FXMLLoader(getClass().getResource(APPLICATION_LAYOUT));
-    private Parent root;
-    private Scene scene;
-
-    private Controller controller;
+    private final FXMLLoader sceneLoader = new FXMLLoader(getClass().getResource(APPLICATION_LAYOUT));
 
     @Override
-    public void start(final Stage primaryStage) {
-        try {
-            root = LOADER.load();
-        }
-        catch (IOException error) {
-            System.err.println("File FXML Not Found! " + error.getMessage());
-            CLOSE_FUNCTION.apply(-1);
-        }
-
-        scene = new Scene(root);
-        controller = LOADER.getController();
+    public void start(final Stage primaryStage) throws Exception {
+        final Parent root = sceneLoader.load();
+        final Scene scene = new Scene(root);
         
         primaryStage.setScene(scene);
         primaryStage.setTitle(APPLICATION_NAME);
         primaryStage.setResizable(APPLICATION_RESIZABLE);
-        primaryStage.setOnCloseRequest((closeRequest) -> CLOSE_FUNCTION.apply(0));
-    
-        try {
-            new SerialCommChannel("COM8", 9600, controller);
-        } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-            CLOSE_FUNCTION.apply(-1);
-        }
+        primaryStage.setOnCloseRequest((closeRequest) -> {
+            Platform.exit();
+            System.exit(0);
+        });
 
         primaryStage.show();
     }
