@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_WASTE_DETECTOR__
+#define __A02_WASTE_DETECTOR__
 
 #include "../physical/Sonar.h"
 
@@ -56,3 +57,5 @@ public:
 private:
     bool _isFullAlarm;
 };
+
+#endif

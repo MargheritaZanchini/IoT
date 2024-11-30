@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_WASTE_DETECTOR_TASK__
+#define __A02_WASTE_DETECTOR_TASK__
 
 #include "Task.h"
 #include "../components/logical/Display.h"
@@ -16,3 +17,5 @@ private:
     int _pin;
     WasteDetector* _detector;
 };
+
+#endif

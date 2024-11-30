@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_BUTTON__
+#define __A02_BUTTON__
 
 /**
  * @brief Button Component Helper Class
@@ -23,3 +24,5 @@ private:
     long _previous; /** Last Time Reading for Debounce */
     bool _state; /** Current Button State Cache */
 };
+
+#endif

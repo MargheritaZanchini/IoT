@@ -21,7 +21,8 @@ void DoorTask::tick() {
 
     switch (_state) {
         case CLOSED:
-            if(openPressed) {
+            if(openPressed && (!isInAlarm && !isFull)) {
+                Serial.println("ciao");
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
                 _state = OPENED;
             }

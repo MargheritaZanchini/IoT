@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_TEMPERATURE_DETECTOR__
+#define __A02_TEMPERATURE_DETECTOR__
 
 #include "../physical/Thermistor.h"
 #include "../../communication/MsgService.h"
@@ -50,3 +51,5 @@ public:
 private:
     bool _highTemperatureAlarm;
 };
+
+#endif

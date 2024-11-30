@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_DOOR__
+#define __A02_DOOR__
 
 #include "../physical/ServoMotor.h"
 #include "arduino/lib/Constants.h"
@@ -33,3 +34,5 @@ public:
 private:
     int _angle;
 };
+
+#endif

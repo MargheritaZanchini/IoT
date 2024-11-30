@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_DOOR_TASK__
+#define __A02_DOOR_TASK__
 
 #include "Task.h"
 #include "../components/logical/Door.h"
@@ -24,3 +25,5 @@ private:
   TemperatureDetector* _temperatureDetector;
   unsigned long _lastEmptiedTime;
 };
+
+#endif

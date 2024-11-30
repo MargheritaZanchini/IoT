@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_TASK__
+#define __A02_TASK__
 
 class Task {
 int myPeriod;
@@ -23,3 +24,5 @@ public:
         }
     }
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_CONSTANTS__
+#define __A02_CONSTANTS__
 
 #include <Arduino.h>
 
@@ -33,10 +34,10 @@ namespace Constants {
 
     namespace LED {
         namespace OK {
-            constexpr int PIN = 6; /** Pin Number for Status OK LED Indicator */
+            constexpr int PIN = 8; /** Pin Number for Status OK LED Indicator */
         }
         namespace Error {
-            constexpr int PIN = 7; /** Pin Number for Error Status LED Indicator */
+            constexpr int PIN = 9; /** Pin Number for Error Status LED Indicator */
         }
     }
 
@@ -76,3 +77,5 @@ namespace Constants {
 
     constexpr unsigned long BAUD_RATE = 9600; /** Baud Rate for Serial Communication */
 }
+
+#endif

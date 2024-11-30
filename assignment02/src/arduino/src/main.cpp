@@ -30,7 +30,7 @@ void setup() {
 
     Button closeButton(Constants::Button::Close::PIN);
     Button openButton(Constants::Button::Open::PIN);
-    Display display(Constants::LCD::ADDRESS);
+    //Display display(Constants::LCD::ADDRESS);
     Led okIndicator(Constants::LED::OK::PIN);
     Led errorIndicator(Constants::LED::Error::PIN);
     PIR pir(Constants::PIR::PIN);
@@ -52,18 +52,18 @@ void setup() {
     Task* wasteDetection = new WasteDetectorTask(wasteDetector);
     wasteDetection->init(500);
 
-    Task* ledManager = new LedsTask(okIndicator, errorIndicator);
+    Task* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector);
     ledManager->init(500);
 
-    Task* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
-    userDisplay->init(1000);
+    //Task* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
+    //userDisplay->init(1000);
 
     scheduler.addTask(doorManager);
     scheduler.addTask(userDetecion);
     scheduler.addTask(temperatureDetection);
     scheduler.addTask(wasteDetection);
     scheduler.addTask(ledManager);
-    scheduler.addTask(userDisplay);
+    //scheduler.addTask(userDisplay);
 }
 
 void loop() {

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_DISPLAY__
+#define __A02_DISPLAY__
 
 #include "../physical/LCD.h"
 #include "../../Constants.h"
@@ -27,3 +28,5 @@ public:
         print(Constants::LCD::MSG_DEFAULT, 0, 0);
     } 
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_MESSAGE_HANDLER__
+#define __A02_MESSAGE_HANDLER__
 
 #include "Arduino.h"
 
@@ -41,3 +42,5 @@ public:
 };
 
 extern MsgServiceClass MsgService;
+
+#endif

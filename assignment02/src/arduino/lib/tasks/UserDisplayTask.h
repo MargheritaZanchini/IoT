@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __A02_USER_DISPLAY_TASK__
+#define __A02_USER_DISPLAY_TASK__
 
 #include "Task.h"
 #include "../components/logical/Display.h"
@@ -24,3 +25,5 @@ private:
     enum State { OK, DISPLAY_WASTE, DISPLAY_TEMPERATURE, DISPLAY_DOOR_OPEN, DISPLAY_ON_DOOR_CLOSED };
     State _state;
 };
+
+#endif

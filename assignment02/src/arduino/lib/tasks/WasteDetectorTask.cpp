@@ -10,6 +10,7 @@ void WasteDetectorTask::init(int period) {
 
 void WasteDetectorTask::tick() {
     _detector->setFullnessAlarm(checkFullness());
+    Serial.println(checkFullness());
     //MsgService.sendMsg("[Value:WasteLevel]" + String(_detector->getFormattedValue()));
 }
 
