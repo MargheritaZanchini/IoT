@@ -36,17 +36,16 @@ void TemperatureTask::tick() {
             }
             break;
         case PROBLEM_DETECTED:
-            while (Serial.available()) {
-                String content = Serial.readStringUntil('\n');
-                
-                if(content == "[Action:Restore]") {
-                    Serial.println("SEEEEEEEEEEEEEEEEEE!!!");
-                    _lastDetectedTime = 0;
-                    _temperatureDetector->setTemperatureAlarm(false);
-                    _state = NORMAL;
-                    break;
-                }
-            }
+            // while (Serial.available()) {
+            //     String content = Serial.readStringUntil('\n');
+            //     
+            //     if(content == "[Action:Restore]") {
+            //         _lastDetectedTime = 0;
+            //         _temperatureDetector->setTemperatureAlarm(false);
+            //         _state = NORMAL;
+            //         break;
+            //     }
+            // }
 
             break;
     }
