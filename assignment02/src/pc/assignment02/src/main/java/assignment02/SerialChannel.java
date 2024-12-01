@@ -22,19 +22,11 @@ public class SerialChannel implements CommunicationChannel, SerialPortEventListe
 
     @Override
     public void sendMessage(String msg) {
-        char[] array = (msg+"\n").toCharArray();
-        byte[] bytes = new byte[array.length];
-
-        for (int i = 0; i < array.length; i++){
-            bytes[i] = (byte) array[i];
-        }
-
         try {
             synchronized (serialPort) {
-                serialPort.writeBytes(bytes);
+                serialPort.writeString(msg + "\n");
             }
-        }
-        catch(Exception ex) {
+        } catch (SerialPortException ex) {
             ex.printStackTrace();
         }
     }

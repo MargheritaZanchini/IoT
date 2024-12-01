@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.beans.binding.StringBinding;
+import javafx.application.Platform;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.FloatProperty;
@@ -20,10 +21,13 @@ public class Controller {
     @FXML private Button emptyButton;
     @FXML private Button restoreButton;
     
-    private SerialDataHandler serialHandler;
+    private SerialDataHandler serialHandler = null;
 
     @FXML public void initialize() throws Exception {
         this.serialHandler = new SerialDataHandler(Launcher.SERIAL_PORT, Launcher.BAUD_RATE, this.wasteValue, this.temperatureValue, this.wasteLevelAlarm, this.temperatureAlarm);
+        if (this.serialHandler == null) {
+            throw new Exception("Failed to initialize SerialDataHandler");
+        }
         this.serialHandler.start();
 
         this.toxicWasteLevel.progressProperty().bind(this.wasteValue);
@@ -98,10 +102,14 @@ public class Controller {
     }
     
     private void emptyWaste() {
-        this.serialHandler.sendMessage("[Action:Empty]");
+        Platform.runLater(() -> {
+            this.serialHandler.sendMessage("[Action:Empty]");
+        });
     }
 
     private void restoreTemperature() {
-        this.serialHandler.sendMessage("[Action:Restore]");
+        Platform.runLater(() -> {
+            this.serialHandler.sendMessage("[Action:Restore]");
+        });
     }
 }

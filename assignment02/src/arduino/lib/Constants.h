@@ -71,7 +71,7 @@ namespace Constants {
 
     namespace Thermistor {
         constexpr int PIN = A0; /** Pin Number for Thermistor Analog Input */
-        constexpr int MAX_TEMPERATURE = 30; 
+        constexpr int MAX_TEMPERATURE = 28;
         constexpr int MAX_TEMPERATURE_TIME = 4000; /**If the thermistor is in MAX_TEMP for MAX_TEMP_TIME there is a problem  */
     }
 

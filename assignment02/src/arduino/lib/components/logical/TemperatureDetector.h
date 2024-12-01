@@ -45,7 +45,9 @@ public:
      */
     void setTemperatureAlarm(bool alarm) {
         _highTemperatureAlarm = alarm;
-        MsgService.sendMsg("[Alarm:Temperature]" + String(alarm ? "true" : "false"));
+        
+        Serial.print("[Alarm:Temperature]");
+        Serial.println(_highTemperatureAlarm ? "true" : "false");
     }
 
 private:

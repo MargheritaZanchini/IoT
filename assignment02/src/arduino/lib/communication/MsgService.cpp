@@ -29,20 +29,19 @@ void MsgServiceClass::init(){
 }
 
 void MsgServiceClass::sendMsg(const String& msg){
-  Serial.println(msg);  
+    Serial.println(msg);
 }
 
 void serialEvent() {
-  /* reading the content */
-  while (Serial.available()) {
-    char ch = (char) Serial.read();
-    if (ch == '\n'){
-      MsgService.currentMsg = new Msg(content);
-      MsgService.msgAvailable = true;      
-    } else {
-      content += ch;      
+    while (Serial.available()) {
+        String content = Serial.readStringUntil('\n');
+        
+        if(content.length() > 0 && content.startsWith("[") && content.endsWith("]")) {
+            MsgService.currentMsg = new Msg(content);
+            MsgService.msgAvailable = true;
+            content = "";
+        }
     }
-  }
 }
 
 bool MsgServiceClass::isMsgAvailable(Pattern& pattern){
