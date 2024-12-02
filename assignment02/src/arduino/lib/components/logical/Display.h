@@ -15,8 +15,8 @@ public:
      * @brief Creates new display
      * @param address I2C bus address
      */
-    Display(int address) : LCD(address) {
-        printDefaultMessage();
+    Display(LiquidCrystal_I2C* lcd) : LCD(lcd) {
+        // printDefaultMessage();
     }
 
     /**

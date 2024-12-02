@@ -3,6 +3,7 @@
 
 #include "../physical/Thermistor.h"
 #include "../../communication/MsgService.h"
+#include "../../Constants.h"
 
 /**
  * @brief Class for the temperature detector

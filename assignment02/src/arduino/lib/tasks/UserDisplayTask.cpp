@@ -3,16 +3,19 @@
 
 #include <Arduino.h>
 
-UserDisplayTask::UserDisplayTask(Display& display, WasteDetector& wasteDetector, TemperatureDetector& temperatureDetector, Door& door) {
-    _display = &display;
-    _wasteDetector = &wasteDetector;
-    _temperatureDetector = &temperatureDetector;
-    _door = &door;
+UserDisplayTask::UserDisplayTask(Display* display, WasteDetector* wasteDetector, TemperatureDetector* temperatureDetector, Door* door) {
+    _display = display;
+    _wasteDetector = wasteDetector;
+    _temperatureDetector = temperatureDetector;
+    _door = door;
     _state = OK;
 }
 
 void UserDisplayTask::init(int period) {
     Task::init(period);
+    Serial.println("LCD istanziato");
+
+    _display->printDefaultMessage();
 }
 
 void UserDisplayTask::tick() {

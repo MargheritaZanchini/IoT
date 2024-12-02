@@ -10,7 +10,7 @@
 
 class UserDisplayTask : public Task {
 public:
-    UserDisplayTask(Display& display, WasteDetector& wasteDetector, TemperatureDetector& temperatureDetector, Door& door);
+    UserDisplayTask(Display* display, WasteDetector* wasteDetector, TemperatureDetector* temperatureDetector, Door* door);
     void init(int period);
     void tick();
 

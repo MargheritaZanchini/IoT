@@ -16,7 +16,7 @@ public:
      * @brief Creates New LCD Instance
      * @param address I2C Bus Address of Display
      */
-    LCD(int address);
+    LCD(LiquidCrystal_I2C* lcd);
 
     /**
      * @brief Initializes Display Hardware
@@ -45,10 +45,10 @@ public:
      * @brief Provides Access to Hardware Interface
      * @return Reference Pointer to the I2C Display
      */
-    LiquidCrystal_I2C* getDisplay();
+    // LiquidCrystal_I2C* getDisplay();
 
 private:
-    LiquidCrystal_I2C _lcd; /** Hardware Interface Instance */
+    LiquidCrystal_I2C* _lcd;// = LiquidCrystal_I2C(0x27, 20, 4); /** Hardware Interface Instance */ // = LiquidCrystal_I2C(0x27, 20, 4)
     int _address; /** I2C Communication Address */
     String _currentText; /** Stores the current text displayed on the LCD */
 };

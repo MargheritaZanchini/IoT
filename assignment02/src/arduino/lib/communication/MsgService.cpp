@@ -22,6 +22,7 @@ Msg* MsgServiceClass::receiveMsg(){
 }
 
 void MsgServiceClass::init(){
+  // Serial.begin(9600);
   content.reserve(256);
   content = "";
   currentMsg = NULL;
@@ -29,17 +30,18 @@ void MsgServiceClass::init(){
 }
 
 void MsgServiceClass::sendMsg(const String& msg){
-    Serial.println(msg);
+  Serial.println(msg);  
 }
 
 void serialEvent() {
     while (Serial.available()) {
-        String content = Serial.readStringUntil('\n');
-        
-        if(content.length() > 0 && content.startsWith("[") && content.endsWith("]")) {
+        char ch = (char) Serial.read();
+        if (ch == '\n'){
             MsgService.currentMsg = new Msg(content);
-            MsgService.msgAvailable = true;
-            content = "";
+            MsgService.msgAvailable = true;      
+        }
+        else {
+            content += ch;      
         }
     }
 }
@@ -54,8 +56,8 @@ Msg* MsgServiceClass::receiveMsg(Pattern& pattern){
     msgAvailable = false;
     currentMsg = NULL;
     content = "";
-    return msg;  
-  } else {
+    return msg;
+  }else {
     return NULL; 
   }
   

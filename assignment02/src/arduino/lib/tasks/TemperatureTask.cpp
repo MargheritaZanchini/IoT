@@ -1,7 +1,7 @@
 #include "TemperatureTask.h"
 
-TemperatureTask::TemperatureTask(TemperatureDetector& temperatureDetector) {
-    this->_temperatureDetector = &temperatureDetector;
+TemperatureTask::TemperatureTask(TemperatureDetector* temperatureDetector) {
+    this->_temperatureDetector = temperatureDetector;
 }
 
 void TemperatureTask::init(int period) {
@@ -14,6 +14,9 @@ void TemperatureTask::init(int period) {
 void TemperatureTask::tick() {
     Serial.print("[Value:Temperature]");
     Serial.println(_temperatureDetector->read());
+
+    // MsgService.sendMsg("[Value:Temperature]" + String(_temperatureDetector->read()));
+    // Serial.println("[Value:Temperature]" + String(_temperatureDetector->read()));
 
     switch(_state) {
         case NORMAL:
@@ -36,16 +39,21 @@ void TemperatureTask::tick() {
             }
             break;
         case PROBLEM_DETECTED:
-            // while (Serial.available()) {
-            //     String content = Serial.readStringUntil('\n');
-            //     
-            //     if(content == "[Action:Restore]") {
-            //         _lastDetectedTime = 0;
-            //         _temperatureDetector->setTemperatureAlarm(false);
-            //         _state = NORMAL;
-            //         break;
-            //     }
-            // }
+            if(MsgService.isMsgAvailable()) {
+                Msg* msg = MsgService.receiveMsg();    
+
+                // if(msg == NULL) {
+                //     delete msg;
+                //     break;
+                // }
+                if(msg->getContent() == "[Action:Restore]") {
+                    _lastDetectedTime = 0;
+                    _temperatureDetector->setTemperatureAlarm(false);
+                    _state = NORMAL;
+                }
+            
+                delete msg;
+            }
 
             break;
     }

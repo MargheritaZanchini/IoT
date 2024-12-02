@@ -1,5 +1,5 @@
-#ifndef __A02_MESSAGE_HANDLER__
-#define __A02_MESSAGE_HANDLER__
+#ifndef __MSGSERVICE__
+#define __MSGSERVICE__
 
 #include "Arduino.h"
 

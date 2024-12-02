@@ -7,7 +7,7 @@
 
 class TemperatureTask : public Task {
 public:
-    TemperatureTask(TemperatureDetector& temperatureDetector);  
+    TemperatureTask(TemperatureDetector* temperatureDetector);  
     void init(int period);  
     void tick();
 

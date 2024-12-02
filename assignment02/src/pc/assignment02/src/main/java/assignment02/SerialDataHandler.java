@@ -61,8 +61,8 @@ public class SerialDataHandler extends Thread {
         this.channel.closeChannel();
     }
     
-    public void sendMessage(final String message) {
-        this.channel.sendMessage(message);
+    public boolean sendMessage(final String message) {
+        return this.channel.sendMessage(message);
     }
 
     public CommunicationChannel getChannel() {

@@ -55,7 +55,7 @@ public:
     }
 
 private:
-    bool _isFullAlarm;
+    bool _isFullAlarm = false;
 };
 
 #endif

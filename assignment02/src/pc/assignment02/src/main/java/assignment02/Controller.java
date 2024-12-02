@@ -110,6 +110,7 @@ public class Controller {
     private void restoreTemperature() {
         Platform.runLater(() -> {
             this.serialHandler.sendMessage("[Action:Restore]");
+            // System.out.println("Restoring Action: " + this.serialHandler.sendMessage("[Action:Restore]"));
         });
     }
 }

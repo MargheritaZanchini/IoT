@@ -21,15 +21,21 @@ public class SerialChannel implements CommunicationChannel, SerialPortEventListe
     }
 
     @Override
-    public void sendMessage(String msg) {
-        try {
-            synchronized (serialPort) {
-                serialPort.writeString(msg + "\n");
-            }
-        } catch (SerialPortException ex) {
-            ex.printStackTrace();
-        }
-    }
+    public boolean sendMessage(String msg) {
+		char[] array = (msg+"\n").toCharArray();
+		byte[] bytes = new byte[array.length];
+		for (int i = 0; i < array.length; i++){
+			bytes[i] = (byte) array[i];
+		}
+		try {
+			synchronized (serialPort) {
+                return serialPort.writeBytes(bytes);
+			}
+		} catch(Exception ex){
+			ex.printStackTrace();
+            return false;
+		}
+	}
 
     @Override
     public String receiveMessage() throws InterruptedException {
@@ -53,9 +59,8 @@ public class SerialChannel implements CommunicationChannel, SerialPortEventListe
         }
     }
 
-
+    @Override
     public void serialEvent(SerialPortEvent event) {
-        /* if there are bytes received in the input buffer */
         if (event.isRXCHAR()) {
             try {
                 String msg = serialPort.readString(event.getEventValue());
