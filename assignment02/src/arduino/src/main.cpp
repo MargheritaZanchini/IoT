@@ -39,7 +39,7 @@ void setup() {
     Serial.begin(Constants::BAUD_RATE);
     Serial.flush();
 
-    scheduler.init(250);
+    scheduler.init(500);
 
     _lcd->init();
     _lcd->backlight();
@@ -48,9 +48,6 @@ void setup() {
 
     // DoorTask* doorManager = new DoorTask(door, closeButton, openButton, temperatureDetector, wasteDetector);
     // doorManager->init(500);
-
-    // UserDisplayTask* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
-    // userDisplay->init(1000);
 
     UserDetectorTask* userDetecion = new UserDetectorTask(pir);
     userDetecion->init(500);
@@ -61,14 +58,17 @@ void setup() {
     WasteDetectorTask* wasteDetection = new WasteDetectorTask(wasteDetector);
     wasteDetection->init(500);
 
-    // LedsTask* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector, wasteDetector);
-    // ledManager->init(500);
+    LedsTask* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector, wasteDetector);
+    ledManager->init(500);
+
+    // UserDisplayTask* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
+    // userDisplay->init(1000);
 
     // scheduler.addTask(doorManager);
     scheduler.addTask(userDetecion);
     scheduler.addTask(temperatureDetection);
     scheduler.addTask(wasteDetection);
-    // scheduler.addTask(ledManager);
+    scheduler.addTask(ledManager);
     // scheduler.addTask(userDisplay);
 }
 
