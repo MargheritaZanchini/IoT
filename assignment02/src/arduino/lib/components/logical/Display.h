@@ -24,7 +24,6 @@ public:
      * @param message Default Message
      */
     void printDefaultMessage() {
-        clear();
         print(Constants::LCD::MSG_DEFAULT, 0, 0);
     } 
 };

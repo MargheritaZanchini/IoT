@@ -16,7 +16,7 @@ public:
      * @param pin Analog Input for Thermistor
      */
     TemperatureDetector(int pin) : Thermistor(pin) {
-        _highTemperatureAlarm = false;
+        // _highTemperatureAlarm = false;
     }
 
     /**
@@ -47,12 +47,13 @@ public:
     void setTemperatureAlarm(bool alarm) {
         _highTemperatureAlarm = alarm;
         
-        Serial.print("[Alarm:Temperature]");
+        Serial.print("[A:T]");
         Serial.println(_highTemperatureAlarm ? "true" : "false");
+        Serial.flush();
     }
 
 private:
-    bool _highTemperatureAlarm;
+    bool _highTemperatureAlarm = false;
 };
 
 #endif

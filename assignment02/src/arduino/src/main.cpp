@@ -22,56 +22,52 @@
 
 Scheduler scheduler;
 
-LiquidCrystal_I2C _lcd = LiquidCrystal_I2C(0x27, 20, 4);
+LiquidCrystal_I2C* _lcd = new LiquidCrystal_I2C(0x27, 20, 4);
+Display* display = new Display(_lcd);
+Button* closeButton = new Button(Constants::Button::Close::PIN);
+Button* openButton = new Button(Constants::Button::Open::PIN);
+Led* okIndicator = new Led(Constants::LED::OK::PIN);
+Led* errorIndicator = new Led(Constants::LED::Error::PIN);
+PIR* pir = new PIR(Constants::PIR::PIN);
+Door* door = new Door(Constants::Servo::PIN);
+WasteDetector* wasteDetector = new WasteDetector(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
+TemperatureDetector* temperatureDetector = new TemperatureDetector(Constants::Thermistor::PIN);
 
-// Button closeButton(Constants::Button::Close::PIN);
-// Button openButton(Constants::Button::Open::PIN);
-Display display(&_lcd);
-// Led okIndicator(Constants::LED::OK::PIN);
-// Led errorIndicator(Constants::LED::Error::PIN);
-// PIR pir(Constants::PIR::PIN);
-// Door door(Constants::Servo::PIN);
-// WasteDetector wasteDetector(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
-// TemperatureDetector temperatureDetector(Constants::Thermistor::PIN);
-
-void wakeUp(){ }
+void wakeUp() { }
 
 void setup() {
-    // MsgService.init();
     Serial.begin(Constants::BAUD_RATE);
+    Serial.flush();
+
     scheduler.init(250);
 
-    Serial.println("Inizio setup");
-    display.printDefaultMessage();
-    
-    // enableInterrupt(Constants::PIR::PIN, wakeUp, RISING);
+    _lcd->init();
+    _lcd->backlight();
 
-    // Task* doorManager = new DoorTask(door, closeButton, openButton, temperatureDetector, wasteDetector);
+    enableInterrupt(Constants::PIR::PIN, wakeUp, RISING);
+
+    // DoorTask* doorManager = new DoorTask(door, closeButton, openButton, temperatureDetector, wasteDetector);
     // doorManager->init(500);
 
-    // Task* userDetecion = new UserDetectorTask(pir);
-    // userDetecion->init(500);
+    // UserDisplayTask* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
+    // userDisplay->init(1000);
 
-    // Task* temperatureDetection = new TemperatureTask(&temperatureDetector);
-    // temperatureDetection->init(500);
- 
-    // Task* wasteDetection = new WasteDetectorTask(wasteDetector);
-    // wasteDetection->init(500);
+    UserDetectorTask* userDetecion = new UserDetectorTask(pir);
+    userDetecion->init(500);
 
-    // Task* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector, wasteDetector);
+    TemperatureTask* temperatureDetection = new TemperatureTask(temperatureDetector);
+    temperatureDetection->init(500);
+
+    WasteDetectorTask* wasteDetection = new WasteDetectorTask(wasteDetector);
+    wasteDetection->init(500);
+
+    // LedsTask* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector, wasteDetector);
     // ledManager->init(500);
 
-    //Task* userDisplay = new UserDisplayTask(&display, &wasteDetector, &temperatureDetector, &door);
-    Serial.println("Setup");
-    Task* userDisplay = new UserDisplayTask(&display, nullptr, nullptr, nullptr);
-    Serial.println("UserDisplay instanziato");
-    // userDisplay->init(1000);
-    Serial.println("UserDisplay inizzializzato");
-
     // scheduler.addTask(doorManager);
-    // scheduler.addTask(userDetecion);
-    // scheduler.addTask(temperatureDetection);
-    // scheduler.addTask(wasteDetection);
+    scheduler.addTask(userDetecion);
+    scheduler.addTask(temperatureDetection);
+    scheduler.addTask(wasteDetection);
     // scheduler.addTask(ledManager);
     // scheduler.addTask(userDisplay);
 }

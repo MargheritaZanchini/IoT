@@ -23,7 +23,7 @@ public:
      * @return Mapped Value (0.00 - 1.00) Representing Fill Level
      */
     float mapValue(float value = -1) {
-        if (value == -1) value = read();
+        if (value == -1) value = Sonar::read();
         
         if(value >= Constants::Sonar::EMPTY_DISTANCE) return 0.0;
         if(value <= Constants::Sonar::FULL_DISTANCE) return 1.0;
@@ -35,7 +35,7 @@ public:
      * @return Mapped Value (0.0% - 100.0%) Representing Fill Level
      */
     float getFormattedValue() {
-        return mapValue(read())*100.0;
+        return mapValue(Sonar::read())*100.0;
     }
 
     /**

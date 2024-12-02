@@ -7,9 +7,9 @@
 class UserDetectorTask : public Task{
 
 public:
-    void init(int period);
-    void tick();
-    UserDetectorTask(PIR& pir);
+    // void init(int period);
+    void tick() override;
+    UserDetectorTask(PIR* pir);
 private:
     bool _sleep;
     bool _userDetected;

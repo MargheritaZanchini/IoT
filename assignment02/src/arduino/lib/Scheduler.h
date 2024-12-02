@@ -3,7 +3,7 @@
 
 #include "tasks/Task.h"
 
-#define MAX_TASKS 50
+#define MAX_TASKS 10
 
 class Scheduler {
   

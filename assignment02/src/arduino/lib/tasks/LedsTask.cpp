@@ -1,10 +1,10 @@
 #include "LedsTask.h"
 
-LedsTask::LedsTask(Led& ok, Led& error, TemperatureDetector& temperatureDetector, WasteDetector& wasteDetector) {
-    _ok = &ok;
-    _error = &error;
-    _temperatureDetector = &temperatureDetector;
-    _wasteDetector = &wasteDetector;
+LedsTask::LedsTask(Led* ok, Led* error, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector) {
+    _ok = ok;
+    _error = error;
+    _temperatureDetector = temperatureDetector;
+    _wasteDetector = wasteDetector;
 }
 
 void LedsTask::init(int period) {

@@ -1,18 +1,14 @@
 #include "TemperatureTask.h"
 
 TemperatureTask::TemperatureTask(TemperatureDetector* temperatureDetector) {
-    this->_temperatureDetector = temperatureDetector;
-}
+    _temperatureDetector = temperatureDetector;
 
-void TemperatureTask::init(int period) {
-    Task::init(period);
-    _temperatureDetector->setTemperatureAlarm(false);
     _state = NORMAL;
     _lastDetectedTime = 0;
 }
 
 void TemperatureTask::tick() {
-    Serial.print("[Value:Temperature]");
+    Serial.print("[Value:Temp]");
     Serial.println(_temperatureDetector->read());
 
     // MsgService.sendMsg("[Value:Temperature]" + String(_temperatureDetector->read()));
@@ -46,7 +42,7 @@ void TemperatureTask::tick() {
                 //     delete msg;
                 //     break;
                 // }
-                if(msg->getContent() == "[Action:Restore]") {
+                if(msg->getContent() == "[A:R]") {
                     _lastDetectedTime = 0;
                     _temperatureDetector->setTemperatureAlarm(false);
                     _state = NORMAL;

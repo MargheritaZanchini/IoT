@@ -11,7 +11,7 @@
 
 class DoorTask : public Task {   
 public:
-  DoorTask(Door& door, Button& closeButton, Button& openButton, TemperatureDetector& temperatureDetector, WasteDetector& wasteDetector);
+  DoorTask(Door* door, Button* closeButton, Button* openButton, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector);
   void init(int period);
   void tick();
 

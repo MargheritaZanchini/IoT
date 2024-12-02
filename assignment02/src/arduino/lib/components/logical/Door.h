@@ -7,9 +7,7 @@
 class Door : public ServoMotor {
 public:
 
-    Door(int pin) : ServoMotor(pin) {
-        setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
-    }
+    Door(int pin) : ServoMotor(pin) { }
 
     void setDoorPosition(int angle) {
         _angle = angle;
@@ -32,7 +30,7 @@ public:
     }
 
 private:
-    int _angle;
+    int _angle = Constants::Servo::USER_DOOR_CLOSED;;
 };
 
 #endif

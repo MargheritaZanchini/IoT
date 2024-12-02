@@ -14,15 +14,13 @@ public:
      * @brief Creates New PIR Instance
      * @param pin Input Pin for the PIR Sensor
      */
-    PIR(int pin) : Sensor(pin) { }
+    PIR(int pin);
 
     /**
      * @brief Reads Current Motion State
      * @return true if Motion Detected, false Otherwise
      */
-    const bool isDetected() {
-        return digitalRead(_pin) == HIGH;
-    }
+    const bool isDetected();
 };
 
 #endif

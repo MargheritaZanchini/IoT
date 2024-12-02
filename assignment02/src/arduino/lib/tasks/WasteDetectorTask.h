@@ -8,7 +8,7 @@
 
 class WasteDetectorTask : public Task {
 public:
-    WasteDetectorTask(WasteDetector& detector);
+    WasteDetectorTask(WasteDetector* detector);
     void init(int period);
     void tick();
     bool checkFullness();

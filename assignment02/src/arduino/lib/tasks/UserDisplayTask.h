@@ -11,8 +11,7 @@
 class UserDisplayTask : public Task {
 public:
     UserDisplayTask(Display* display, WasteDetector* wasteDetector, TemperatureDetector* temperatureDetector, Door* door);
-    void init(int period);
-    void tick();
+    void tick() override;
 
 private:
     Display* _display;

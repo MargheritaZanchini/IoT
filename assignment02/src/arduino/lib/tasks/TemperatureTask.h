@@ -7,9 +7,8 @@
 
 class TemperatureTask : public Task {
 public:
-    TemperatureTask(TemperatureDetector* temperatureDetector);  
-    void init(int period);  
-    void tick();
+    TemperatureTask(TemperatureDetector* temperatureDetector);
+    void tick() override;
 
 private:
     int _pin;

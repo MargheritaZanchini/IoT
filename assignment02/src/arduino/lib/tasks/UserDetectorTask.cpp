@@ -4,19 +4,17 @@
 #include "avr/power.h"
 
 //Il pir viene creato nel main e poi passato al costruttore
-UserDetectorTask::UserDetectorTask(PIR& pir) {
-    _pir = &pir;
+UserDetectorTask::UserDetectorTask(PIR* pir) {
+    _pir = pir;
+
+    _state = NOT_DETECTED;
+    _lastDetectedTime = 0;
+    _deltaTime = 5000;
 }
 
-void UserDetectorTask::init(int period){
-    Task::init(period);
-    _state = NOT_DETECTED; //inizialmente non c'è nessuno user
-    _lastDetectedTime = 0; //per calcolare il tempo in cui nessun user è rilevato   
-    _deltaTime = 6000; //tempo dopo il quale nessun user è rilevato e il sistema va in sleep
-}
-
-void UserDetectorTask::tick(){
+void UserDetectorTask::tick() {
     _userDetected = _pir->isDetected();
+    
     switch (_state){
     case NOT_DETECTED:
         if(_userDetected){ //se rileva un utente cambia stato

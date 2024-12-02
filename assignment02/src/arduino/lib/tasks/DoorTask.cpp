@@ -1,11 +1,11 @@
 #include "DoorTask.h"
 
-DoorTask::DoorTask(Door& door, Button& closeButton, Button& openButton, TemperatureDetector& temperatureDetector, WasteDetector& wasteDetector) {
-    _door = &door;
-    _closeButton = &closeButton;
-    _openButton = &openButton;
-    _temperatureDetector = &temperatureDetector;
-    _wasteDetector = &wasteDetector;
+DoorTask::DoorTask(Door* door, Button* closeButton, Button* openButton, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector) {
+    _door = door;
+    _closeButton = closeButton;
+    _openButton = openButton;
+    _temperatureDetector = temperatureDetector;
+    _wasteDetector = wasteDetector;
 }
 
 void DoorTask::init(int period) {

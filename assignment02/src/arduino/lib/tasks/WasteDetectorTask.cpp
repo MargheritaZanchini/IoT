@@ -1,7 +1,7 @@
 #include "WasteDetectorTask.h"
 
-WasteDetectorTask::WasteDetectorTask(WasteDetector& detector) {
-    _detector = &detector;
+WasteDetectorTask::WasteDetectorTask(WasteDetector* detector) {
+    _detector = detector;
 }
 
 void WasteDetectorTask::init(int period) {
@@ -11,7 +11,7 @@ void WasteDetectorTask::init(int period) {
 }
 
 void WasteDetectorTask::tick() {
-    Serial.print("[Value:WasteLevel]");
+    Serial.print("[Value:WLvl]");
     Serial.println(_detector->getFormattedValue());
 
     bool isFull = checkFullness();

@@ -8,7 +8,7 @@
 
 class LedsTask: public Task {
 public:
-    LedsTask(Led& ok, Led& error, TemperatureDetector& temperatureDetector, WasteDetector& wasteDetector);  
+    LedsTask(Led* ok, Led* error, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector);  
     void init(int period);
     void tick();
 
