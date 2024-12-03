@@ -11,7 +11,7 @@ Button::Button(int pin) {
 bool Button::isPressed() {
     long _delta = millis() - _previous;
 
-    if(_delta > Constants::Button::DEBOUNCE_TIME) {
+    if (_delta > Constants::Button::DEBOUNCE_TIME) {
         _state = bool(digitalRead(_pin));
         _previous = millis();
     }

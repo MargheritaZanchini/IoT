@@ -33,22 +33,22 @@ public class SerialDataHandler extends Thread {
     @Override
     public void run() throws NumberFormatException {
         while(true) {
-            if(!this.channel.isMessageAvailable()) continue;
+            if (!this.channel.isMessageAvailable()) continue;
             
             try {
                 final String message = this.channel.receiveMessage().replace("\n", "").replace("\r", "");
                 System.out.println("Received Message: " + message);
                 
-                if(message.startsWith(WASTE_LEVEL_TAG)) {
+                if (message.startsWith(WASTE_LEVEL_TAG)) {
                     Platform.runLater(() -> this.wasteLevel.set(Float.parseFloat(message.substring(WASTE_LEVEL_TAG.length()))/100));
                 }
-                else if(message.startsWith(TEMPERATURE_TAG)) {
+                else if (message.startsWith(TEMPERATURE_TAG)) {
                     Platform.runLater(() -> this.temperature.set(Float.parseFloat(message.substring(TEMPERATURE_TAG.length()))/100));
                 }
-                else if(message.startsWith(WASTE_LEVEL_ALARM_TAG)) {
+                else if (message.startsWith(WASTE_LEVEL_ALARM_TAG)) {
                     Platform.runLater(() -> this.wasteLevelAlarm.set(message.substring(WASTE_LEVEL_ALARM_TAG.length()).equals("true")));
                 }
-                else if(message.startsWith(TEMPERATURE_ALARM_TAG)) {
+                else if (message.startsWith(TEMPERATURE_ALARM_TAG)) {
                     Platform.runLater(() -> this.temperatureAlarm.set(message.substring(TEMPERATURE_ALARM_TAG.length()).equals("true")));
                 }
             } catch (InterruptedException e) {

@@ -7,8 +7,8 @@ WasteDetector::WasteDetector(Sonar* sonar) {
 float WasteDetector::mapValue(float value) {
     if (value == -1) value = _sonar->read();
     
-    if(value >= Constants::Sonar::EMPTY_DISTANCE) return 0.0;
-    if(value <= Constants::Sonar::FULL_DISTANCE) return 1.0;
+    if (value >= Constants::Sonar::EMPTY_DISTANCE) return 0.0;
+    if (value <= Constants::Sonar::FULL_DISTANCE) return 1.0;
     return ((Constants::Sonar::EMPTY_DISTANCE - value) / (Constants::Sonar::EMPTY_DISTANCE - Constants::Sonar::FULL_DISTANCE));
 }
 

@@ -7,7 +7,7 @@
 
 /**
  * \brief Class for the Temperature Detector
- * \implements Thermistor
+ * \implements{Thermistor}
  */
 class TemperatureDetector {
 public:
@@ -36,6 +36,6 @@ public:
     void setTemperatureAlarm(bool alarm);
 
 private:
-    Thermistor* _thermistor; /**< Reference to the Thermistor Object */
-    bool _highTemperatureAlarm = false; /**< High Temperature Alarm Status */
+    Thermistor* _thermistor; /** Reference to the Thermistor Object */
+    bool _highTemperatureAlarm = false; /** High Temperature Alarm Status */
 };

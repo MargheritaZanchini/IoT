@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+    Main Layout of the Application's Operator Dashboard.
+    It Contains the Following Components:
+
+    - A Title Label
+    - Two Vertical Boxes, each Containing:
+        - Progress Bar Title Label
+        - Progress Bar Component
+        - Progress Bar Value Label
+    - A Horizontal Box Containing Two Buttons:
+        - Empty Button
+        - Restore Button
+
+    The layout is designed to display the waste level and temperature of a machine, along with buttons to empty and restore the machine.
+
+    @author Marco Marrelli
+-->
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -34,8 +52,5 @@
             <Button fx:id="emptyButton" focusTraversable="false" style="-fx-font-size: 14px; -fx-min-width: 100px; -fx-min-height: 40px" text="EMPTY" />
             <Button fx:id="restoreButton" focusTraversable="false" style="-fx-font-size: 14px; -fx-min-width: 100px; -fx-min-height: 40px" text="RESTORE" />
         </HBox>
-        <!--
-            <Label fx:id="statusLabel" alignment="CENTER" style="-fx-font-size: 14px" text="System Status: Normal" />
-         -->
     </children>
 </VBox>

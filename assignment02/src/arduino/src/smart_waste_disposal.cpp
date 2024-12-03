@@ -34,8 +34,8 @@ ServoMotor* servo; /** [Pointer] Servo Motor */
 
 Button* closeButton; /** [Pointer] Close Button */
 Button* openButton; /** [Pointer] Open Button */
-Led* okIndicator; /** [Pointer] OK Indicator LED */
-Led* errorIndicator; /** [Pointer] Error Indicator LED */
+Led* okLED; /** [Pointer] OK Indicator LED */
+Led* errorLED; /** [Pointer] Error Indicator LED */
 PIR* pir; /** [Pointer] PIR Sensor */
 WasteDetector* wasteDetector; /** [Pointer] Waste Detector (Sonar Handler Class) */
 TemperatureDetector* temperatureDetector; /** [Pointer] Temperature Detector (Thermistor Handler Class) */
@@ -64,8 +64,8 @@ void setup() {
 
     closeButton = new Button(Constants::Button::Close::PIN);
     openButton = new Button(Constants::Button::Open::PIN);
-    okIndicator = new Led(Constants::LED::OK::PIN);
-    errorIndicator = new Led(Constants::LED::Error::PIN);
+    okLED = new Led(Constants::LED::OK::PIN);
+    errorLED = new Led(Constants::LED::Error::PIN);
     pir = new PIR(Constants::PIR::PIN);
     sonar = new Sonar(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
     thermistor = new Thermistor(Constants::Thermistor::PIN);
@@ -87,7 +87,7 @@ void setup() {
     wasteDetection = new WasteDetectorTask(wasteDetector);
     wasteDetection->init(500);
 
-    ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector, wasteDetector);
+    ledManager = new LedsTask(okLED, errorLED, temperatureDetector, wasteDetector);
     ledManager->init(500);
 
     userDisplay = new UserDisplayTask(wasteDetector, temperatureDetector, door);

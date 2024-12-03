@@ -1,5 +1,4 @@
-#ifndef __A02_CONSTANTS__
-#define __A02_CONSTANTS__
+#pragma once
 
 #include <Arduino.h>
 
@@ -51,9 +50,9 @@ namespace Constants {
         constexpr int USER_DOOR_OPENED = 750; //0°
         constexpr int USER_DOOR_CLOSED = 1500; //90°
         constexpr int OPERATOR_DOOR_OPENED = 2250; //180° 
-        constexpr unsigned long CLOSING_MESSAGE_TIME = 3000;
-        constexpr unsigned long OPERATOR_EMPTY_TIME = 5000;
-        constexpr unsigned long AUTOMATIC_CLOSE_TIME = 5000;
+        constexpr unsigned long CLOSING_MESSAGE_TIME = 2000;
+        constexpr unsigned long OPERATOR_EMPTY_TIME = 4000;
+        constexpr unsigned long AUTOMATIC_CLOSE_TIME = 8000;
     }
 
     namespace Sonar {
@@ -72,7 +71,7 @@ namespace Constants {
 
     namespace Thermistor {
         constexpr int PIN = A0; /** Pin Number for Thermistor Analog Input */
-        constexpr int MAX_TEMPERATURE = 32;
+        constexpr int MAX_TEMPERATURE = 28;
         constexpr int MAX_TEMPERATURE_TIME = 4000; /**If the thermistor is in MAX_TEMP for MAX_TEMP_TIME there is a problem  */
     }
 
@@ -80,5 +79,3 @@ namespace Constants {
     constexpr unsigned long BAUD_RATE = 9600; /** Baud Rate for Serial Communication */
     constexpr unsigned long SLEEP_TIME = 10000; /** Time Before Sleep State */
 }
-
-#endif

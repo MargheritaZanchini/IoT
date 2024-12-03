@@ -1,13 +1,10 @@
 #include "WasteDetectorTask.h"
 
 WasteDetectorTask::WasteDetectorTask(WasteDetector* detector) {
-    _detector = detector;
-}
-
-void WasteDetectorTask::init(int period) {
-    Task::init(period);
-    _detector->setFullnessAlarm(false);
     _state = NOT_FULL;
+
+    _detector = detector;
+    _detector->setFullnessAlarm(false);
 }
 
 void WasteDetectorTask::tick() {
@@ -15,26 +12,24 @@ void WasteDetectorTask::tick() {
     Serial.println(_detector->getFormattedValue());
 
     bool isFull = checkFullness();
-    switch(_state) {
+    switch (_state) {
         case NOT_FULL:
-            if(isFull) {
+            if (isFull) {
                 _detector->setFullnessAlarm(isFull);
                 _state = FULL;
             }
+
             break;
         case FULL:
-            if(!isFull) {
+            if (!isFull) {
                 _detector->setFullnessAlarm(isFull);
                 _state = NOT_FULL;
             }
+
             break;
     }
 }
 
-/**
- * \brief Check if Container is Full
- * \return if Waste Level >= Alarm Threshold \note See Constants::Sonar::ALARM_THRESHOLD
- */
 bool WasteDetectorTask::checkFullness() {
     return (_detector->read() <= Constants::Sonar::FULL_THRESHOLD);
 }

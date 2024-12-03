@@ -3,16 +3,28 @@
 #include "arduino/lib/tasks/Task.h"
 #include "arduino/lib/components/physical/Pir.h"
 
+/**
+ * \brief User Detector Task Class
+ * \implements{Task}
+ */
 class UserDetectorTask : public Task {
 public:
-    void tick() override;
+    /**
+     * \brief Creates New User Detector Task
+     * \param pir Pointer to PIR Sensor Object
+     */
     UserDetectorTask(PIR* pir);
 
+    void tick() override;
+
 private:
-    bool _sleep;
-    bool _userDetected;
-    unsigned long _lastDetectedTime;
-    enum State {NOT_DETECTED, DETECTED, SLEEP};
-    State _state;
-    PIR* _pir;
+    enum State {NOT_DETECTED, DETECTED, SLEEP}; /** Enumeration for PIR States */
+    State _state; /** Current State of the User Detector Task */
+
+    PIR* _pir; /** Pointer to PIR Sensor Object */
+
+    bool _sleep; /** Sleep Status */
+    bool _userDetected; /** User Detected Status */
+    
+    unsigned long _lastDetectedTime; /** Timestamp of the Last Detected User */
 };

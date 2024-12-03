@@ -5,19 +5,30 @@
 #include "arduino/lib/components/logical/TemperatureDetector.h"
 #include "arduino/lib/components/logical/WasteDetector.h"
 
+/**
+ * \brief Leds Task Class
+ * \implements{Task}
+ */
 class LedsTask: public Task {
 public:
-    LedsTask(Led* ok, Led* error, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector);  
-    void init(int period);
-    void tick();
+    /**
+     * \brief Creates New Leds Task
+     * \param ok Pointer to OK (Green) LED Object
+     * \param error Pointer to Error (Red) LED Object
+     * \param temperatureDetector Pointer to Temperature Detector Object
+     * \param wasteDetector Pointer to Waste Detector Object
+     */
+    LedsTask(Led* ok, Led* error, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector);
+
+    void tick() override;
 
 private:
-    Led* _ok;
-    Led* _error;
+    enum State { OK_ON, ERROR_ON}; /** Enumeration for LED States */
+    State _state; /** Current State of the LEDs */
 
-    TemperatureDetector* _temperatureDetector;
-    WasteDetector* _wasteDetector;
+    Led* _ok; /** Pointer to OK (Green) LED Object */
+    Led* _error; /** Pointer to Error (Red) LED Object */
 
-    enum State { OK_ON, ERROR_ON};
-    State _state;
+    WasteDetector* _wasteDetector; /** Pointer to Waste Detector Object */
+    TemperatureDetector* _temperatureDetector; /** Pointer to Temperature Detector Object */
 };
