@@ -53,6 +53,7 @@ namespace Constants {
         constexpr int OPERATOR_DOOR_OPENED = 2250; //180° 
         constexpr unsigned long CLOSING_MESSAGE_TIME = 3000;
         constexpr unsigned long OPERATOR_EMPTY_TIME = 5000;
+        constexpr unsigned long AUTOMATIC_CLOSE_TIME = 5000;
     }
 
     namespace Sonar {

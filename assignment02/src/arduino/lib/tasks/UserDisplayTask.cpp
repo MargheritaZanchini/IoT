@@ -11,7 +11,7 @@ UserDisplayTask::UserDisplayTask(WasteDetector* wasteDetector, TemperatureDetect
     _lcd.backlight();
     _lcd.setCursor(0, 0);
 
-    _state = OK;
+    _state = DISPLAY_DEFAULT;
     updateDisplay(Constants::LCD::MSG_DEFAULT);
 }
 
@@ -21,7 +21,7 @@ void UserDisplayTask::tick() {
     bool isOpen = _door->isOpen();
 
     switch (_state) {
-        case OK:
+        case DISPLAY_DEFAULT:
             if (isFull){
                 _state = DISPLAY_WASTE;
                 updateDisplay(Constants::LCD::MSG_CONTAINER_FULL);
@@ -38,20 +38,23 @@ void UserDisplayTask::tick() {
 
         case DISPLAY_WASTE:
             if(!isFull){
-                _state = OK;
+                _state = DISPLAY_DEFAULT;
                 updateDisplay(Constants::LCD::MSG_DEFAULT);
             }
             break;
 
         case DISPLAY_TEMPERATURE:
             if(!isInAlarm){
-                _state = OK;
+                _state = DISPLAY_DEFAULT;
                 updateDisplay(Constants::LCD::MSG_DEFAULT);
             }
             break;
 
         case DISPLAY_DOOR_OPEN:
-            if(!isOpen) {
+            if(isInAlarm || isFull){
+                _state = DISPLAY_DEFAULT;
+            }
+            else if(!isOpen) {
                 _state = DISPLAY_ON_DOOR_CLOSED;
                 updateDisplay(Constants::LCD::MSG_DOOR_CLOSE);
                 _lastDetectedTime = 0;
@@ -61,7 +64,7 @@ void UserDisplayTask::tick() {
         case DISPLAY_ON_DOOR_CLOSED:
             if(_lastDetectedTime == 0) _lastDetectedTime = millis();
             else if(millis() - _lastDetectedTime > Constants::Servo::CLOSING_MESSAGE_TIME) {
-                _state = OK;
+                _state = DISPLAY_DEFAULT;
                 updateDisplay(Constants::LCD::MSG_DEFAULT);
             }
             break;

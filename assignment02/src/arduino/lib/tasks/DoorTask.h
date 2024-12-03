@@ -24,6 +24,7 @@ private:
   WasteDetector* _wasteDetector;
   TemperatureDetector* _temperatureDetector;
   unsigned long _lastEmptiedTime;
+  unsigned long _automaticCloseTime;
 };
 
 #endif

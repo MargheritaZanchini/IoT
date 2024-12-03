@@ -22,6 +22,7 @@ void DoorTask::tick() {
     switch (_state) {
         case CLOSED:
             if(openPressed && (!isInAlarm && !isFull)) {
+                _automaticCloseTime = 0;
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
                 _state = OPENED;
             }
@@ -35,6 +36,14 @@ void DoorTask::tick() {
         
         case OPENED:
             if(closePressed || isInAlarm || isFull) {
+                _door->setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
+                _state = CLOSED;
+            }
+
+            if(_automaticCloseTime == 0) {
+                _automaticCloseTime = millis();
+            }
+            if(millis() - _automaticCloseTime >= Constants::Servo::AUTOMATIC_CLOSE_TIME) {
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
                 _state = CLOSED;
             }
