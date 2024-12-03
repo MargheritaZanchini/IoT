@@ -2,7 +2,6 @@
 #include "../lib/components/physical/Button.h"
 #include "../lib/components/physical/Led.h"
 #include "../lib/components/physical/Pir.h"
-#include "../lib/components/logical/Display.h"
 #include "../lib/components/logical/Door.h"
 #include "../lib/components/logical/WasteDetector.h"
 #include "../lib/components/logical/TemperatureDetector.h"
@@ -22,14 +21,12 @@
 
 Scheduler scheduler;
 
-LiquidCrystal_I2C* _lcd = new LiquidCrystal_I2C(0x27, 20, 4);
-Display* display = new Display(_lcd);
 Button* closeButton = new Button(Constants::Button::Close::PIN);
 Button* openButton = new Button(Constants::Button::Open::PIN);
 Led* okIndicator = new Led(Constants::LED::OK::PIN);
 Led* errorIndicator = new Led(Constants::LED::Error::PIN);
 PIR* pir = new PIR(Constants::PIR::PIN);
-Door* door = new Door(Constants::Servo::PIN);
+// Door* door = new Door(Constants::Servo::PIN);
 WasteDetector* wasteDetector = new WasteDetector(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
 TemperatureDetector* temperatureDetector = new TemperatureDetector(Constants::Thermistor::PIN);
 
@@ -40,9 +37,6 @@ void setup() {
     Serial.flush();
 
     scheduler.init(500);
-
-    _lcd->init();
-    _lcd->backlight();
 
     enableInterrupt(Constants::PIR::PIN, wakeUp, RISING);
 
@@ -61,15 +55,15 @@ void setup() {
     LedsTask* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector, wasteDetector);
     ledManager->init(500);
 
-    // UserDisplayTask* userDisplay = new UserDisplayTask(display, wasteDetector, temperatureDetector, door);
-    // userDisplay->init(1000);
+    UserDisplayTask* userDisplay = new UserDisplayTask(wasteDetector, temperatureDetector/* , door */);
+    userDisplay->init(1000);
 
     // scheduler.addTask(doorManager);
     scheduler.addTask(userDetecion);
     scheduler.addTask(temperatureDetection);
     scheduler.addTask(wasteDetection);
     scheduler.addTask(ledManager);
-    // scheduler.addTask(userDisplay);
+    scheduler.addTask(userDisplay);
 }
 
 void loop() {

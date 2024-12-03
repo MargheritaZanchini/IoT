@@ -2,7 +2,6 @@
 #define __A02_WASTE_DETECTOR_TASK__
 
 #include "Task.h"
-#include "../components/logical/Display.h"
 #include "../components/logical/WasteDetector.h"
 #include "../communication/MsgService.h"
 

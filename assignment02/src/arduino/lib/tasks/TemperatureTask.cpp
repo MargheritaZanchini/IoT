@@ -8,7 +8,7 @@ TemperatureTask::TemperatureTask(TemperatureDetector* temperatureDetector) {
 }
 
 void TemperatureTask::tick() {
-    Serial.print("[Value:Temp]");
+    Serial.print("[Value:Temperature]");
     Serial.println(_temperatureDetector->read());
 
     // MsgService.sendMsg("[Value:Temperature]" + String(_temperatureDetector->read()));
