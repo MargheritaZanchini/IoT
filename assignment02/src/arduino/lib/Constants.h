@@ -25,11 +25,11 @@ namespace Constants {
         constexpr int COLUMNS = 20; /** Number of Character Columns on LCD Display */
         constexpr int ROWS = 20; /** Number of Character Rows on LCD Display */
 
-        const String MSG_DEFAULT = "Press Open to Enter Waste"; /** Press Open to Enter Waste */
-        const String MSG_DOOR_OPEN = "Press Close When Done"; /** Press Close When Done */
-        const String MSG_DOOR_CLOSE = "Waste Received"; /** Waste Received */
-        const String MSG_CONTAINER_FULL = "Container Full"; /** Container Full */
-        const String MSG_TEMPERATURE_ALARM = "Problem Detected!"; /** Problem Detected! */
+        constexpr const char* MSG_DEFAULT = "Press Open to Enter Waste"; /** Press Open to Enter Waste */
+        constexpr const char* MSG_DOOR_OPEN = "Press Close When Done"; /** Press Close When Done */
+        constexpr const char* MSG_DOOR_CLOSE = "Waste Received"; /** Waste Received */
+        constexpr const char* MSG_CONTAINER_FULL = "Container Full"; /** Container Full */
+        constexpr const char* MSG_TEMPERATURE_ALARM = "Problem Detected!"; /** Problem Detected! */
     }
 
     namespace LED {
@@ -71,7 +71,7 @@ namespace Constants {
 
     namespace Thermistor {
         constexpr int PIN = A0; /** Pin Number for Thermistor Analog Input */
-        constexpr int MAX_TEMPERATURE = 28;
+        constexpr int MAX_TEMPERATURE = 32;
         constexpr int MAX_TEMPERATURE_TIME = 4000; /**If the thermistor is in MAX_TEMP for MAX_TEMP_TIME there is a problem  */
     }
 

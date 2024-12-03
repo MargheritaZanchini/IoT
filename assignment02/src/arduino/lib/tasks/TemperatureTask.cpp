@@ -34,6 +34,9 @@ void TemperatureTask::tick() {
         case PROBLEM_DETECTED:
             if(MsgService.isMsgAvailable()) {
                 Msg* msg = MsgService.receiveMsg();
+                
+                Serial.print(F("[Value:Msg] "));
+                Serial.println(MsgService.receiveMsg()->getContent());
 
                 if(msg == NULL) {
                     delete msg;

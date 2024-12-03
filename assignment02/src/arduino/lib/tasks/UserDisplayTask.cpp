@@ -68,7 +68,7 @@ void UserDisplayTask::tick() {
     }
 }
 
-void UserDisplayTask::updateDisplay(const String& msg) {
+void UserDisplayTask::updateDisplay(const char* msg) {
     if (_previousMessage == msg) {
         return;
     }

@@ -63,15 +63,15 @@ void setup() {
     LedsTask* ledManager = new LedsTask(okIndicator, errorIndicator, temperatureDetector, wasteDetector);
     ledManager->init(500);
 
-    // UserDisplayTask* userDisplay = new UserDisplayTask(wasteDetector, temperatureDetector, door);
-    // userDisplay->init(1000);
+    UserDisplayTask* userDisplay = new UserDisplayTask(wasteDetector, temperatureDetector, door);
+    userDisplay->init(1000);
 
     scheduler.addTask(doorManager);
     scheduler.addTask(userDetecion);
     scheduler.addTask(temperatureDetection);
     scheduler.addTask(wasteDetection);
     scheduler.addTask(ledManager);
-    // scheduler.addTask(userDisplay);
+    scheduler.addTask(userDisplay);
 }
 
 void loop() {

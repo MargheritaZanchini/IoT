@@ -24,8 +24,8 @@ private:
     enum State { OK, DISPLAY_WASTE, DISPLAY_TEMPERATURE, DISPLAY_DOOR_OPEN, DISPLAY_ON_DOOR_CLOSED };
     State _state;
 
-    String _previousMessage;
-    void updateDisplay(const String& msg);
+    const char* _previousMessage;
+    void updateDisplay(const char* msg);
 };
 
 #endif
