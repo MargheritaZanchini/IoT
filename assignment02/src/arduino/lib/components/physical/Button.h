@@ -1,9 +1,9 @@
-#ifndef __A02_BUTTON__
-#define __A02_BUTTON__
+#pragma once
+
+#include "arduino/lib/Constants.h"
 
 /**
  * @brief Button Component Helper Class
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
  */
 class Button {
 public:
@@ -24,5 +24,3 @@ private:
     long _previous; /** Last Time Reading for Debounce */
     bool _state; /** Current Button State Cache */
 };
-
-#endif

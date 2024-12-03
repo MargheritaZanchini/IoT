@@ -1,8 +1,10 @@
 #include "Button.h"
 
-#include "../../Constants.h"
+Button::Button(int pin) {
+    _pin = pin;
+    _previous = 0;
+    _state = LOW;
 
-Button::Button(int pin) : _pin(pin), _previous(0), _state(LOW) {
     pinMode(pin, INPUT);
 }
 

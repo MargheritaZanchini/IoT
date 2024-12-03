@@ -1,49 +1,29 @@
-#ifndef __SONAR__
-#define __SONAR__
+#pragma once
 
-#include "Sensor.h"
-#include "../../Constants.h"
+#include <Arduino.h>
+#include "arduino/lib/Constants.h"
+#include "arduino/lib/components/physical/Sensor.h"
 
 /**
  * @brief Sonar Component Helper Class
  * @implements{Sensor}
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
  */
 class Sonar : public Sensor {
 public:
     /**
-     * @brief Creates New Distance Sensor
+     * @brief Creates New Sonar Instance
      * @param trig Output Pin for Trigger Signal
      * @param echo Input Pin for Echo Signal
      */
-    Sonar(int trig, int echo) : Sensor() {
-        _trig = trig;
-        _echo = echo;
+    Sonar(int trig, int echo);
 
-        pinMode(_trig, OUTPUT);
-        pinMode(_echo, INPUT);
-    };
-
-    /*** 
-     * @brief Measure the Time in microseconds and Convert to Distance in Meters
-     * Dividing by 1000000 to Convert to Seconds and
-     * Dividing by 2 because the Sound Travels Back and Forth.
-     * 
+    /**
+     * @brief Reads the Distance Measured by the Sonar
      * @return Distance in Meters.
      */
-    float read() override {
-        digitalWrite(_trig, LOW);
-        delayMicroseconds(5);
-        digitalWrite(_trig, HIGH);
-        delayMicroseconds(5);
-        digitalWrite(_trig, LOW); 
-
-        return (pulseIn(_echo, HIGH) * Constants::Sonar::SOUND_VELOCITY) / (2.0 * 1000000.0);
-    }
+    float read() override;
 
 private:
     int _trig; /** Trigger Signal Pin */
     int _echo; /** Echo Signal Pin */
 };
-
-#endif

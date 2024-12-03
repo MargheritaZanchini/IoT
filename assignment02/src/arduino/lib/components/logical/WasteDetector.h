@@ -5,7 +5,6 @@
 
 /**
  * @brief Waste Detector Logical Component
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
  */
 class WasteDetector {
 public:
