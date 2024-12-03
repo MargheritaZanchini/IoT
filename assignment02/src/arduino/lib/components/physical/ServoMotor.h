@@ -1,11 +1,9 @@
-#ifndef __SERVO_MOTOR__
-#define __SERVO_MOTOR__
+#pragma once
 
 #include "ServoTimer2.h"
 
 /**
  * @brief Servo Component Helper Class
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
  */
 class ServoMotor {
 public:
@@ -35,5 +33,3 @@ private:
     int _pin; /** Pin Number for PWM Output */
     ServoTimer2 _servo; /** Servo Controller */
 };
-
-#endif

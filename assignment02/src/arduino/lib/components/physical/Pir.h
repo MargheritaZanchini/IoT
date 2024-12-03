@@ -1,12 +1,10 @@
-#ifndef __PIR__
-#define __PIR__
+#pragma once
 
-#include "Sensor.h"
+#include "arduino/lib/components/physical/Sensor.h"
 
 /**
  * @brief PIR Component Helper Class
- * @implements Sensor
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
+ * @implements{Sensor}
  */
 class PIR : public Sensor {
 public:
@@ -22,5 +20,3 @@ public:
      */
     const bool isDetected();
 };
-
-#endif

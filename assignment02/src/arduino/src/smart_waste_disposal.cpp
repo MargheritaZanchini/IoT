@@ -26,16 +26,17 @@
 #include "arduino/lib/tasks/LedsTask.h"
 #include "arduino/lib/tasks/TemperatureTask.h"
 
-Scheduler scheduler; /**< Schedule Object for Managing Tasks */
+Scheduler scheduler; /** Schedule Object for Managing Tasks */
+
+Sonar* sonar; /** [Pointer] Sonar Sensor */
+Thermistor* thermistor; /** [Pointer] Thermistor Sensor */
+ServoMotor* servo; /** [Pointer] Servo Motor */
 
 Button* closeButton; /** [Pointer] Close Button */
 Button* openButton; /** [Pointer] Open Button */
 Led* okIndicator; /** [Pointer] OK Indicator LED */
 Led* errorIndicator; /** [Pointer] Error Indicator LED */
 PIR* pir; /** [Pointer] PIR Sensor */
-Sonar* sonar; /** [Pointer] Sonar Sensor */
-Thermistor* thermistor; /** [Pointer] Thermistor Sensor */
-ServoMotor* servo; /** [Pointer] Servo Motor */
 WasteDetector* wasteDetector; /** [Pointer] Waste Detector (Sonar Handler Class) */
 TemperatureDetector* temperatureDetector; /** [Pointer] Temperature Detector (Thermistor Handler Class) */
 Door* door; /** [Pointer] Door (ServoMotor Handler Class) */
@@ -66,9 +67,13 @@ void setup() {
     okIndicator = new Led(Constants::LED::OK::PIN);
     errorIndicator = new Led(Constants::LED::Error::PIN);
     pir = new PIR(Constants::PIR::PIN);
-    door = new Door(Constants::Servo::PIN);
-    wasteDetector = new WasteDetector(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
-    temperatureDetector = new TemperatureDetector(Constants::Thermistor::PIN);
+    sonar = new Sonar(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
+    thermistor = new Thermistor(Constants::Thermistor::PIN);
+    servo = new ServoMotor(Constants::Servo::PIN);
+
+    door = new Door(servo);
+    wasteDetector = new WasteDetector(sonar);
+    temperatureDetector = new TemperatureDetector(thermistor);
 
     doorManager = new DoorTask(door, closeButton, openButton, temperatureDetector, wasteDetector);
     doorManager->init(500);

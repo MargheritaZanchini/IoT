@@ -1,11 +1,9 @@
-#ifndef __SENSOR__
-#define __SENSOR__
+#pragma once
 
 #include <Arduino.h>
 
 /**
  * @brief Generic Sensor Helper Base Class
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
  */
 class Sensor {
 public:
@@ -34,5 +32,3 @@ protected:
         pinMode(_pin, INPUT);
     }
 };
-
-#endif

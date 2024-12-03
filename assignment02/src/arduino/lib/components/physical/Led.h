@@ -1,9 +1,9 @@
-#ifndef __LED__
-#define __LED__
+#pragma once
+
+#include <Arduino.h>
 
 /**
  * @brief LED Component Helper Class
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
  */
 class Led {
 public:
@@ -29,7 +29,5 @@ public:
     void toggle();
 
 private:
-    int _pin;    /** Pin Number for Digital Output */
+    int _pin; /** Pin Number for Digital Output */
 };
-
-#endif

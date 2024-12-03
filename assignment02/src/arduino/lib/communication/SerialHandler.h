@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 /**
  * @brief Serial Helper Object Class
@@ -8,8 +8,8 @@
  */
 class SerialHelperObject {
 public:
-    bool hasEmptyAction = false; /**< Indicates if Empty Action is Available */
-    bool hasRestoreAction = false; /**< Indicates if Restore Action is Available */
+    bool hasEmptyAction = false; /** Indicates if Empty Action is Available */
+    bool hasRestoreAction = false; /** Indicates if Restore Action is Available */
 
     /**
      * @brief Initializes the Serial Helper Object
