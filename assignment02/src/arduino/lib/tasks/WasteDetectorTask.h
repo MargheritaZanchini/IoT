@@ -3,7 +3,7 @@
 
 #include "Task.h"
 #include "../components/logical/WasteDetector.h"
-#include "../communication/MsgService.h"
+#include "../communication/SerialHandler.h"
 
 class WasteDetectorTask : public Task {
 public:

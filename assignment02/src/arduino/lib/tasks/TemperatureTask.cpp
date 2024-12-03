@@ -32,15 +32,9 @@ void TemperatureTask::tick() {
             }
             break;
         case PROBLEM_DETECTED:
-            if(MsgService.isMsgAvailable()) {
-                Msg* msg = MsgService.receiveMsg();
-
-                if(msg->getContent() == "[Action:Restore]") {
-                    _temperatureDetector->setTemperatureAlarm(false);
-                    _state = NORMAL;
-                }
-
-                delete msg;
+            if(SerialHelper.restoreActionAvailable()) {
+                _temperatureDetector->setTemperatureAlarm(false);
+                _state = NORMAL;
             }
             break;
     }

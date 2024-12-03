@@ -6,7 +6,7 @@
 #include "../components/logical/WasteDetector.h"
 #include "../components/logical/TemperatureDetector.h"
 #include "../components/logical/Door.h"
-#include "../communication/MsgService.h"
+#include "../communication/SerialHandler.h"
 
 class UserDisplayTask : public Task {
 public:
@@ -21,7 +21,7 @@ private:
 
     unsigned long _lastDetectedTime;
 
-    enum State { OK, DISPLAY_WASTE, DISPLAY_TEMPERATURE, DISPLAY_DOOR_OPEN, DISPLAY_ON_DOOR_CLOSED };
+    enum State { DISPLAY_DEFAULT, DISPLAY_WASTE, DISPLAY_TEMPERATURE, DISPLAY_DOOR_OPEN, DISPLAY_ON_DOOR_CLOSED };
     State _state;
 
     const char* _previousMessage;

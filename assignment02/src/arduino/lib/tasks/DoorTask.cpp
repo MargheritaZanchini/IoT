@@ -6,10 +6,6 @@ DoorTask::DoorTask(Door* door, Button* closeButton, Button* openButton, Temperat
     _openButton = openButton;
     _temperatureDetector = temperatureDetector;
     _wasteDetector = wasteDetector;
-}
-
-void DoorTask::init(int period) {
-    Task::init(period);
     _state = CLOSED;
 }
 
@@ -22,25 +18,28 @@ void DoorTask::tick() {
     switch (_state) {
         case CLOSED:
             if(openPressed && (!isInAlarm && !isFull)) {
+                _automaticCloseTime = 0;
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
                 _state = OPENED;
             }
-            if(MsgService.isMsgAvailable()) {
-                Msg* msg = MsgService.receiveMsg();
-
-                if(msg->getContent() == "[Action:Empty]") {
-                    _lastEmptiedTime = 0;
-                    _state = OPERATOR_OPENED;
-                    _door->setDoorPosition(Constants::Servo::OPERATOR_DOOR_OPENED);
-                }
-
-                delete msg;
+            if(SerialHelper.emptyActionAvailable()) {
+                _lastEmptiedTime = 0;
+                _state = OPERATOR_OPENED;
+                _door->setDoorPosition(Constants::Servo::OPERATOR_DOOR_OPENED);
             }
 
             break;
         
         case OPENED:
             if(closePressed || isInAlarm || isFull) {
+                _door->setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
+                _state = CLOSED;
+            }
+
+            if(_automaticCloseTime == 0) {
+                _automaticCloseTime = millis();
+            }
+            if(millis() - _automaticCloseTime >= Constants::Servo::AUTOMATIC_CLOSE_TIME) {
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
                 _state = CLOSED;
             }
