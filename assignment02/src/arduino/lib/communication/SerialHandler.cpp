@@ -26,9 +26,9 @@ void SerialHelperObject::init() {
 }
 
 /**
- * @brief [Override] Function Called Whenever a New Message is Available (in the Serial Port).
+ * \brief [Override] Function Called Whenever a New Message is Available (in the Serial Port).
  * 
- * @brief Uses '10' (\n) and '13' (\r) as EOS (End of String) Characters.
+ * \brief Uses '10' (\n) and '13' (\r) as EOS (End of String) Characters.
  */
 void serialEvent() {
     content = "";

@@ -1,10 +1,9 @@
-#ifndef __A02_LEDS_TASK__
-#define __A02_LEDS_TASK__
+#pragma once
 
-#include "Task.h"
-#include "../components/physical/Led.h"
-#include "../components/logical/TemperatureDetector.h"
-#include "../components/logical/WasteDetector.h"
+#include "arduino/lib/tasks/Task.h"
+#include "arduino/lib/components/physical/Led.h"
+#include "arduino/lib/components/logical/TemperatureDetector.h"
+#include "arduino/lib/components/logical/WasteDetector.h"
 
 class LedsTask: public Task {
 public:
@@ -22,5 +21,3 @@ private:
     enum State { OK_ON, ERROR_ON};
     State _state;
 };
-
-#endif

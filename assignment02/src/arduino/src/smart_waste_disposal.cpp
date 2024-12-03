@@ -1,10 +1,10 @@
 /**
  * Smart Waste Disposal
  * 
- * @brief Assignment02 - ESIoT 2024-2025 @ Unibo (Cesena)
- * @authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
- * @date 03/12/2024
- * @version 1.0
+ * \brief Assignment02 - ESIoT 2024-2025 @ Unibo (Cesena)
+ * \authors Marco Marrelli, Margherita Zanchini, Sofia Caberletti
+ * \date 03/12/2024
+ * \version 1.0
 **/
 #include <Arduino.h>
 #include <EnableInterrupt.h>
@@ -49,12 +49,12 @@ LedsTask* ledManager; /** [Pointer] LEDs Management Task */
 UserDisplayTask* userDisplay; /** [Pointer] User Display Task */
 
 /**
- * @brief Wakeup Function for Sleep State
+ * \brief Wakeup Function for Sleep State
  */
 void wakeup() { }
 
 /**
- * @brief Setup Function
+ * \brief Setup Function
  */
 void setup() {
     Serial.begin(Constants::BAUD_RATE);
@@ -104,7 +104,7 @@ void setup() {
 }
 
 /**
- * @brief Main Loop
+ * \brief Main Loop
  */
 void loop() {
     scheduler.schedule();

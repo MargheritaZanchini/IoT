@@ -1,9 +1,8 @@
-#ifndef __A02_TEMPERATURE_TASK__
-#define __A02_TEMPERATURE_TASK__
+#pragma once
 
-#include "Task.h"
-#include "../components/logical/TemperatureDetector.h"
-#include "../Constants.h"
+#include "arduino/lib/Constants.h"
+#include "arduino/lib/tasks/Task.h"
+#include "arduino/lib/components/logical/TemperatureDetector.h"
 
 class TemperatureTask : public Task {
 public:
@@ -17,5 +16,3 @@ private:
     TemperatureDetector* _temperatureDetector;
     unsigned long _lastDetectedTime;
 };
-
-#endif

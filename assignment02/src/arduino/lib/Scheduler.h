@@ -4,8 +4,8 @@
 #include "arduino/lib/tasks/Task.h"
 
 /**
- * @brief Scheduler Class
- * @author Alessandro Ricci @see{https://github.com/aricci303/}
+ * \brief Scheduler Class
+ * \author Alessandro Ricci \note See https://github.com/aricci303/
  */
 class Scheduler {
 public:

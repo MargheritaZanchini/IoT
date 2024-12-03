@@ -3,19 +3,19 @@
 #include "arduino/lib/Constants.h"
 
 /**
- * @brief Button Component Helper Class
+ * \brief Button Component Helper Class
  */
 class Button {
 public:
     /**
-     * @brief Creates New Button Instance
-     * @param pin Input Pin for Button Connection
+     * \brief Creates New Button Instance
+     * \param pin Input Pin for Button Connection
      */
     Button(int pin);
 
     /**
-     * @brief Detects Button Press with Debouncing
-     * @return true if Button is Pressed, false Otherwise
+     * \brief Detects Button Press with Debouncing
+     * \return true if Button is Pressed, false Otherwise
      */
     bool isPressed();
 

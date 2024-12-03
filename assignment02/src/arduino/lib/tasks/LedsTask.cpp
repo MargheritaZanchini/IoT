@@ -17,8 +17,7 @@ void LedsTask::tick() {
     bool isInAlarm = _temperatureDetector->getTemperatureAlarm();
     bool isFull = _wasteDetector->getFullnessAlarm();
 
-    switch (_state)
-    {
+    switch(_state) {
         case OK_ON:
             if(isInAlarm || isFull) {
                 _ok->off();

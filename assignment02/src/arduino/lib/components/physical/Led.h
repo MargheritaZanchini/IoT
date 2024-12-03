@@ -3,28 +3,28 @@
 #include <Arduino.h>
 
 /**
- * @brief LED Component Helper Class
+ * \brief LED Component Helper Class
  */
 class Led {
 public:
     /**
-     * @brief Creates New LED Instance
-     * @param pin Output Pin for LED Connection
+     * \brief Creates New LED Instance
+     * \param pin Output Pin for LED Connection
      */
     Led(int pin);
 
     /**
-     * @brief Sets LED to High State
+     * \brief Sets LED to High State
      */
     void on();
 
     /**
-     * @brief Sets LED to Low State
+     * \brief Sets LED to Low State
      */
     void off();
 
     /**
-     * @brief Inverts Current LED State
+     * \brief Inverts Current LED State
      */
     void toggle();
 

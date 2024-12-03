@@ -1,9 +1,8 @@
-#ifndef __A02_WASTE_DETECTOR_TASK__
-#define __A02_WASTE_DETECTOR_TASK__
+#pragma once
 
-#include "Task.h"
-#include "../components/logical/WasteDetector.h"
-#include "../communication/SerialHandler.h"
+#include "arduino/lib/tasks/Task.h"
+#include "arduino/lib/components/logical/WasteDetector.h"
+#include "arduino/lib/communication/SerialHandler.h"
 
 class WasteDetectorTask : public Task {
 public:
@@ -19,5 +18,3 @@ private:
     enum State { NOT_FULL, FULL };
     State _state;
 };
-
-#endif

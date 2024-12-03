@@ -1,13 +1,13 @@
-#ifndef __A02_USER_DETECTOR_TASK__
-#define __A02_USER_DETECTOR_TASK__
+#pragma once
 
-#include "Task.h"
-#include "../components/physical/Pir.h"
+#include "arduino/lib/tasks/Task.h"
+#include "arduino/lib/components/physical/Pir.h"
 
 class UserDetectorTask : public Task {
 public:
     void tick() override;
     UserDetectorTask(PIR* pir);
+
 private:
     bool _sleep;
     bool _userDetected;
@@ -16,5 +16,3 @@ private:
     State _state;
     PIR* _pir;
 };
-
-#endif

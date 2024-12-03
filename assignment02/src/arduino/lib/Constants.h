@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 /**
- * @brief Constants Namespace
+ * \brief Constants Namespace
  * 
  * Implemented for Global Arduino-Workspace Use
  */
@@ -43,7 +43,7 @@ namespace Constants {
 
     namespace PIR {
         constexpr int PIN = 5; /** Pin Number for Passive Infrared Motion Sensor */
-        constexpr int CALIBRATION_TIME = 4000; /** Time in Seconds for the PIR to be Calibrated \see{Constants::SECOND} */
+        constexpr int CALIBRATION_TIME = 4000; /** Time in Seconds for the PIR to be Calibrated \note See Constants::SECOND */
     }
 
     namespace Servo {
@@ -63,7 +63,7 @@ namespace Constants {
         namespace Echo {
             constexpr int PIN = 13; /** Pin Number for Ultrasonic Sensor Echo Signal */
         }
-        constexpr float TEMPERATURE = 20; /** Temperature for Speed Calculation @note https://en.wikipedia.org/wiki/Speed_of_sound */
+        constexpr float TEMPERATURE = 20; /** Temperature for Speed Calculation \note See https://en.wikipedia.org/wiki/Speed_of_sound */
         constexpr float SOUND_VELOCITY = 331.45 + (0.62 * TEMPERATURE); /** Current Sound Velocity */
         constexpr float EMPTY_DISTANCE = 1.0; /** Empty Distance (in Meters) */
         constexpr float FULL_DISTANCE = 0.0; /** Full Distance (in Meters) */

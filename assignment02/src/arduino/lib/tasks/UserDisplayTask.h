@@ -1,12 +1,11 @@
-#ifndef __A02_USER_DISPLAY_TASK__
-#define __A02_USER_DISPLAY_TASK__
+#pragma once
 
 #include <LiquidCrystal_I2C.h>
-#include "Task.h"
-#include "../components/logical/WasteDetector.h"
-#include "../components/logical/TemperatureDetector.h"
-#include "../components/logical/Door.h"
-#include "../communication/SerialHandler.h"
+#include "arduino/lib/tasks/Task.h"
+#include "arduino/lib/communication/SerialHandler.h"
+#include "arduino/lib/components/logical/WasteDetector.h"
+#include "arduino/lib/components/logical/TemperatureDetector.h"
+#include "arduino/lib/components/logical/Door.h"
 
 class UserDisplayTask : public Task {
 public:
@@ -27,5 +26,3 @@ private:
     const char* _previousMessage;
     void updateDisplay(const char* msg);
 };
-
-#endif

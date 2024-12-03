@@ -1,29 +1,26 @@
-#ifndef __A02_DOOR_TASK__
-#define __A02_DOOR_TASK__
+#pragma once
 
-#include "Task.h"
-#include "../components/logical/Door.h"
-#include "../components/physical/Button.h"
-#include "../Constants.h"
-#include "../components/logical/TemperatureDetector.h"
-#include "../components/logical/WasteDetector.h"
-#include "../../lib/communication/SerialHandler.h"
+#include "arduino/lib/Constants.h"
+#include "arduino/lib/tasks/Task.h"
+#include "arduino/lib/communication/SerialHandler.h"
+#include "arduino/lib/components/physical/Button.h"
+#include "arduino/lib/components/logical/Door.h"
+#include "arduino/lib/components/logical/TemperatureDetector.h"
+#include "arduino/lib/components/logical/WasteDetector.h"
 
 class DoorTask : public Task {   
 public:
-  DoorTask(Door* door, Button* closeButton, Button* openButton, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector);
-  void tick() override;
+    DoorTask(Door* door, Button* closeButton, Button* openButton, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector);
+    void tick() override;
 
 private:
-  enum State { CLOSED, OPENED, OPERATOR_OPENED };
-  State _state;
-  Door* _door;
-  Button* _closeButton;
-  Button* _openButton;
-  WasteDetector* _wasteDetector;
-  TemperatureDetector* _temperatureDetector;
-  unsigned long _lastEmptiedTime;
-  unsigned long _automaticCloseTime;
+    enum State { CLOSED, OPENED, OPERATOR_OPENED };
+    State _state;
+    Door* _door;
+    Button* _closeButton;
+    Button* _openButton;
+    WasteDetector* _wasteDetector;
+    TemperatureDetector* _temperatureDetector;
+    unsigned long _lastEmptiedTime;
+    unsigned long _automaticCloseTime;
 };
-
-#endif

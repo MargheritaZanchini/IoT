@@ -32,8 +32,8 @@ void WasteDetectorTask::tick() {
 }
 
 /**
- * @brief Check if Container is Full
- * @return if Waste Level >= Alarm Threshold @see{Constants::Sonar::ALARM_THRESHOLD}
+ * \brief Check if Container is Full
+ * \return if Waste Level >= Alarm Threshold \note See Constants::Sonar::ALARM_THRESHOLD
  */
 bool WasteDetectorTask::checkFullness() {
     return (_detector->read() <= Constants::Sonar::FULL_THRESHOLD);
