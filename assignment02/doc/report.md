@@ -16,7 +16,7 @@ Il programma utilizza uno [`Scheduler`](../src/arduino/lib/Scheduler.cpp) per ge
 ## Componenti Principali
 
 ### Sensori e Attuatori
-
+Le seguenti classi servono ad interfacciarsi con i componenti elettronici fisici.
 - [`ServoMotor`](../src/arduino/lib/components/physical/ServoMotor.cpp): Utilizzato per controllare l'apertura e la chiusura del coperchio del bidone.
 - [`LED`](../src/arduino/lib/components/physical/Led.cpp): Indicatori di stato per segnalare condizioni normali o di errore.
 - [`Button`](../src/arduino/lib/components/physical/Button.cpp): Pulsanti per aprire e chiudere manualmente il coperchio del bidone.
@@ -25,15 +25,14 @@ Il programma utilizza uno [`Scheduler`](../src/arduino/lib/Scheduler.cpp) per ge
 - [`Sonar`](../src/arduino/lib/components/physical/Sonar.cpp): Sensore a ultrasuoni per misurare il livello di riempimento del bidone.
 
 ### Classi Logiche
-
+Le seguenti classi, invece, sfruttano le precedentemente citate come risorse interne, constestualizzandole all'interno dell'architettura del progetto.
 - [`Door`](../src/arduino/lib/components/logical/Door.cpp): Gestisce il movimento del coperchio del bidone.
 - [`TemperatureDetector`](../src/arduino/lib/components/logical/TemperatureDetector.cpp): Monitora la temperatura e rileva condizioni di surriscaldamento.
 - [`WasteDetector`](../src/arduino/lib/components/logical/WasteDetector.cpp): Monitora il livello di riempimento del bidone.
-- [`SerialHandler`](../src/arduino/lib/communication/SerialHandler.cpp): Gestisce la comunicazione seriale per inviare e ricevere messaggi.
 
 ## Funzionamento
 
-Per sviluppare ogni task siamo partiti da diagrammi delle final state machine. Guardiamole più nel dettaglio.
+Per sviluppare ogni task siamo partiti da diagrammi delle FSM. Guardiamole più nel dettaglio.
 
 ### User Detector Task
 
@@ -72,7 +71,7 @@ Gestisce l'apertura e la chiusura del coperchio del bidone. Lo stato del task di
 Gestisce l'output testuale su uno schermo LCD (I2C, nel nostro caso 20x4). I messaggi sono preconfigurati e devono aggiornarsi quando:
 - **"Press Open to Enter Waste"**: Messaggio da mostrare di default
 - **"Press Close When Done"**: Messaggio da mostrare quando la porta è aperta.
-- **"Waste Received"**: Messaggio da mostrare quando la porta viene chiusa (senza presenza di alarms) o da un utente, o automaticamente. Dopo un tempo T2, ritorna al messaggio di default.
+- **"Waste Received"**: Messaggio da mostrare quando la porta viene chiusa (senza presenza di alarm) o da un utente, o automaticamente. Dopo un tempo T2, ritorna al messaggio di default.
 - **"Container Full"**: Messaggio da mostrare quando il contenitore supera la soglia d'allarme.
 - **"Problem Detected!"**: Messaggio da mostrare quando il termistore ha l'allarme attivo.
 All'interno del task vengono considerati anche le tempistiche di stampa su schermo.
@@ -81,10 +80,6 @@ All'interno del task vengono considerati anche le tempistiche di stampa su scher
 
 <img src="img/SmartWasteDisposalSchema.png" alt="Schema della Breadboard" width="750"/>
 
-## Comunicazione
+## Comunicazione con GUI Dashboard
 
-Il sistema utilizza la comunicazione seriale per inviare e ricevere messaggi. La classe [`SerialHandler`](../src/arduino/lib/communication/SerialHandler.h) gestisce la comunicazione, permettendo al sistema di inviare messaggi di stato e ricevere comandi da un'interfaccia utente esterna. L'[`interfaccia`](../src/pc/assignment02/src/main/java/assignment02/App.java), scritta in JavaFX, permette di visualizzare graficamente questi dati e di trasmettere azioni di svuotaggio e restoring del sistema tramite pulsanti su schermo.
-
-## Conclusione
-
-Il programma per il bidone intelligente per rifiuti tossici è un sistema complesso che integra vari sensori e attuatori per monitorare e controllare lo stato del bidone. Utilizzando un task scheduler, il sistema esegue periodicamente i task necessari per garantire il corretto funzionamento e la sicurezza del bidone. La comunicazione seriale permette l'interazione con un'interfaccia utente esterna, fornendo un controllo completo del sistema.
+Il sistema utilizza la comunicazione seriale per inviare e ricevere messaggi. La classe [`SerialHandler`](../src/arduino/lib/communication/SerialHandler.h) gestisce la comunicazione, permettendo al sistema di inviare messaggi di stato e ricevere comandi da un'interfaccia grafica esterna. L'[`interfaccia per gli operatori`](../src/pc/assignment02/src/main/java/assignment02/App.java), scritta in JavaFX, permette di visualizzare graficamente questi dati e di trasmettere azioni di svuotaggio e restoring del sistema tramite pulsanti su schermo.
