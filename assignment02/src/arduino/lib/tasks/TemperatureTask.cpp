@@ -8,11 +8,8 @@ TemperatureTask::TemperatureTask(TemperatureDetector* temperatureDetector) {
 }
 
 void TemperatureTask::tick() {
-    Serial.print("[Value:Temperature]");
+    Serial.print(F("[Value:Temperature]"));
     Serial.println(_temperatureDetector->read());
-
-    // MsgService.sendMsg("[Value:Temperature]" + String(_temperatureDetector->read()));
-    // Serial.println("[Value:Temperature]" + String(_temperatureDetector->read()));
 
     switch(_state) {
         case NORMAL:
@@ -38,16 +35,16 @@ void TemperatureTask::tick() {
             if(MsgService.isMsgAvailable()) {
                 Msg* msg = MsgService.receiveMsg();    
 
-                // if(msg == NULL) {
-                //     delete msg;
-                //     break;
-                // }
-                if(msg->getContent() == "[A:R]") {
+                if(msg == NULL) {
+                    delete msg;
+                    break;
+                }
+                if(msg->getContent() == "[Action:Restore]") {
                     _lastDetectedTime = 0;
                     _temperatureDetector->setTemperatureAlarm(false);
                     _state = NORMAL;
                 }
-            
+
                 delete msg;
             }
 

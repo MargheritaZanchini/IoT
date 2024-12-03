@@ -47,8 +47,8 @@ public:
     void setTemperatureAlarm(bool alarm) {
         _highTemperatureAlarm = alarm;
         
-        Serial.print("[A:T]");
-        Serial.println(_highTemperatureAlarm ? "true" : "false");
+        Serial.print(F("[Alarm:Temperature]"));
+        Serial.println(_highTemperatureAlarm ? F("true") : F("false"));
         Serial.flush();
     }
 

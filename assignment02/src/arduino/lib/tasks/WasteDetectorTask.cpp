@@ -11,7 +11,7 @@ void WasteDetectorTask::init(int period) {
 }
 
 void WasteDetectorTask::tick() {
-    Serial.print("[Value:WasteLevel]");
+    Serial.print(F("[Value:WasteLevel]"));
     Serial.println(_detector->getFormattedValue());
 
     bool isFull = checkFullness();

@@ -2,7 +2,7 @@
 #include "../lib/components/physical/Button.h"
 #include "../lib/components/physical/Led.h"
 #include "../lib/components/physical/Pir.h"
-// #include "../lib/components/logical/Door.h"
+#include "../lib/components/logical/Door.h"
 #include "../lib/components/logical/WasteDetector.h"
 #include "../lib/components/logical/TemperatureDetector.h"
 
@@ -73,11 +73,6 @@ void setup() {
     scheduler.addTask(wasteDetection);
     scheduler.addTask(ledManager);
     // scheduler.addTask(userDisplay);
-
-    door->setDoorPosition(750);
-    delay(200);
-    door->setDoorPosition(1500);
-    delay(200);
 }
 
 void loop() {
