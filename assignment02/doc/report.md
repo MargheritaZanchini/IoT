@@ -11,29 +11,27 @@ Il Smart Waste Disposal Container è un sistema embedded che implementa una gest
 
 ## Architettura task-based con utilizzo di un Task Scheduler
 
-Il programma utilizza uno `Scheduler` per gestire l'esecuzione periodica degli oggetti `Task`. Il metodo `schedule` dello scheduler viene richiamato ad ogni ciclo del `loop` e periodicamente, secondo un interrupt generato dal timer, controlla se ci sono dei task che possono essere eseguiti. Il controllo viene fatto sull'array `taskList` che contiene tutti i task del sistema e se un task può essere eseguito (quindi il suo specifico periodo è passato) viene richiamato il suo metodo `tick` che contiene il codice del suo comportamento.
+Il programma utilizza uno [`Scheduler`](../src/arduino/lib/Scheduler.cpp) per gestire l'esecuzione periodica degli oggetti [`Task`](../src/arduino/lib/tasks/Task.h). Il metodo `schedule` dello scheduler viene richiamato ad ogni ciclo del `loop` e periodicamente, secondo un interrupt generato dal timer, controlla se ci sono dei task che possono essere eseguiti. Il controllo viene fatto sull'array `taskList` che contiene tutti i task del sistema e se un task può essere eseguito (quindi il suo specifico periodo è passato) viene richiamato il suo metodo `tick` che contiene il codice del suo comportamento.
 
 ## Componenti Principali
 
 ### Sensori e Attuatori
 
-- **ServoMotor**: Utilizzato per controllare l'apertura e la chiusura del coperchio del bidone.
-- **LED**: Indicatori di stato per segnalare condizioni normali o di errore.
-- **Button**: Pulsanti per aprire e chiudere manualmente il coperchio del bidone.
-- **PIR (Passive Infrared Sensor)**: Sensore di movimento per rilevare la presenza di utenti.
-- **Thermistor**: Sensore di temperatura per monitorare la temperatura dei liquidi tossici all'interno.
-- **Sonar**: Sensore a ultrasuoni per misurare il livello di riempimento del bidone.
+- [`ServoMotor`](../src/arduino/lib/components/physical/ServoMotor.cpp): Utilizzato per controllare l'apertura e la chiusura del coperchio del bidone.
+- [`LED`](../src/arduino/lib/components/physical/Led.cpp): Indicatori di stato per segnalare condizioni normali o di errore.
+- [`Button`](../src/arduino/lib/components/physical/Button.cpp): Pulsanti per aprire e chiudere manualmente il coperchio del bidone.
+- [`PIR (Passive Infrared Sensor)`](../src/arduino/lib/components/physical/Pir.cpp): Sensore di movimento per rilevare la presenza di utenti.
+- [`Thermistor`](../src/arduino/lib/components/physical/Thermistor.cpp): Sensore di temperatura per monitorare la temperatura dei liquidi tossici all'interno.
+- [`Sonar`](../src/arduino/lib/components/physical/Sonar.cpp): Sensore a ultrasuoni per misurare il livello di riempimento del bidone.
 
 ### Classi Logiche
 
-- *Door*: Gestisce il movimento del coperchio del bidone.
-- *TemperatureDetector*: Monitora la temperatura e rileva condizioni di surriscaldamento.
-- *WasteDetector*: Monitora il livello di riempimento del bidone.
-- *MsgService*: Gestisce la comunicazione seriale per inviare e ricevere messaggi.
+- [`Door`](../src/arduino/lib/components/logical/Door.cpp): Gestisce il movimento del coperchio del bidone.
+- [`TemperatureDetector`](../src/arduino/lib/components/logical/TemperatureDetector.cpp): Monitora la temperatura e rileva condizioni di surriscaldamento.
+- [`WasteDetector`](../src/arduino/lib/components/logical/WasteDetector.cpp): Monitora il livello di riempimento del bidone.
+- [`SerialHandler`](../src/arduino/lib/communication/SerialHandler.cpp): Gestisce la comunicazione seriale per inviare e ricevere messaggi.
 
-## Task Scheduler
-
-Il programma utilizza un task scheduler per eseguire periodicamente i vari task attraverso il metodo `schedule`. I task sono contenuti in un array `taskList` situato all'interno dello scheduler. I task sono delle classi astratte e il loro comportamento è descritto all'interno del metodo `tick`.
+## Funzionamento
 
 Per sviluppare ogni task siamo partiti da diagrammi delle final state machine. Guardiamole più nel dettaglio.
 
@@ -78,30 +76,6 @@ Gestisce l'output testuale su uno schermo LCD (I2C, nel nostro caso 20x4). I mes
 - **"Container Full"**: Messaggio da mostrare quando il contenitore supera la soglia d'allarme.
 - **"Problem Detected!"**: Messaggio da mostrare quando il termistore ha l'allarme attivo.
 All'interno del task vengono considerati anche le tempistiche di stampa su schermo.
-
-## Funzionamento
-
-### UserDetectorTask
-
-### UserDisplayTask
-
-<img src="img/UserDisplayTask.png" alt="UserDisplayTask" width="550"/>
-
-### TemperatureTask
-
-<img src="img/TemperatureTask.png" alt="TemperatureTask" width="550"/>
-
-### WasteDetectorTask
-
-<img src="img/WasteDetectorTask.png" alt="WasteDetectorTask" width="550"/>
-
-### DoorTask
-
-<img src="img/DoorTask.png" alt="DoorTask" width="550"/>
-
-### LedsTask
-
-<img src="img/LedsTask.png" alt="LedsTask" width="550"/>
 
 ## Schema della Breadboard
 
