@@ -4,38 +4,33 @@
 #include "Arduino.h"
 
 class Msg {
-    String content;
-
 public:
     Msg(String content) {
-        this->content = content;
+        this->_content = content;
     }
   
     String getContent() {
-        return content;
+        return _content;
     }
-};
 
-class Pattern {
-public:
-    virtual boolean match(const Msg& m) = 0;  
+private:
+    String _content;
 };
 
 class MsgServiceClass {
 public:
     Msg* currentMsg;
-    bool msgAvailable;
 
-    void init();  
+    bool hasEmptyAction = false;
+    bool hasRestoreAction = false;
 
-    bool isMsgAvailable();
-    Msg* receiveMsg();
+    void init();
+    bool emptyActionAvailable();
+    bool restoreActionAvailable();
 
-    bool isMsgAvailable(Pattern& pattern);
+    Msg* receiveMessage();
 
-    Msg* receiveMsg(Pattern& pattern);
-  
-    void sendMsg(const String& msg);
+    // void sendMsg(const String& msg);
 };
 
 extern MsgServiceClass MsgService;

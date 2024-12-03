@@ -25,8 +25,11 @@ void DoorTask::tick() {
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
                 _state = OPENED;
             }
-            if(MsgService.isMsgAvailable()) {
-                Msg* msg = MsgService.receiveMsg();
+            if(MsgService.emptyActionAvailable()) {
+                Msg* msg = MsgService.receiveMessage();
+
+                Serial.print(F("[DT] "));
+                Serial.println(msg->getContent());
 
                 if(msg->getContent() == "[Action:Empty]") {
                     _lastEmptiedTime = 0;

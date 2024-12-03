@@ -12,7 +12,7 @@ public class Launcher extends Application {
     public static final String APPLICATION_LAYOUT = "Main.fxml";
     public static final boolean APPLICATION_RESIZABLE = false;
 
-    public static final String SERIAL_PORT = "COM8";
+    public static final String SERIAL_PORT = "COM5";
     public static final int BAUD_RATE = 9600;
 
     private final FXMLLoader sceneLoader = new FXMLLoader(getClass().getResource(APPLICATION_LAYOUT));

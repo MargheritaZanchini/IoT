@@ -5,33 +5,31 @@ String content;
 
 MsgServiceClass MsgService;
 
-bool MsgServiceClass::isMsgAvailable(){
-    return msgAvailable;
+bool MsgServiceClass::emptyActionAvailable() {
+    return hasEmptyAction;
 }
 
-Msg* MsgServiceClass::receiveMsg(){
-    if (msgAvailable){
-      Msg* msg = currentMsg;
-      msgAvailable = false;
-      currentMsg = NULL;
-      content = "";
-      return msg;
-    }
-    else {
-        return NULL; 
-    }
+bool MsgServiceClass::restoreActionAvailable() {
+    return hasRestoreAction;
+}
+
+Msg* MsgServiceClass::receiveMessage() {
+    if(hasEmptyAction) hasEmptyAction = false;
+    else if(hasRestoreAction) hasRestoreAction = false;
+    else return NULL;
+
+    return MsgService.currentMsg;
 }
 
 void MsgServiceClass::init() {
     content.reserve(256);
     content = "";
     currentMsg = NULL;
-    msgAvailable = false;  
 }
 
-void MsgServiceClass::sendMsg(const String& msg){
-    Serial.println(msg);  
-}
+// void MsgServiceClass::sendMsg(const String& msg){
+//     Serial.println(msg);
+// }
 
 /**
  * @overload
@@ -43,27 +41,17 @@ void serialEvent() {
         char ch = (char) Serial.read();
 
         if (ch == 10 || ch == 0 || ch == 13) {
-            MsgService.currentMsg = new Msg(content);
-            MsgService.msgAvailable = true;
+            if(content == "[Action:Empty]") {
+                MsgService.currentMsg = new Msg(content);
+                MsgService.hasEmptyAction = true;
+            }
+            else if(content == "[Action:Restore]") {
+                MsgService.currentMsg = new Msg(content);
+                MsgService.hasRestoreAction = true;
+            }
         }
         else content += ch;
     }
-}
 
-bool MsgServiceClass::isMsgAvailable(Pattern& pattern){
-  return (msgAvailable && pattern.match(*currentMsg));
+    content = "";
 }
-
-Msg* MsgServiceClass::receiveMsg(Pattern& pattern){
-    if (msgAvailable && pattern.match(*currentMsg)){
-        Msg* msg = currentMsg;
-        msgAvailable = false;
-        currentMsg = NULL;
-        content = "";
-        return msg;
-    }
-    else {
-        return NULL; 
-    }
-}
-
