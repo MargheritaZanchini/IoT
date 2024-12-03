@@ -1,35 +1,45 @@
-#ifndef __A02_DOOR__
-#define __A02_DOOR__
+#pragma once
 
-#include "../physical/ServoMotor.h"
+#include <Arduino.h>
 #include "arduino/lib/Constants.h"
+#include "arduino/lib/components/physical/ServoMotor.h"
 
-class Door : public ServoMotor {
+/**
+ * @brief Door Component Helper Class
+ */
+class Door {
 public:
-    Door(int pin) : ServoMotor(pin) { }
+    /**
+     * @brief Creates New Door Controller
+     * @param servoMotor Reference to a ServoMotor Object
+     */
+    Door(ServoMotor* servoMotor);
 
-    void setDoorPosition(int angle) {
-        _angle = angle;
-        on();
-        setPosition(_angle);
-        delay(80);
-        off();
-    }
+    /**
+     * @brief Sets the Door Position
+     * @param angle Target Angle in Degrees
+     */
+    void setDoorPosition(int angle);
 
-    int getDoorPosition() {
-        return _angle;
-    }
+    /**
+     * @brief Gets the Current Door Position
+     * @return Current Angle in Degrees
+     */
+    int getDoorPosition();
 
-    bool isOpen() {
-        return (_angle == Constants::Servo::USER_DOOR_OPENED);
-    }
+    /**
+     * @brief Checks if the Door is Open
+     * @return True if the Door is Open, False Otherwise
+     */
+    bool isOpen();
 
-    bool isOperatorOpen() {
-        return (_angle == Constants::Servo::OPERATOR_DOOR_OPENED);
-    }
+    /**
+     * @brief Checks if the Door is Operator Open
+     * @return True if the Door is Operator Open, False Otherwise
+     */
+    bool isOperatorOpen();
 
 private:
-    int _angle = Constants::Servo::USER_DOOR_CLOSED;;
+    ServoMotor* _servoMotor; /** Reference to the ServoMotor Object */
+    int _angle; /** Current Angle of the Door */
 };
-
-#endif
