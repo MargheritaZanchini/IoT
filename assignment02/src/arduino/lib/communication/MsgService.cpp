@@ -6,25 +6,32 @@ String content;
 MsgServiceClass MsgService;
 
 bool MsgServiceClass::emptyActionAvailable() {
-    return hasEmptyAction;
+    if(MsgService.hasEmptyAction) {
+        MsgService.hasEmptyAction = false;
+        return true;
+    }
+    return false;
 }
 
 bool MsgServiceClass::restoreActionAvailable() {
-    return hasRestoreAction;
+    if(MsgService.hasRestoreAction) {
+        MsgService.hasRestoreAction = false;
+        return true;
+    }
+    return false;
 }
 
-Msg* MsgServiceClass::receiveMessage() {
-    if(hasEmptyAction) hasEmptyAction = false;
-    else if(hasRestoreAction) hasRestoreAction = false;
-    else return NULL;
-
-    return MsgService.currentMsg;
-}
+// Msg* MsgServiceClass::receiveMessage() {
+//     if(hasEmptyAction) hasEmptyAction = false;
+//     else if(hasRestoreAction) hasRestoreAction = false;
+//     else return NULL;
+// 
+//     return MsgService.currentMsg;
+// }
 
 void MsgServiceClass::init() {
     content.reserve(256);
     content = "";
-    currentMsg = NULL;
 }
 
 // void MsgServiceClass::sendMsg(const String& msg){
@@ -37,21 +44,21 @@ void MsgServiceClass::init() {
  * @brief Uses '10' (\n) and '13' (\r) as EOS (End of String) characters.
  */
 void serialEvent() {
+    content = "";
+
     while (Serial.available()) {
         char ch = (char) Serial.read();
 
         if (ch == 10 || ch == 0 || ch == 13) {
             if(content == "[Action:Empty]") {
-                MsgService.currentMsg = new Msg(content);
+                // MsgService.currentMsg = new Msg(content);
                 MsgService.hasEmptyAction = true;
             }
             else if(content == "[Action:Restore]") {
-                MsgService.currentMsg = new Msg(content);
+                // MsgService.currentMsg = new Msg(content);
                 MsgService.hasRestoreAction = true;
             }
         }
         else content += ch;
     }
-
-    content = "";
 }

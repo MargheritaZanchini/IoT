@@ -3,23 +3,23 @@
 
 #include "Arduino.h"
 
-class Msg {
-public:
-    Msg(String content) {
-        this->_content = content;
-    }
-  
-    String getContent() {
-        return _content;
-    }
-
-private:
-    String _content;
-};
+// class Msg {
+// public:
+//     Msg(String content) {
+//         this->_content = content;
+//     }
+//   
+//     String getContent() {
+//         return _content;
+//     }
+// 
+// private:
+//     String _content;
+// };
 
 class MsgServiceClass {
 public:
-    Msg* currentMsg;
+    // Msg* currentMsg;
 
     bool hasEmptyAction = false;
     bool hasRestoreAction = false;
@@ -28,7 +28,7 @@ public:
     bool emptyActionAvailable();
     bool restoreActionAvailable();
 
-    Msg* receiveMessage();
+    // Msg* receiveMessage();
 
     // void sendMsg(const String& msg);
 };

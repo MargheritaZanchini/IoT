@@ -33,17 +33,8 @@ void TemperatureTask::tick() {
             break;
         case PROBLEM_DETECTED:
             if(MsgService.restoreActionAvailable()) {
-                Msg* msg = MsgService.receiveMessage();
-
-                Serial.print(F("[TT] "));
-                Serial.println(msg->getContent());
-
-                if(msg->getContent() == "[Action:Restore]") {
-                    _temperatureDetector->setTemperatureAlarm(false);
-                    _state = NORMAL;
-                }
-
-                delete msg;
+                _temperatureDetector->setTemperatureAlarm(false);
+                _state = NORMAL;
             }
             break;
     }
