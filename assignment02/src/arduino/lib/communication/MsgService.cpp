@@ -22,7 +22,7 @@ Msg* MsgServiceClass::receiveMsg(){
     }
 }
 
-void MsgServiceClass::init(){
+void MsgServiceClass::init() {
     content.reserve(256);
     content = "";
     currentMsg = NULL;

@@ -28,10 +28,6 @@ void DoorTask::tick() {
             if(MsgService.isMsgAvailable()) {
                 Msg* msg = MsgService.receiveMsg();
 
-                if(msg == NULL) {
-                    delete msg;
-                    break;
-                }
                 if(msg->getContent() == "[Action:Empty]") {
                     _lastEmptiedTime = 0;
                     _state = OPERATOR_OPENED;
@@ -40,6 +36,7 @@ void DoorTask::tick() {
 
                 delete msg;
             }
+
             break;
         
         case OPENED:

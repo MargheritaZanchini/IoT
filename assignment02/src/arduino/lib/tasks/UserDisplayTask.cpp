@@ -53,7 +53,7 @@ void UserDisplayTask::tick() {
         case DISPLAY_DOOR_OPEN:
             if(!isOpen) {
                 _state = DISPLAY_ON_DOOR_CLOSED;
-                 //_lcd..print(Constants::LCD::MSG_DOOR_CLOSE);
+                updateDisplay(Constants::LCD::MSG_DOOR_CLOSE);
                 _lastDetectedTime = 0;
             }
             break;
