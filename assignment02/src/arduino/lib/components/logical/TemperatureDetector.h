@@ -2,7 +2,7 @@
 #define __A02_TEMPERATURE_DETECTOR__
 
 #include "../physical/Thermistor.h"
-#include "../../communication/MsgService.h"
+#include "../../communication/SerialHandler.h"
 #include "../../Constants.h"
 
 /**

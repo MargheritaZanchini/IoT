@@ -7,13 +7,12 @@
 #include "../Constants.h"
 #include "../components/logical/TemperatureDetector.h"
 #include "../components/logical/WasteDetector.h"
-#include "../../lib/communication/MsgService.h"
+#include "../../lib/communication/SerialHandler.h"
 
 class DoorTask : public Task {   
 public:
   DoorTask(Door* door, Button* closeButton, Button* openButton, TemperatureDetector* temperatureDetector, WasteDetector* wasteDetector);
-  void init(int period);
-  void tick();
+  void tick() override;
 
 private:
   enum State { CLOSED, OPENED, OPERATOR_OPENED };

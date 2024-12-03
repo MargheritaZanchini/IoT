@@ -6,10 +6,6 @@ DoorTask::DoorTask(Door* door, Button* closeButton, Button* openButton, Temperat
     _openButton = openButton;
     _temperatureDetector = temperatureDetector;
     _wasteDetector = wasteDetector;
-}
-
-void DoorTask::init(int period) {
-    Task::init(period);
     _state = CLOSED;
 }
 
@@ -26,7 +22,7 @@ void DoorTask::tick() {
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
                 _state = OPENED;
             }
-            if(MsgService.emptyActionAvailable()) {
+            if(SerialHelper.emptyActionAvailable()) {
                 _lastEmptiedTime = 0;
                 _state = OPERATOR_OPENED;
                 _door->setDoorPosition(Constants::Servo::OPERATOR_DOOR_OPENED);

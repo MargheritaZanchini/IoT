@@ -6,7 +6,7 @@
 #include "../components/logical/WasteDetector.h"
 #include "../components/logical/TemperatureDetector.h"
 #include "../components/logical/Door.h"
-#include "../communication/MsgService.h"
+#include "../communication/SerialHandler.h"
 
 class UserDisplayTask : public Task {
 public:

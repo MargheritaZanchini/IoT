@@ -32,7 +32,7 @@ void TemperatureTask::tick() {
             }
             break;
         case PROBLEM_DETECTED:
-            if(MsgService.restoreActionAvailable()) {
+            if(SerialHelper.restoreActionAvailable()) {
                 _temperatureDetector->setTemperatureAlarm(false);
                 _state = NORMAL;
             }
