@@ -37,31 +37,31 @@ Il programma utilizza un task scheduler per eseguire periodicamente i vari task.
 
 ### UserDetectorTask
 
-![UserDetectorTask](doc/UserDetectorTask.png)
+<img src="UserDetectorTask.png" alt="UserDetectorTask" width="400"/>
 
 ### UserDisplayTask
 
-![UserDisplayTask](doc/UserDisplayTask.png)
+<img src="UserDisplayTask.png" alt="UserDisplayTask" width="400"/>
 
 ### TemperatureTask
 
-![TemperatureTask](doc/TemperatureTask.png)
+<img src="TemperatureTask.png" alt="TemperatureTask" width="400"/>
 
 ### WasteDetectorTask
 
-![WasteDetectorTask](doc/WasteDetectorTask.png)
+<img src="WasteDetectorTask.png" alt="WasteDetectorTask" width="400"/>
 
 ### DoorTask
 
-![DoorTask](doc/DoorTask.png)
+<img src="DoorTask.png" alt="DoorTask" width="400"/>
 
 ### LedsTask
 
-![LedsTask](doc/LedsTask.png)
+<img src="LedsTask.png" alt="LedsTask" width="400"/>
 
 ## Schema della Breadboard
 
-![Schema della Breadboard](doc/Breadboard.png)
+<img src="SmartWasteDisposalSchema.png" alt="Schema della Breadboard" width="750"/>
 
 ## Comunicazione
 
