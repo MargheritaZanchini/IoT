@@ -23,6 +23,9 @@ public class Controller {
     
     private SerialDataHandler serialHandler = null;
 
+    private final static String RESTORE_MESSAGE = "[Action:Restore]";
+    private final static String EMPTY_MESSAGE = "[Action:Empty]";
+
     @FXML public void initialize() throws Exception {
         this.serialHandler = new SerialDataHandler(Launcher.SERIAL_PORT, Launcher.BAUD_RATE, this.wasteValue, this.temperatureValue, this.wasteLevelAlarm, this.temperatureAlarm);
         if (this.serialHandler == null) {
@@ -103,14 +106,13 @@ public class Controller {
     
     private void emptyWaste() {
         Platform.runLater(() -> {
-            this.serialHandler.sendMessage("[Action:Empty]");
+            this.serialHandler.sendMessage(EMPTY_MESSAGE);
         });
     }
 
     private void restoreTemperature() {
         Platform.runLater(() -> {
-            this.serialHandler.sendMessage("[Action:Restore]");
-            // System.out.println("Restoring Action: " + this.serialHandler.sendMessage("[Action:Restore]"));
+            this.serialHandler.sendMessage(RESTORE_MESSAGE);
         });
     }
 }

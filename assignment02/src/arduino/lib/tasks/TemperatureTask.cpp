@@ -14,12 +14,12 @@ void TemperatureTask::tick() {
     switch(_state) {
         case NORMAL:
             if(_temperatureDetector->read() >= Constants::Thermistor::MAX_TEMPERATURE) {
+                _lastDetectedTime = 0;
                 _state = HIGH_TEMP;
             }
             break;
         case HIGH_TEMP:
             if(_temperatureDetector->read() < Constants::Thermistor::MAX_TEMPERATURE) {
-                _lastDetectedTime = 0;
                 _state = NORMAL;
             }
 
@@ -33,14 +33,13 @@ void TemperatureTask::tick() {
             break;
         case PROBLEM_DETECTED:
             if(MsgService.isMsgAvailable()) {
-                Msg* msg = MsgService.receiveMsg();    
+                Msg* msg = MsgService.receiveMsg();
 
                 if(msg == NULL) {
                     delete msg;
                     break;
                 }
                 if(msg->getContent() == "[Action:Restore]") {
-                    _lastDetectedTime = 0;
                     _temperatureDetector->setTemperatureAlarm(false);
                     _state = NORMAL;
                 }

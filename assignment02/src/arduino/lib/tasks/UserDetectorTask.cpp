@@ -1,15 +1,16 @@
+// #include <Arduino.h>
+
 #include "UserDetectorTask.h"
-#include <Arduino.h>
 #include "avr/sleep.h"
 #include "avr/power.h"
 
-//Il pir viene creato nel main e poi passato al costruttore
+#define SLEEP_TIME 10000
+
 UserDetectorTask::UserDetectorTask(PIR* pir) {
     _pir = pir;
 
     _state = NOT_DETECTED;
     _lastDetectedTime = 0;
-    _deltaTime = 5000;
 }
 
 void UserDetectorTask::tick() {
@@ -22,7 +23,7 @@ void UserDetectorTask::tick() {
         }else{  //se nessun utente viene rilevato si controlla da quanto tempo siamo nello stato NOT_DETECTED
             if(_lastDetectedTime == 0){ 
                 _lastDetectedTime = millis();
-            }else if(millis() - _lastDetectedTime > _deltaTime){
+            }else if(millis() - _lastDetectedTime > SLEEP_TIME){
                 _state = SLEEP;
             }
         }

@@ -25,6 +25,21 @@ void DoorTask::tick() {
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_OPENED);
                 _state = OPENED;
             }
+            if(MsgService.isMsgAvailable()) {
+                Msg* msg = MsgService.receiveMsg();
+
+                if(msg == NULL) {
+                    delete msg;
+                    break;
+                }
+                if(msg->getContent() == "[Action:Empty]") {
+                    _lastEmptiedTime = 0;
+                    _state = OPERATOR_OPENED;
+                    _door->setDoorPosition(Constants::Servo::OPERATOR_DOOR_OPENED);
+                }
+
+                delete msg;
+            }
             break;
         
         case OPENED:
@@ -32,18 +47,6 @@ void DoorTask::tick() {
                 _door->setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
                 _state = CLOSED;
             }
-            /*
-            if(MsgService.isMsgAvailable()) {
-                Msg* msg = MsgService.receiveMsg();    
-
-                if(msg->getContent() == "[Action:Empty]") {
-                    _lastEmptiedTime = 0;
-                    _state = OPERATOR_OPENED;
-                };
-
-                delete msg;
-            }
-            */
             break;
             
         case OPERATOR_OPENED:
@@ -51,6 +54,7 @@ void DoorTask::tick() {
                 _lastEmptiedTime = millis();
             }
             if(millis() - _lastEmptiedTime >= Constants::Servo::OPERATOR_EMPTY_TIME) {
+                _door->setDoorPosition(Constants::Servo::USER_DOOR_CLOSED);
                 _state = CLOSED;
             }
             break;

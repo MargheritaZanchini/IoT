@@ -17,18 +17,17 @@
 #include "EnableInterrupt.h"
 
 #include "../lib/Constants.h"
-// #include "../lib/communication/MsgService.h"
 
 Scheduler scheduler;
 
-Button* closeButton; // = new Button(Constants::Button::Close::PIN);
-Button* openButton; // = new Button(Constants::Button::Open::PIN);
-Led* okIndicator; // = new Led(Constants::LED::OK::PIN);
-Led* errorIndicator; // = new Led(Constants::LED::Error::PIN);
-PIR* pir; // = new PIR(Constants::PIR::PIN);
-Door* door; // = new Door(Constants::Servo::PIN);
-WasteDetector* wasteDetector; // = new WasteDetector(Constants::Sonar::Trigger::PIN, Constants::Sonar::Echo::PIN);
-TemperatureDetector* temperatureDetector; // = new TemperatureDetector(Constants::Thermistor::PIN);
+Button* closeButton;
+Button* openButton;
+Led* okIndicator;
+Led* errorIndicator;
+PIR* pir;
+Door* door;
+WasteDetector* wasteDetector;
+TemperatureDetector* temperatureDetector;
 
 void wakeUp() { }
 

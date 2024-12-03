@@ -15,8 +15,9 @@ Msg* MsgServiceClass::receiveMsg(){
       msgAvailable = false;
       currentMsg = NULL;
       content = "";
-      return msg;  
-    } else {
+      return msg;
+    }
+    else {
         return NULL; 
     }
 }
@@ -32,6 +33,11 @@ void MsgServiceClass::sendMsg(const String& msg){
     Serial.println(msg);  
 }
 
+/**
+ * @overload
+ * @brief Function Called Whenever a new Message is Available (in the Serial Port).
+ * @brief Uses '10' (\n) and '13' (\r) as EOS (End of String) characters.
+ */
 void serialEvent() {
     while (Serial.available()) {
         char ch = (char) Serial.read();

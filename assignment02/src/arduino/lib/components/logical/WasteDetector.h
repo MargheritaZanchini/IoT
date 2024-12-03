@@ -52,6 +52,10 @@ public:
      */
     void setFullnessAlarm(bool isFull) {
         _isFullAlarm = isFull;
+
+        Serial.print(F("[Alarm:WasteLevel]"));
+        Serial.println(_isFullAlarm ? F("true") : F("false"));
+        Serial.flush();
     }
 
 private:

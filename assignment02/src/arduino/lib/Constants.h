@@ -76,6 +76,7 @@ namespace Constants {
     }
 
     constexpr unsigned long BAUD_RATE = 9600; /** Baud Rate for Serial Communication */
+    constexpr unsigned long SLEEP_TIME = 10000; /** Time Before Sleep State */
 }
 
 #endif
