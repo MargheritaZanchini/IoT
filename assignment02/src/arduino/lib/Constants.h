@@ -76,6 +76,7 @@ namespace Constants {
         constexpr int MAX_TEMPERATURE_TIME = 4000; /**If the thermistor is in MAX_TEMP for MAX_TEMP_TIME there is a problem  */
     }
 
+    constexpr int MAX_TASKS = 10; /** Max Available Tasks for Scheduler */
     constexpr unsigned long BAUD_RATE = 9600; /** Baud Rate for Serial Communication */
     constexpr unsigned long SLEEP_TIME = 10000; /** Time Before Sleep State */
 }

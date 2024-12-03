@@ -1,38 +1,42 @@
-#include "arduino/lib/Scheduler.h"
 #include <TimerOne.h>
+#include "arduino/lib/Scheduler.h"
 
 volatile bool timerFlag;
 
-void timerHandler(void){
-  timerFlag = true;
+void timerHandler(void) {
+    timerFlag = true;
 }
 
-void Scheduler::init(int basePeriod){
-  this->basePeriod = basePeriod;
-  timerFlag = false;
-  long period = 1000l*basePeriod;
-  Timer1.initialize(period);
-  Timer1.attachInterrupt(timerHandler);
-  nTasks = 0;
+void Scheduler::init(int basePeriod) {
+    this->basePeriod = basePeriod;
+    timerFlag = false;
+    long period = 1000l*basePeriod;
+    Timer1.initialize(period);
+    Timer1.attachInterrupt(timerHandler);
+    nTasks = 0;
 }
 
-bool Scheduler::addTask(Task* task){
-  if (nTasks < MAX_TASKS-1){
-    taskList[nTasks] = task;
-    nTasks++;
-    return true;
-  } else {
-    return false; 
-  }
+bool Scheduler::addTask(Task* task) {
+    if(nTasks < Constants::MAX_TASKS-1) {
+        taskList[nTasks] = task;
+        nTasks++;
+        return true;
+    }
+    else {
+        return false; 
+    }
 }
   
-void Scheduler::schedule(){   
-  while (!timerFlag){} //I wait for the period of the scheduler to elapse before checkig the tasks
-  timerFlag = false;
+void Scheduler::schedule() {
+    while(!timerFlag) {
 
-  for (int i = 0; i < nTasks; i++){
-    if (taskList[i]->updateAndCheckTime(basePeriod)){
-      taskList[i]->tick();
     }
-  }
+
+    timerFlag = false;
+
+    for(int i = 0; i < nTasks; i++) {
+        if(taskList[i]->updateAndCheckTime(basePeriod)) {
+            taskList[i]->tick();
+        }
+    }
 }

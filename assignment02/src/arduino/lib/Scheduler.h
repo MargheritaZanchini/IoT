@@ -1,20 +1,20 @@
-#ifndef __A02_SCHEDULER__
-#define __A02_SCHEDULER__
+#pragma once
 
-#include "tasks/Task.h"
+#include "arduino/lib/Constants.h"
+#include "arduino/lib/tasks/Task.h"
 
-#define MAX_TASKS 10
-
+/**
+ * @brief Scheduler Class
+ * @author Alessandro Ricci @see{https://github.com/aricci303/}
+ */
 class Scheduler {
-  
-  int basePeriod;
-  int nTasks;
-  Task* taskList[MAX_TASKS];  
-
 public:
-  void init(int basePeriod);  
-  virtual bool addTask(Task* task);  
-  virtual void schedule();
-};
+    void init(int basePeriod);
+    virtual bool addTask(Task* task);
+    virtual void schedule();
 
-#endif
+private:
+    int basePeriod;
+    int nTasks;
+    Task* taskList[Constants::MAX_TASKS];
+};

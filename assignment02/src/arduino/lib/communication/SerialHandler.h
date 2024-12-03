@@ -5,6 +5,7 @@
 /**
  * @brief Serial Helper Object Class
  * @details Manages Serial Communication and Actions
+ * @see{https://github.com/pslab-unibo/esiot-2024-2025/blob/master/Arduino/module-lab-2.2/remote_blinking/MsgService.h}
  */
 class SerialHelperObject {
 public:
