@@ -5,6 +5,9 @@
 - **Marrelli Marco** (0001079192)
 - **Zanchini Margherita** (0001081989)
 
+### Video:
+[Link al Video](https://drive.google.com/file/d/1Wk_oK48XeT2nOjk5r3q21W1Bl19y8nWY/)
+
 ## Descrizione del Sistema
 
 Il Smart Waste Disposal Container è un sistema embedded che implementa una gestione intelligente dei rifiuti liquidi pericolosi. Il sistema è composto da vari sensori e attuatori per monitorare e gestire lo stato del bidone. L'utente può interagire con il sistema tramite due bottoni per aprire e chiudere il bidone, mentre agli operatori viene fornita una dashboard di controllo. L'implementazione software è basata su un'architettura task-based, composta quindi da più task sviluppate a partire da Synchronous Finite State Machines, cioè time-triggered FSMs. Queste task vengono poi gestite da uno scheduler.
