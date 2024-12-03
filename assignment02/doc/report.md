@@ -1,8 +1,13 @@
-# Relazione del Programma: Bidone Intelligente per Rifiuti Tossici
+# Report Assignment 02: Smart Waste Disposal System
+
+Membri del gruppo:
+- Caberletti Sofia
+- Marrelli Marco
+- Zanchini Margherita
 
 ## Descrizione del Programma
 
-Il programma fornisce un'implementazione di un bidone intelligente per lo smaltimento di rifiuti tossici, simulato con Arduino Uno. Il sistema è dotato di vari sensori e attuatori per monitorare e controllare lo stato del bidone. Inoltre, è stata fornita una GUI per interagire con il bidone.
+Il programma fornisce un'implementazione di un bidone intelligente per lo smaltimento di rifiuti tossici, simulato con Arduino Uno. Il sistema è composta da vari sensori e attuatori per monitorare e controllare lo stato del bidone. Inoltre, viene fornita una GUI per permettere agli operatori di interagire con il bidone e per monitorarlo.
 
 ## Componenti Principali
 
@@ -12,19 +17,13 @@ Il programma fornisce un'implementazione di un bidone intelligente per lo smalti
 - **LED**: Indicatori di stato per segnalare condizioni normali o di errore.
 - **Button**: Pulsanti per aprire e chiudere manualmente il coperchio del bidone.
 - **PIR (Passive Infrared Sensor)**: Sensore di movimento per rilevare la presenza di utenti.
-- **Thermistor**: Sensore di temperatura per monitorare la temperatura interna del bidone.
+- **Thermistor**: Sensore di temperatura per monitorare la temperatura dei liquidi tossici all'interno.
 - **Sonar**: Sensore a ultrasuoni per misurare il livello di riempimento del bidone.
-
-### Classi Logiche
-
-- **Door**: Gestisce il movimento del coperchio del bidone.
-- **TemperatureDetector**: Monitora la temperatura e rileva condizioni di surriscaldamento.
-- **WasteDetector**: Monitora il livello di riempimento del bidone.
-- **MsgService**: Gestisce la comunicazione seriale per inviare e ricevere messaggi.
 
 ### Task Scheduler
 
-Il programma utilizza un task scheduler per eseguire periodicamente i vari task. Ogni task è responsabile di una specifica funzionalità del sistema:
+Il programma utilizza un task scheduler per eseguire periodicamente i vari task attraverso il metodo `schedule`. I task sono contenuti in un array `taskList` situato all'interno dello scheduler. I task sono delle classi astratte e il loro comportamento è descritto all'interno del metodo `tick`.
+Ogni task è responsabile di una specifica funzionalità del sistema:
 
 - **UserDetectorTask**: Rileva la presenza di utenti tramite il sensore PIR.
 - **UserDisplayTask**: Aggiorna il display LCD con messaggi di stato.
@@ -37,31 +36,31 @@ Il programma utilizza un task scheduler per eseguire periodicamente i vari task.
 
 ### UserDetectorTask
 
-<img src="UserDetectorTask.png" alt="UserDetectorTask" width="400"/>
+<img src="img/UserDetectorTask.png" alt="UserDetectorTask" width="550"/>
 
 ### UserDisplayTask
 
-<img src="UserDisplayTask.png" alt="UserDisplayTask" width="400"/>
+<img src="img/UserDisplayTask.png" alt="UserDisplayTask" width="550"/>
 
 ### TemperatureTask
 
-<img src="TemperatureTask.png" alt="TemperatureTask" width="400"/>
+<img src="img/TemperatureTask.png" alt="TemperatureTask" width="550"/>
 
 ### WasteDetectorTask
 
-<img src="WasteDetectorTask.png" alt="WasteDetectorTask" width="400"/>
+<img src="img/WasteDetectorTask.png" alt="WasteDetectorTask" width="550"/>
 
 ### DoorTask
 
-<img src="DoorTask.png" alt="DoorTask" width="400"/>
+<img src="img/DoorTask.png" alt="DoorTask" width="550"/>
 
 ### LedsTask
 
-<img src="LedsTask.png" alt="LedsTask" width="400"/>
+<img src="img/LedsTask.png" alt="LedsTask" width="550"/>
 
 ## Schema della Breadboard
 
-<img src="SmartWasteDisposalSchema.png" alt="Schema della Breadboard" width="750"/>
+<img src="img/SmartWasteDisposalSchema.png" alt="Schema della Breadboard" width="750"/>
 
 ## Comunicazione
 
