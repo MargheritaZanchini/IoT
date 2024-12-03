@@ -3,13 +3,30 @@ package assignment02;
 import java.util.concurrent.*;
 import jssc.*;
 
+/**
+ * A Communication Channel that uses a Serial Port
+ * 
+ * @author Alessandro Ricci
+ * 
+ * @see CommunicationChannel CommunicationChannel (Implemented Interface)
+ * @see SerialPortEventListener SerialPortEventListener (Implemented Interface)
+ * @see https://github.com/aricci303/ Author's GitHub Profile
+ */
 public class SerialChannel implements CommunicationChannel, SerialPortEventListener {
-    private static final int QUEUE_SIZE = 100;
+    private static final int QUEUE_SIZE = 100; /** Queue Size for Storing Messages */
 
-    private final SerialPort serialPort;
-    private final BlockingQueue<String> queue;
-    private StringBuffer currentMessage = new StringBuffer("");
+    private final SerialPort serialPort; /** Serial Port Object */
+    private final BlockingQueue<String> queue; /** Blocking Queue for Storing Messages */
+    private StringBuffer currentMessage = new StringBuffer(""); /** Current Message Buffer */
 
+    /**
+     * Constructor for SerialChannel
+     * 
+     * @param port Serial Port Name
+     * @param rate Baud Rate
+     * 
+     * @throws SerialPortException
+     */
     public SerialChannel(String port, int rate) throws SerialPortException {
         this.queue = new ArrayBlockingQueue<String>(QUEUE_SIZE);
         

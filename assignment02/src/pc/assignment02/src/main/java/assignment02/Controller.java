@@ -12,6 +12,9 @@ import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleFloatProperty;
 
+/**
+ * Controller Class for the JavaFX Application
+ */
 public class Controller {
     @FXML private ProgressBar toxicWasteLevel; /** Progress Bar for the Toxic Waste Level */
     @FXML private ProgressBar temperatureLevel; /** Progress Bar for the Temperature Level */
@@ -146,6 +149,7 @@ public class Controller {
     
     /**
      * Sends a Message to the Serial Port to Empty the Waste
+     * 
      * @see #EMPTY_MESSAGE
      */
     private void emptyWaste() {
@@ -156,6 +160,7 @@ public class Controller {
 
     /**
      * Sends a Message to the Serial Port to Restore the Temperature
+     * 
      * @see #RESTORE_MESSAGE
      */
     private void restoreTemperature() {
