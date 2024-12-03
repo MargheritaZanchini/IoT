@@ -10,14 +10,14 @@
 
 class UserDisplayTask : public Task {
 public:
-    UserDisplayTask(WasteDetector* wasteDetector, TemperatureDetector* temperatureDetector/* , Door* door */);
+    UserDisplayTask(WasteDetector* wasteDetector, TemperatureDetector* temperatureDetector, Door* door);
     void tick() override;
 
 private:
     LiquidCrystal_I2C _lcd = LiquidCrystal_I2C(0x27, 20, 4);
     WasteDetector* _wasteDetector;
     TemperatureDetector* _temperatureDetector;
-    /* Door* _door; */
+    Door* _door;
 
     unsigned long _lastDetectedTime;
 

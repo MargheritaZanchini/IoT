@@ -6,7 +6,6 @@
 
 class Door : public ServoMotor {
 public:
-
     Door(int pin) : ServoMotor(pin) { }
 
     void setDoorPosition(int angle) {

@@ -1,8 +1,7 @@
 #ifndef __SERVO_MOTOR__
 #define __SERVO_MOTOR__
 
-#include <Arduino.h>
-#include <ServoTimer2.h>
+#include "ServoTimer2.h"
 
 /**
  * @brief Servo Component Helper Class
@@ -14,35 +13,27 @@ public:
      * @brief Creates New Servo Controller
      * @param pin PWM Pin for Servo Control
      */
-    ServoMotor(int pin) {
-        this->_pin = pin;
-    } 
+    ServoMotor(int pin);
 
     /**
      * @brief Attaches Servo to PWM Pin
      */
-    void on() {
-        _servo.attach(_pin);
-    }
+    void on();
 
     /**
      * @brief Rotates Servo to Position
      * @param angle Target Angle in Degrees
      */
-    void setPosition(int angle) {
-        _servo.write(angle);
-    }
+    void setPosition(int angle);
 
     /**
      * @brief Detaches Servo from PWM Pin
      */
-    void off() {
-        _servo.detach();
-    }
+    void off();
 
 private:
     int _pin; /** Pin Number for PWM Output */
-    ServoTimer2 _servo; /** Hardware Interface Instance */
+    ServoTimer2 _servo; /** Servo Controller */
 };
 
 #endif

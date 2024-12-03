@@ -2,10 +2,10 @@
 
 #include <Arduino.h>
 
-UserDisplayTask::UserDisplayTask(WasteDetector* wasteDetector, TemperatureDetector* temperatureDetector/* , Door* door */) {
+UserDisplayTask::UserDisplayTask(WasteDetector* wasteDetector, TemperatureDetector* temperatureDetector, Door* door) {
     _wasteDetector = wasteDetector;
     _temperatureDetector = temperatureDetector;
-    /* _door = door; */
+    _door = door;
 
     _lcd.init();
     _lcd.backlight();
@@ -13,57 +13,56 @@ UserDisplayTask::UserDisplayTask(WasteDetector* wasteDetector, TemperatureDetect
 
     _state = OK;
     updateDisplay(Constants::LCD::MSG_DEFAULT);
-    // _lcd.print(Constants::LCD::MSG_DEFAULT);
 }
 
 void UserDisplayTask::tick() {
     bool isFull = _wasteDetector->getFullnessAlarm();
     bool isInAlarm = _temperatureDetector->getTemperatureAlarm();
-    /* bool isOpen = _door->isOpen(); */
+    bool isOpen = _door->isOpen();
 
     switch (_state) {
         case OK:
             if (isFull){
                 _state = DISPLAY_WASTE;
-                updateDisplay(Constants::LCD::MSG_CONTAINER_FULL); // _lcd.print(Constants::LCD::MSG_CONTAINER_FULL);
+                updateDisplay(Constants::LCD::MSG_CONTAINER_FULL);
             }
             else if (isInAlarm){
                 _state = DISPLAY_TEMPERATURE;
-                updateDisplay(Constants::LCD::MSG_TEMPERATURE_ALARM); // _lcd.print(Constants::LCD::MSG_TEMPERATURE_ALARM);
+                updateDisplay(Constants::LCD::MSG_TEMPERATURE_ALARM);
             }
-/*             else if (isOpen){
+            else if (isOpen){
                 _state = DISPLAY_DOOR_OPEN;
-                 //_lcd..print(Constants::LCD::MSG_DOOR_OPEN);
-            } */
+                updateDisplay(Constants::LCD::MSG_DOOR_OPEN);
+            }
             break;
 
         case DISPLAY_WASTE:
             if(!isFull){
                 _state = OK;
-                updateDisplay(Constants::LCD::MSG_DEFAULT); //_lcd..print(Constants::LCD::MSG_DEFAULT);
+                updateDisplay(Constants::LCD::MSG_DEFAULT);
             }
             break;
 
         case DISPLAY_TEMPERATURE:
             if(!isInAlarm){
                 _state = OK;
-                updateDisplay(Constants::LCD::MSG_DEFAULT); //_lcd..print(Constants::LCD::MSG_DEFAULT);
+                updateDisplay(Constants::LCD::MSG_DEFAULT);
             }
             break;
 
         case DISPLAY_DOOR_OPEN:
-/*             if(!isOpen) {
+            if(!isOpen) {
                 _state = DISPLAY_ON_DOOR_CLOSED;
                  //_lcd..print(Constants::LCD::MSG_DOOR_CLOSE);
                 _lastDetectedTime = 0;
-            } */
+            }
             break;
             
         case DISPLAY_ON_DOOR_CLOSED:
             if(_lastDetectedTime == 0) _lastDetectedTime = millis();
             else if(millis() - _lastDetectedTime > Constants::Servo::CLOSING_MESSAGE_TIME) {
                 _state = OK;
-                updateDisplay(Constants::LCD::MSG_DEFAULT); //_lcd..print(Constants::LCD::MSG_DEFAULT);
+                updateDisplay(Constants::LCD::MSG_DEFAULT);
             }
             break;
     }
