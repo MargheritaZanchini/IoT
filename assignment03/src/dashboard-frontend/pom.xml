@@ -33,6 +33,11 @@
     </dependencies>
     <build>
         <sourceDirectory>stm/src/main/java/</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>stm/src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
