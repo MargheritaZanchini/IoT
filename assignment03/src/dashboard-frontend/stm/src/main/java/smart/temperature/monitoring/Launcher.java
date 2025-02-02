@@ -7,9 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import io.vertx.core.*;
-import io.vertx.mqtt.*;
-
 /**
  *  Main Class of the JavaFX Application (Smart Temperature Monitoring)
  * 

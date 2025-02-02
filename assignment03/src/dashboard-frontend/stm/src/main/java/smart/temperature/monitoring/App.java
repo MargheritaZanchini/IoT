@@ -4,6 +4,7 @@ import javafx.application.Application;
 
 /**
  * Entry Point of the Application
+ *
  * @see Launcher
  */
 public final class App {
