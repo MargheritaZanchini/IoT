@@ -25,6 +25,11 @@
             <artifactId>vertx-core</artifactId>
             <version>4.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-mqtt</artifactId>
+            <version>4.5.12</version>
+        </dependency>
     </dependencies>
     <build>
         <sourceDirectory>stm/src/main/java/</sourceDirectory>

@@ -1,6 +1,7 @@
 package smart.temperature.monitoring;
 
 import io.vertx.core.*;
+import io.vertx.mqtt.*;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
