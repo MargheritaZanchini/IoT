@@ -1,8 +1,8 @@
 #pragma once
 
-#include "arduino/lib/Constants.h"
-#include "arduino/lib/tasks/Task.h"
-#include "arduino/lib/components/logical/TemperatureDetector.h"
+#include "./lib/Constants.h"
+#include "./lib/tasks/Task.h"
+#include "./lib/components/logical/TemperatureDetector.h"
 
 /**
  * \brief Temperature Task Class

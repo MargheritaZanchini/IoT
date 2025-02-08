@@ -3,6 +3,8 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
+#include "Thermistor.h"
+
 
 
 const char* SSID = "";
