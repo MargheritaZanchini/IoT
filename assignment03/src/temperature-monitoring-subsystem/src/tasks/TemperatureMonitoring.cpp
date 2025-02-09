@@ -1,21 +1,35 @@
 #include "TemperatureMonitoring.h"
+#include <Led.h>
 
-TemperatureMonitoring::TemperatureMonitoring(Thermistor* thermistor) {
+TemperatureMonitoring::TemperatureMonitoring(Thermistor* thermistor, Led* okLED, Led* errorLED) {
     _thermistor = thermistor;
+    _okLED = okLED;
+    _errorLED = errorLED;
     _state = OK;
+    _okLED->on();
 }
 
 void TemperatureMonitoring::tick() {
     switch (_state) {
         case OK:
-            if(_thermistor->read() >= 50) {
+            if(_thermistor->read() >= 25) {
                 _state = ERROR;
+                _okLED->off();
+                _errorLED->on();
             }
+            _currentTemperature = _thermistor->read();
+            Serial.println("Current Temperature: " + String(_currentTemperature));
             break;
         case ERROR:
-            if(false) {
+            if(_thermistor->read() <= 25) {
                 _state = OK;
+                _okLED->on();
+                _errorLED->off();
             }
             break;
     }
+}
+
+float TemperatureMonitoring::getCurrentTemperature() {
+    return _currentTemperature;
 }

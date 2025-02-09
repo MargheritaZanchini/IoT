@@ -4,11 +4,13 @@
 #include <PubSubClient.h>
 
 #include "Thermistor.h"
+#include <TemperatureMonitoring.h>
+#include <Led.h>
 
 
 
-const char* SSID = "";
-const char* PASSWORD = "";
+const char* SSID = "TIM-29820711";
+const char* PASSWORD = "casa2020";
 
 const char* MQTT_SERVER = "broker.mqtt-dashboard.com";
 const char* MQTT_TOPIC = "assignment03temperature";
@@ -24,7 +26,14 @@ char msg[75];
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+Led* okLED; /** [Pointer] OK Indicator LED */
+Led* errorLED; /** [Pointer] Error Indicator LED */
 
+Thermistor* thermistor; /** [Pointer] Thermistor Sensor */
+
+TemperatureMonitoring* temperatureTask; /** [Pointer] Temperature Detection Task */
+
+TaskHandle_t temperatureTaskHandle;
 
 void setupWifi() {
     WiFi.mode(WIFI_STA);
@@ -53,6 +62,16 @@ void reconnect() {
     client.setCallback(callback);
 }
 
+void temperatureMonitoringTask(void* parameter) {
+    TickType_t xLastWakeTime;
+    TickType_t xFrequency = 5000 / portTICK_PERIOD_MS;
+    for ( ;; ) {
+        //xFrequency = temperatureTask->getPeriod() / portTICK_PERIOD_MS; // Converto da ms a ticks
+        temperatureTask->tick();
+        vTaskDelayUntil(&xLastWakeTime, xFrequency);
+    }
+}
+
 void setup() {
     Serial.begin(BAUD_RATE);
 
@@ -64,6 +83,14 @@ void setup() {
     client.setServer(MQTT_SERVER, MQTT_PORT);
     client.setCallback(callback);
     Serial.println("MQTT connected");
+
+    okLED = new Led(4);
+    errorLED = new Led(5);
+    thermistor = new Thermistor(15);
+
+    temperatureTask = new TemperatureMonitoring(thermistor, okLED, errorLED);
+
+    xTaskCreatePinnedToCore(temperatureMonitoringTask, "temperatureTask", 10000, NULL, 1, &temperatureTaskHandle, 1);
 }
 
 void loop() {
