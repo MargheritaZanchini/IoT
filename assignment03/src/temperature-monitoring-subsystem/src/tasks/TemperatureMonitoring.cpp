@@ -1,5 +1,6 @@
 #include "TemperatureMonitoring.h"
-#include <Led.h>
+
+extern MQTT* mqtt;
 
 TemperatureMonitoring::TemperatureMonitoring(Thermistor* thermistor, Led* okLED, Led* errorLED) {
     _thermistor = thermistor;
@@ -12,13 +13,14 @@ TemperatureMonitoring::TemperatureMonitoring(Thermistor* thermistor, Led* okLED,
 void TemperatureMonitoring::tick() {
     switch (_state) {
         case OK:
-            if(_thermistor->read() >= 25) {
+            if(_thermistor->read() > 25) {
                 _state = ERROR;
                 _okLED->off();
                 _errorLED->on();
             }
             _currentTemperature = _thermistor->read();
-            Serial.println("Current Temperature: " + String(_currentTemperature));
+
+            mqtt->sendTemperature(_currentTemperature);
             break;
         case ERROR:
             if(_thermistor->read() <= 25) {

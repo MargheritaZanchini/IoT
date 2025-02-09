@@ -14,7 +14,7 @@ public class MQTTAgent extends AbstractVerticle {
     private static final String BROKER_ADDRESS = "broker.mqtt-dashboard.com";
     private static final int BROKER_PORT = 1883;
 
-    private static final String TOPIC_STRING = "assignment03temperature";
+    private static final String TOPIC_STRING = "a03temperature";
     private static final MqttQoS QUALITY_OF_SERVICE = MqttQoS.EXACTLY_ONCE;
 
     private static final int RECONNECT_INTERVAL = 3000;
@@ -50,7 +50,7 @@ public class MQTTAgent extends AbstractVerticle {
         System.out.println("Received message: " + h.payload().toString() + ". In topic: " + h.topicName());
 
         try {
-            t = Double.parseDouble(h.payload().toString().replace("Temperature: ", ""));
+            t = Double.parseDouble(h.payload().toString().replace("temperature:", ""));
             System.out.println("Received temperature: " + t);
         }
         catch(NumberFormatException e) {

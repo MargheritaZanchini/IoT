@@ -14,7 +14,7 @@ namespace Constants {
     constexpr const int RECONNECTION_INTERVAL = int(3000);
     constexpr const int BAUD_RATE = int(115200);
 
-    constexpr const int MESSAGE_MAX_BUFFER = int(100);
+    constexpr const int MESSAGE_MAX_BUFFER = int(75);
 
     constexpr const int LED_OK_PIN = int(4);
     constexpr const int LED_ERROR_PIN = int(5);

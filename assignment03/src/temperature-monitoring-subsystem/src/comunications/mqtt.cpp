@@ -1,6 +1,32 @@
 #include "mqtt.h"
 
 /**
+ * Callback function for the MQTT connection.
+ * 
+ * @param topic The topic of the message
+ * @param payload The message payload
+ * @param length The length of the message
+ * 
+ * @return void
+ * 
+ * @note Created locally to avoid casting error inside client.setCallback.
+ * Cannot cast void to std::function<void (char *, uint8_t *, unsigned int)>
+ */
+/*
+ void callback(const char* topic, const byte* payload, unsigned int length) {
+    Serial.print("Message arrived [");
+    Serial.print(topic);
+    Serial.print("] ");
+
+    for(int i = 0; i < length; i++) {
+        Serial.print((char)payload[i]);
+    }
+
+    Serial.println();
+}
+*/
+
+/**
  * Constructor for the MQTT class.
  * 
  * @param espClient The WiFi client
@@ -15,7 +41,7 @@ MQTT::MQTT(WiFiClient espClient, PubSubClient client) {
 
     Serial.println("Setting up the MQTT connection...");
     _client.setServer(Constants::MQTT_SERVER, Constants::MQTT_PORT);
-    _client.setCallback(callback);
+    //_client.setCallback(callback);
 
     Serial.println("MQTT connected");
 }
@@ -39,7 +65,7 @@ bool MQTT::isOK() {
  */
 void MQTT::sendTemperature(float temperature) {
     snprintf(_message, Constants::MESSAGE_MAX_BUFFER, "temperature:%f", temperature);
-    _lastMessageSent = _client.publish("assignment03temperature", _message);
+    _lastMessageSent = _client.publish(Constants::MQTT_TEMPERATURE_TOPIC, _message);
 }
 
 /**
@@ -52,30 +78,6 @@ void MQTT::setupWifi() {
     WiFi.begin(Constants::SSID, Constants::PASSWORD);
 
     while(WiFi.status() != WL_CONNECTED) { }
-}
-
-/**
- * Callback function for the MQTT connection.
- * 
- * @param topic The topic of the message
- * @param payload The message payload
- * @param length The length of the message
- * 
- * @return void
- * 
- * @note Created locally to avoid casting error inside client.setCallback.
- * Cannot cast void to std::function<void (char *, uint8_t *, unsigned int)>
- */
-void callback(const char* topic, const byte* payload, unsigned int length) {
-    Serial.print("Message arrived [");
-    Serial.print(topic);
-    Serial.print("] ");
-
-    for(int i = 0; i < length; i++) {
-        Serial.print((char)payload[i]);
-    }
-
-    Serial.println();
 }
 
 /**
@@ -99,7 +101,7 @@ void MQTT::reconnect() {
         }
     }
 
-    _client.setCallback(callback);
+    // _client.setCallback(callback);
     Serial.println("MQTT fully connected");
 }
 
@@ -109,7 +111,7 @@ void MQTT::reconnect() {
  * @return bool
  */
 bool MQTT::isConnected() {
-    if(!WiFi.status() != WL_CONNECTED) {
+    if(WiFi.status() != WL_CONNECTED) {
         Serial.println("WiFi Not Available");
         return false;
     }

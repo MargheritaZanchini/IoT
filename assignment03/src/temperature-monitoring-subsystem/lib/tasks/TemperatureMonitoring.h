@@ -4,6 +4,7 @@
 #include "../lib/tasks/Task.h"
 #include "../lib/components/Thermistor.h"
 #include "../lib/components/Led.h"
+#include "MQTT.h"
 
 /**
  * \brief Temperature Task Class
