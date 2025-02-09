@@ -31,8 +31,7 @@ TaskHandle_t temperatureTaskHandle;
 void temperatureMonitoringTask(void* parameter) {
     TickType_t xLastWakeTime = xTaskGetTickCount();
     TickType_t xFrequency = pdMS_TO_TICKS(5000);
-    for (;;) {
-        //xFrequency = temperatureTask->getPeriod() / portTICK_PERIOD_MS; // Converto da ms a ticks
+    for(;;) {
         temperatureTask->tick();
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
@@ -48,14 +47,13 @@ void setup() {
 
     temperatureTask = new TemperatureMonitoring(thermistor, okLED, errorLED);
 
-    xTaskCreatePinnedToCore(temperatureMonitoringTask, "temperatureTask", 10000, NULL, 1, &temperatureTaskHandle, 1);
+    xTaskCreatePinnedToCore(temperatureMonitoringTask, "temperatureTask", 20000, NULL, 1, &temperatureTaskHandle, 1);
 }
 
 void loop() {
     if(!mqtt->isConnected()) {
         mqtt->reconnect();
     }
-    else {
-        client.loop();
-    }
+
+    client.loop();
 }

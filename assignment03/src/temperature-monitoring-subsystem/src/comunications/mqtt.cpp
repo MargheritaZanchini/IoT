@@ -36,14 +36,10 @@ MQTT::MQTT(WiFiClient espClient, PubSubClient client) {
     _espClient = espClient;
     _client = client;
 
-    Serial.println("Setting up the WiFi connection...");
     setupWifi();
 
-    Serial.println("Setting up the MQTT connection...");
     _client.setServer(Constants::MQTT_SERVER, Constants::MQTT_PORT);
     //_client.setCallback(callback);
-
-    Serial.println("MQTT connected");
 }
 
 /**
@@ -59,12 +55,15 @@ bool MQTT::isOK() {
 /**
  * Send the temperature to the MQTT broker.
  * 
- * @param temperature The temperature to send
+ * @param temperature The temperature to send (2 decimal places)
  * 
  * @return void
+ * 
+ * @note The message is sent to the topic "temperature" with only 2 decimal places,
+ * otherwise the message will be too long (causing buffer overflow).
  */
 void MQTT::sendTemperature(float temperature) {
-    snprintf(_message, Constants::MESSAGE_MAX_BUFFER, "temperature:%f", temperature);
+    snprintf(_message, Constants::MESSAGE_MAX_BUFFER, "temperature:%.2f", temperature);
     _lastMessageSent = _client.publish(Constants::MQTT_TEMPERATURE_TOPIC, _message);
 }
 
@@ -101,7 +100,7 @@ void MQTT::reconnect() {
         }
     }
 
-    // _client.setCallback(callback);
+    _client.setCallback(nullptr);
     Serial.println("MQTT fully connected");
 }
 
