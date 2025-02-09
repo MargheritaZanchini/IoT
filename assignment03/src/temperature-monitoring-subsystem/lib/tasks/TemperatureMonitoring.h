@@ -30,5 +30,4 @@ private:
     Led* _errorLED; /** [Pointer] Error Indicator LED */
 
     float _currentTemperature; /** Current Temperature Value */
-
 };
