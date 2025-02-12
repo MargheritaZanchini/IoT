@@ -4,7 +4,6 @@ import control.unit.TemperatureManager;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
 
 import io.vertx.mqtt.messages.MqttPublishMessage;
@@ -14,7 +13,7 @@ public class MQTTAgent extends AbstractVerticle {
     private static final String BROKER_ADDRESS = "broker.mqtt-dashboard.com";
     private static final int BROKER_PORT = 1883;
 
-    private static final String TOPIC_STRING = "a03temperature";
+    private static final String MQTT_TOPIC = "a03monitoring";
     private static final MqttQoS QUALITY_OF_SERVICE = MqttQoS.EXACTLY_ONCE;
 
     private static final int RECONNECT_INTERVAL = 3000;
@@ -25,7 +24,6 @@ public class MQTTAgent extends AbstractVerticle {
 
     public MQTTAgent(TemperatureManager temperatureManager) {
         this.temperatureManager = temperatureManager;
-        System.out.println("MQTT Agent CREATED");
     }
 
     @Override
@@ -41,13 +39,11 @@ public class MQTTAgent extends AbstractVerticle {
             vertx.setTimer(RECONNECT_INTERVAL, h -> start());
         }
 
-        this.client.publishHandler(ph -> this.receiveTemperature(ph)).subscribe(TOPIC_STRING, QUALITY_OF_SERVICE.value());
+        this.client.publishHandler(ph -> this.receiveTemperature(ph)).subscribe(MQTT_TOPIC, QUALITY_OF_SERVICE.value());
     }
 
     public void receiveTemperature(MqttPublishMessage h) {
         double t = 0;
-
-        System.out.println("Received message: " + h.payload().toString() + ". In topic: " + h.topicName());
 
         try {
             t = Double.parseDouble(h.payload().toString().replace("temperature:", ""));
@@ -57,12 +53,18 @@ public class MQTTAgent extends AbstractVerticle {
             System.out.println("Can't parse: " + h.payload().toString());
         }
 
-        // this.temperatureManager.addTemperature(t);
+        this.temperatureManager.addTemperature(t);
     }
 
-    public void sendFrequency(int frequency) {
-        if(!this.client.isConnected()) { }
+    // public void sendFrequency(int frequency) {
+    //     if(!this.client.isConnected()) {
+    //         System.out.println("MQTT client is not connected. Can't send frequency.");
+    //         return;
+    //     }
+    //     this.client.publish(FREQUENCY_TOPIC, Buffer.buffer(String.valueOf(frequency)), QUALITY_OF_SERVICE, false, false);
+    // }
 
-        this.client.publish(TOPIC_STRING, Buffer.buffer(String.valueOf(frequency)), QUALITY_OF_SERVICE, false, false);
-   }
+    public MqttClient getClient() {
+        return this.client;
+    }
 }

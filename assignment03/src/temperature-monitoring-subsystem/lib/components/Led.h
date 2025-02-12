@@ -28,6 +28,12 @@ public:
      */
     void toggle();
 
+    /**
+     * \brief Returns the Pin Number of the LED
+     * \return int
+     */
+    int getPin();
+
 private:
     int _pin; /** Pin Number for Digital Output */
 };

@@ -2,18 +2,22 @@
 
 Led::Led(int pin) {
     this->_pin = pin;
-    pinMode(pin, OUTPUT);
+    pinMode(this->_pin, OUTPUT);
 }
 
 void Led::on() {
-    digitalWrite(_pin, HIGH);
+    digitalWrite(this->_pin, 1);
 }
 
 void Led::off() {
-    digitalWrite(_pin, LOW);
+    digitalWrite(this->_pin, 0);
 }
 
 void Led::toggle() {
     int state = digitalRead(_pin);
-    digitalWrite(_pin, !state);
+    digitalWrite(this->_pin, !state);
+}
+
+int Led::getPin() {
+    return this->_pin;
 }

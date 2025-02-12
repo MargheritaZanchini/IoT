@@ -1,59 +1,35 @@
 #include <Arduino.h>
 
-#include <WiFi.h>
-#include <PubSubClient.h>
+#include "Communication.h"
+#include "Monitoring.h"
 
-#include "Thermistor.h"
-#include "mqtt.h"
-#include <TemperatureMonitoring.h>
-#include <Led.h>
+#include "config.h"
 
-#include "../lib/constants.h"
+Communication* communication;
+Monitoring* monitoring;
 
+void callback(char* topic, byte* payload, unsigned int length) {
 
-
-WiFiClient espClient;
-PubSubClient client(espClient);
-
-Led* okLED; /** [Pointer] OK Indicator LED */
-Led* errorLED; /** [Pointer] Error Indicator LED */
-
-Thermistor* thermistor; /** [Pointer] Thermistor Sensor */
-
-MQTT* mqtt; /** [Object] MQTT Communication */
-
-TemperatureMonitoring* temperatureTask; /** [Pointer] Temperature Detection Task */
-
-TaskHandle_t temperatureTaskHandle;
-
-
-
-void temperatureMonitoringTask(void* parameter) {
-    TickType_t xLastWakeTime = xTaskGetTickCount();
-    TickType_t xFrequency = pdMS_TO_TICKS(5000);
-    for(;;) {
-        temperatureTask->tick();
-        vTaskDelayUntil(&xLastWakeTime, xFrequency);
-    }
 }
 
 void setup() {
-    Serial.begin(Constants::BAUD_RATE);
+    Serial.begin(CONFIG_BAUD_RATE);
 
-    mqtt = new MQTT(espClient, client);
-    okLED = new Led(Constants::LED_OK_PIN);
-    errorLED = new Led(Constants::LED_ERROR_PIN);
-    thermistor = new Thermistor(Constants::THERMISTOR_PIN);
+    WiFiClient* wifiClient = new WiFiClient();
+    PubSubClient* pubSubClient = new PubSubClient(*wifiClient);
+    communication = new Communication(wifiClient, pubSubClient);
 
-    temperatureTask = new TemperatureMonitoring(thermistor, okLED, errorLED);
+    communication->begin();
 
-    xTaskCreatePinnedToCore(temperatureMonitoringTask, "temperatureTask", 20000, NULL, 1, &temperatureTaskHandle, 1);
+    monitoring = new Monitoring();
 }
 
 void loop() {
-    if(!mqtt->isConnected()) {
-        mqtt->reconnect();
-    }
+    // TO DO IN A TASK
 
-    client.loop();
+    // float currentTemperature = monitoring->getTemperature();
+    // String message = "temperature:" + String(currentTemperature);
+    // communication->sendTemperature(message.c_str());
+
+    delay(5000);
 }
