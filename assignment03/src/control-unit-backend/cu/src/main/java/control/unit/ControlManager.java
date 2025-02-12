@@ -11,8 +11,8 @@ public class ControlManager extends Thread {
 
     private TemperatureManager temperatureManager = new TemperatureManager();
 
-    // private final static int F1 = 3000;
-    // private final static int F2 = 1000;
+    private final static int F1 = 3000;
+    private final static int F2 = 1000;
 
     public ControlManager() throws Exception {
         vertx = Vertx.vertx();
@@ -35,10 +35,12 @@ public class ControlManager extends Thread {
         switch(temperatureManager.getTemperatureState()) {
             case NORMAL: {
                 System.out.println("Case NORMAL");
+                mqttAgent.sendFrequency(F1);
                 break;
             }
             case HOT: {
                 System.out.println("Case HOT");
+                mqttAgent.sendFrequency(F2);
                 break;
             }
             case TOO_HOT: {

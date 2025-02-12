@@ -4,6 +4,7 @@ import control.unit.TemperatureManager;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.mqtt.MqttClient;
 
 import io.vertx.mqtt.messages.MqttPublishMessage;
@@ -56,13 +57,13 @@ public class MQTTAgent extends AbstractVerticle {
         this.temperatureManager.addTemperature(t);
     }
 
-    // public void sendFrequency(int frequency) {
-    //     if(!this.client.isConnected()) {
-    //         System.out.println("MQTT client is not connected. Can't send frequency.");
-    //         return;
-    //     }
-    //     this.client.publish(FREQUENCY_TOPIC, Buffer.buffer(String.valueOf(frequency)), QUALITY_OF_SERVICE, false, false);
-    // }
+    public void sendFrequency(int frequency) {
+        if(!this.client.isConnected()) {
+            System.out.println("MQTT client is not connected. Can't send frequency.");
+            return;
+        }
+        this.client.publish(MQTT_TOPIC, Buffer.buffer("frequency:" + String.valueOf(frequency)), QUALITY_OF_SERVICE, false, true);
+    }
 
     public MqttClient getClient() {
         return this.client;

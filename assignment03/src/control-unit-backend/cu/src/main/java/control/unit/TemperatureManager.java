@@ -55,7 +55,6 @@ public class TemperatureManager {
         return Collections.max(this.temperatures);
     }
 
-    // TODO: Implement this method
     public TemperatureState getTemperatureState() {   
         double currentTemperature = this.getCurrentTemperature();
 

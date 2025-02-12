@@ -1,7 +1,7 @@
 #include "Monitoring.h"
 
 Monitoring::Monitoring() : _ok(CONFIG_LED_OK_PIN), _error(CONFIG_LED_ERROR_PIN), _thermistor(CONFIG_THERMISTOR_PIN) {
-    setProblem();
+    setProblem(); // Starts as problem active
 }
 
 void Monitoring::setProblem() {
