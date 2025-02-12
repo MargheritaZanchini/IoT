@@ -73,3 +73,12 @@ bool Communication::sendMessage(const char* message) {
 void Communication::setCallback(CallbackFunction callback) {
     _mqtt->setCallback(callback);
 }
+
+void Communication::eventLoop() {
+    _mqtt->loop(); // Run the MQTT Loop to check for incoming messages
+
+    // If MQTT disconnects, try to reconnect
+    if(!connected()) {
+        reconnect();
+    }
+}

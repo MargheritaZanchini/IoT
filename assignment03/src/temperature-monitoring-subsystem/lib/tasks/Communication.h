@@ -1,16 +1,14 @@
 #pragma once
 
-#include <Arduino.h>
-
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-#include "config.h"
+#include "Task.h"
 
 /**
  * \brief Communication Helper Class
  */
-class Communication {
+class Communication : public Task {
 public:
     /**
      * \brief Alias Type of Callback Function for MQTT Received Messages
@@ -62,6 +60,14 @@ public:
      */
     void setCallback(CallbackFunction callback);
 
+    /**
+     * \brief Event Loop (Overriden)
+     * 
+     * Communication Event Loop
+     * \see{Task}
+     */
+    void eventLoop() override;
+
 private:
     WiFiClient* _client; /** WiFi Client Instance */
     PubSubClient* _mqtt; /** MQTT Client Instance */
@@ -76,3 +82,8 @@ private:
     */
     void setupMQTT();
 };
+
+/**
+ * \brief Global Communication Task Instance
+ */
+extern Communication* communication;

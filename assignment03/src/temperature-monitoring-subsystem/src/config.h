@@ -1,23 +1,22 @@
 #pragma once
 
-#define CONFIG_SSID "TIM-29820711"
-#define CONFIG_PASSWORD "casa2020"
+#define CONFIG_SSID "TIM-29820711" /** WiFi SSID */
+#define CONFIG_PASSWORD "casa2020" /** WiFi Password */
 
-#define CONFIG_MQTT_SERVER "broker.mqtt-dashboard.com"
-#define CONFIG_MQTT_TOPIC "a03monitoring"
-#define CONIFG_MQTT_QOS 1
-#define CONFIG_MQTT_PORT 1883
-#define CONFIG_CLIENT_ID "a03"
+#define CONFIG_MQTT_SERVER "broker.mqtt-dashboard.com" /** MQTT Server */
+#define CONFIG_MQTT_TOPIC "a03monitoring" /** MQTT Topic */
+#define CONIFG_MQTT_QOS 1 /** MQTT QoS */
+#define CONFIG_MQTT_PORT 1883 /** MQTT Port */
+#define CONFIG_CLIENT_ID "a03" /** MQTT Client ID */
 
-#define CONFIG_RECONNECTION_INTERVAL 5000
-#define CONFIG_BAUD_RATE 115200
-#define CONFIG_MESSAGE_MAX_BUFFER 75
+#define CONFIG_RECONNECTION_INTERVAL 5000 /** Reconnection interval (milliseconds) */
+#define CONFIG_BAUD_RATE 115200 /** Baud rate */
 
-#define CONFIG_LED_OK_PIN 16
-#define CONFIG_LED_ERROR_PIN 17
-#define CONFIG_THERMISTOR_PIN 18
+#define CONFIG_LED_OK_PIN 16 /** LED OK Pin */
+#define CONFIG_LED_ERROR_PIN 17 /** LED Error Pin */
+#define CONFIG_THERMISTOR_PIN 18 /** Thermistor Pin */
 
-#define CONFIG_TEMPERATURE_HOT_ALARM_THRESHOLD 27
-#define CONFIG_TEMPERATURE_TOO_HOT_ALARM_THRESHOLD 30
+#define CONFIG_TEMPERATURE_HOT_ALARM_THRESHOLD 27 /** Temperature Hot Alarm Threshold */
+#define CONFIG_TEMPERATURE_TOO_HOT_ALARM_THRESHOLD 30 /** Temperature Too Hot Alarm Threshold */
 
-#define CONFIG_TASK_DEPTH 10000
+#define CONFIG_TASK_DEPTH 10000 /** Task Depth */

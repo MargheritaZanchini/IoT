@@ -10,10 +10,10 @@
 WiFiClient* wifiClient; /** WiFi Client */
 PubSubClient* pubSubClient; /** MQTT Client */
 
-Communication* communication; /** Communication Helper Class */
-Monitoring* monitoring; /** Monitoring Helper Class */
+Communication* communication;
+Monitoring* monitoring;
 
-// TaskHandle_t taskHandle; // TO-DELETE
+TaskHandle_t taskHandle; /** Task Handle */
 
 int frequency = 0; /** Frequency (Normal = F!, Hot = F2) */
 
@@ -25,6 +25,26 @@ int frequency = 0; /** Frequency (Normal = F!, Hot = F2) */
  * \param value String to check
  * \return bool
  */
+bool isInteger(String value);
+
+/**
+ * \brief Task to read the new frequency sent from the Control Unit.
+ * 
+ * \param topic MQTT Topic of the message
+ * \param payload Message arrived
+ * \param length Length of the message
+ */
+void callback(char* topic, byte* payload, unsigned int length);
+
+/**
+ * \brief Monitoring Task Code
+ * 
+ * \param argument Task Arguments
+ */
+void monitoringTaskCode(void *argument);
+
+
+
 bool isInteger(String value) {
     if(value.isEmpty()) return false; // If Empty String, return False
 
@@ -39,13 +59,6 @@ bool isInteger(String value) {
     return true;
 }
 
-/**
- * \brief Task to read the new frequency sent from the Control Unit.
- * 
- * \param topic MQTT Topic of the message
- * \param payload Message arrived
- * \param length Length of the message
- */
 void callback(char* topic, byte* payload, unsigned int length) {
     // Convert the payload to a string and store it in a variable
     String message = "";
@@ -79,16 +92,15 @@ void callback(char* topic, byte* payload, unsigned int length) {
     }
 }
 
-// TO-DELETE
-// void monitoringTaskCode(void *argument) {
-//     TickType_t xLastWakeTime, xFrequency;
-// 
-//     for(;;) {
-//         xFrequency = frequency / portTICK_PERIOD_MS;
-//         tempTask->loop();
-//         xTaskDelayUntil(&xLastWakeTime, xFrequency);
-//     }
-// }
+void monitoringTaskCode(void *argument) {
+    TickType_t _lastWakeTime, _frequency;
+
+    for(;;) {
+        _frequency = pdMS_TO_TICKS(frequency);
+        monitoring->eventLoop();
+        xTaskDelayUntil(&_lastWakeTime, _frequency);
+    }
+}
 
 
 
@@ -109,20 +121,14 @@ void setup() {
     // Set the Callback Function for the MQTT Client
     communication->setCallback(callback);
 
-    // Initialize the Monitoring Class
+    // Initialize the Monitoring Task Class
     monitoring = new Monitoring();
-
-    // TO-DELETE
-    // tempTask = new TemperatureTask(TEMP_PIN, REDLED_PIN, GREENLED_PIN);
-    // xTaskCreatePinnedToCore(monitoringTaskCode, "Monitoring Task", CONFIG_TASK_DEPTH, NULL, 1, &tempTaskHandle, 1);
+    xTaskCreatePinnedToCore(monitoringTaskCode, "Monitoring Task", CONFIG_TASK_DEPTH, NULL, 1, &taskHandle, 1);
 }
 
 /**
  * \brief Loop Function
  */
 void loop() {
-    // TO DO IN A TASK
-    // float currentTemperature = monitoring->getTemperature();
-    // String message = "temperature:" + String(currentTemperature);
-    // communication->sendMessage(message.c_str());
+    communication->eventLoop();
 }

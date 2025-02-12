@@ -1,16 +1,15 @@
 #pragma once
 
-#include <Arduino.h>
-
 #include "Led.h"
 #include "Thermistor.h"
+#include "Communication.h"
 
-#include "config.h"
+#include "Task.h"
 
 /**
  * \brief Monitoring Helper Class
  */
-class Monitoring {
+class Monitoring : public Task {
 public:
     /**
      * \brief Creates New Monitoring Instance
@@ -40,6 +39,14 @@ public:
      * \return Current temperature
      */
     float getTemperature();
+
+    /**
+     * \brief Event Loop (Overriden)
+     * 
+     * Monitoring Event Loop
+     * \see{Task}
+     */
+    void eventLoop() override;
 
 private:
     Led _ok; /** OK Indicator LED */
