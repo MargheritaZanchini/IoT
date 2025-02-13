@@ -15,7 +15,7 @@ Monitoring* monitoring;
 
 TaskHandle_t taskHandle; /** Task Handle */
 
-int frequency = 0; /** Frequency (Normal = F!, Hot = F2) */
+int frequency = 5000; /** Frequency (Normal = F1, Hot = F2) */
 
 
 
@@ -79,11 +79,21 @@ void callback(char* topic, byte* payload, unsigned int length) {
         // If the value is convertible to an integer,
         // Convert it and store it in the frequency variable
         if(isInteger(value)) {
-            frequency = value.toInt();
+            //frequency = value.toInt();
             
             // Print the new frequency to Serial
-            Serial.print("Frequency Changed to: ");
-            Serial.println(frequency);
+            //Serial.print("Frequency Changed to: ");
+            //Serial.println(frequency);
+
+            int newFrequency = value.toInt();
+            if (newFrequency > 0) {
+                frequency = newFrequency;
+                // Print the new frequency to Serial
+                Serial.print("Frequency Changed to: ");
+                Serial.println(frequency);
+            } else {
+                Serial.println("Invalid Frequency Value Received: Must be greater than 0");
+            }
         }
         else { // Else, if not convertible, print an error message and exit the function
             Serial.println("Invalid Frequency Value Received");
@@ -96,9 +106,18 @@ void monitoringTaskCode(void *argument) {
     TickType_t _lastWakeTime, _frequency;
 
     for(;;) {
+        //_frequency = pdMS_TO_TICKS(frequency);
+        //monitoring->eventLoop();
+        //vTaskDelayUntil(&_lastWakeTime, _frequency);
+
         _frequency = pdMS_TO_TICKS(frequency);
-        monitoring->eventLoop();
-        xTaskDelayUntil(&_lastWakeTime, _frequency);
+        if (_frequency > 0) {
+            monitoring->eventLoop();
+            vTaskDelayUntil(&_lastWakeTime, _frequency);
+        } else {
+            Serial.println("Frequency is zero, skipping delay");
+            vTaskDelay(1000 / portTICK_PERIOD_MS); // Delay for 1 second to avoid busy loop
+        }
     }
 }
 

@@ -44,20 +44,24 @@ public class MQTTAgent extends AbstractVerticle {
     }
 
     public void receiveTemperature(MqttPublishMessage h) {
+        String message = h.payload().toString();
+        if (message.startsWith("frequency:")) {
+            return;
+        }
+
         double t = 0;
 
         try {
-            t = Double.parseDouble(h.payload().toString().replace("temperature:", ""));
+            t = Double.parseDouble(message.replace("temperature:", ""));
             System.out.println("Received temperature: " + t);
-        }
-        catch(NumberFormatException e) {
-            System.out.println("Can't parse: " + h.payload().toString());
+        } catch (NumberFormatException e) {
+            System.out.println("Can't parse: " + message);
         }
 
         this.temperatureManager.addTemperature(t);
-    }
+        }
 
-    public void sendFrequency(int frequency) {
+        public void sendFrequency(int frequency) {
         if(!this.client.isConnected()) {
             System.out.println("MQTT client is not connected. Can't send frequency.");
             return;

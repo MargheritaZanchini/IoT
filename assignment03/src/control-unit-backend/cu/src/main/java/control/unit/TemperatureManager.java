@@ -19,7 +19,12 @@ public class TemperatureManager {
     }
 
     public void addTemperature(double temperature) {
+        if(this.temperatures.size() >= 10) {
+            this.temperatures.remove(0);
+        }
         this.temperatures.add(temperature);
+
+        System.out.println("Temperatures: " + this.temperatures);
     }
 
     public double getTemperature(int index) {
@@ -55,13 +60,15 @@ public class TemperatureManager {
         return Collections.max(this.temperatures);
     }
 
+    /*
     public TemperatureState getTemperatureState() {   
         double currentTemperature = this.getCurrentTemperature();
 
-        if(currentTemperature > 0 && currentTemperature <= 30) return TemperatureState.NORMAL;
-        else if(currentTemperature > 30 && currentTemperature <= 32) return TemperatureState.HOT;
-        else if(currentTemperature > 32 && currentTemperature <= 35) return TemperatureState.TOO_HOT;
-        else if(currentTemperature > 35 && currentTemperature <= 40) return TemperatureState.ALARM;
+        if(currentTemperature > 0 && currentTemperature <= 24) return TemperatureState.NORMAL;
+        else if(currentTemperature > 24 && currentTemperature <= 26) return TemperatureState.HOT;
+        else if(currentTemperature > 26 && currentTemperature <= 27) return TemperatureState.TOO_HOT;
+        else if(currentTemperature > 27) return TemperatureState.ALARM;
         else return TemperatureState.ALARM;
     }
+    */
 }
