@@ -59,14 +59,15 @@ public class MQTTAgent extends AbstractVerticle {
         }
 
         this.temperatureManager.addTemperature(t);
-        }
+    }
 
-        public void sendFrequency(int frequency) {
+    public void sendFrequency(int frequency) {
         if(!this.client.isConnected()) {
             System.out.println("MQTT client is not connected. Can't send frequency.");
             return;
         }
         this.client.publish(MQTT_TOPIC, Buffer.buffer("frequency:" + String.valueOf(frequency)), QUALITY_OF_SERVICE, false, true);
+        System.out.println("Sent frequency: " + frequency);
     }
 
     public MqttClient getClient() {

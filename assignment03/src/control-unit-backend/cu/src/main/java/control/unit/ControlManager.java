@@ -6,9 +6,9 @@ import control.unit.connections.mqtt.MQTTAgent;
 import io.vertx.core.Vertx;
 
 public class ControlManager extends Thread {
-    private TemperatureState _state;
-    private boolean _firstRun = true;
-    private long _hotStartTime;
+    private TemperatureState state;
+    private boolean firstRun = true;
+    private long hotStartTime;
 
     private Vertx vertx;
     
@@ -19,6 +19,11 @@ public class ControlManager extends Thread {
     private final static int F1 = 3000;
     private final static int F2 = 1000;
 
+    private final static float T1 = 24;
+    private final static float T2 = 26;
+
+    private final static long DT = 5000;
+
     public ControlManager() throws Exception {
         vertx = Vertx.vertx();
         
@@ -28,9 +33,9 @@ public class ControlManager extends Thread {
 
         vertx.setPeriodic(1000, id -> this.run());
 
-        _state = TemperatureState.NORMAL;
+        state = TemperatureState.NORMAL;
         
-        _hotStartTime = 0;
+        hotStartTime = 0;
     }
 
     public void run() {
@@ -41,55 +46,61 @@ public class ControlManager extends Thread {
             return;
         }
 
-        switch(_state) {
+        switch(state) {
             case NORMAL: {
-                if(temperatureManager.getCurrentTemperature() > 24) {
-                    _state = TemperatureState.HOT;
+                if(temperatureManager.getCurrentTemperature() > T1) {
+                    state = TemperatureState.HOT;
                     System.out.println("Case HOT");
                     mqttAgent.sendFrequency(F2);
+                    break;
                 }
-                if(_firstRun) {
-                    _firstRun = false;
+                if(firstRun) {
+                    firstRun = false;
                     mqttAgent.sendFrequency(F1);
                 }
                 System.out.println("Case NORMAL");
                 break;
             }
             case HOT: {
-                if(temperatureManager.getCurrentTemperature() <= 24) {
-                    _state = TemperatureState.NORMAL;
+                if(temperatureManager.getCurrentTemperature() <= T1) {
+                    state = TemperatureState.NORMAL;
                     System.out.println("Case NORMAL");
                     mqttAgent.sendFrequency(F1);
+                    break;
                 }
-                if(temperatureManager.getCurrentTemperature() > 26) {
-                    _state = TemperatureState.TOO_HOT;
+                if(temperatureManager.getCurrentTemperature() > T2) {
+                    state = TemperatureState.TOO_HOT;
                     System.out.println("Case TOO HOT");
-                    _hotStartTime = 0;
+                    hotStartTime = 0;
+                    break;
                 }
                 System.out.println("Case HOT");
                 break;
             }
             case TOO_HOT: {
-                if(temperatureManager.getCurrentTemperature() <= 26) {
-                    _state = TemperatureState.HOT;
+                if(temperatureManager.getCurrentTemperature() <= T2) {
+                    state = TemperatureState.HOT;
                     System.out.println("Case HOT");
+                    break;
                 }
 
-                if(_hotStartTime == 0) {
-                    _hotStartTime = System.currentTimeMillis();
+                if(hotStartTime == 0) {
+                    hotStartTime = System.currentTimeMillis();
                 }
-                else if(temperatureManager.getCurrentTemperature() > 26.4 && (System.currentTimeMillis() - _hotStartTime) >= 3000) {
-                    _state = TemperatureState.ALARM;
+                else if((System.currentTimeMillis() - hotStartTime) >= DT) {
+                    state = TemperatureState.ALARM;
                     System.out.println("Case ALARM");
+                    break;
                 }
                 System.out.println("Case TOO HOT");
                 break;
             }
-            case ALARM: {
-                if(temperatureManager.getCurrentTemperature() <= 26.4) {
-                    _state = TemperatureState.TOO_HOT;
+            case ALARM: { // TO-DO Modify
+                if(temperatureManager.getCurrentTemperature() <= T2) {
+                    state = TemperatureState.TOO_HOT;
                     System.out.println("Case TOO HOT");
-                    _hotStartTime = 0;
+                    hotStartTime = 0;
+                    break;
                 }
                 System.out.println("Case ALARM");
                 break;

@@ -66,25 +66,19 @@ void callback(char* topic, byte* payload, unsigned int length) {
         message += (char) payload[i];
     }
 
-    // Print the message and its topic to Serial
-    Serial.print("Message arrived in ");
-    Serial.print(topic);
-    Serial.print(": ");
-    Serial.println(message);
-
     // Check if the message is a frequency message
     if(message.startsWith("frequency:")) {
+        // Print the message and its topic to Serial
+        Serial.print("Message arrived in ");
+        Serial.print(topic);
+        Serial.print(": ");
+        Serial.println(message);
+
         String value = message.substring(10); // Extract the value from the message
         
         // If the value is convertible to an integer,
         // Convert it and store it in the frequency variable
         if(isInteger(value)) {
-            //frequency = value.toInt();
-            
-            // Print the new frequency to Serial
-            //Serial.print("Frequency Changed to: ");
-            //Serial.println(frequency);
-
             int newFrequency = value.toInt();
             if (newFrequency > 0) {
                 frequency = newFrequency;
@@ -99,6 +93,15 @@ void callback(char* topic, byte* payload, unsigned int length) {
             Serial.println("Invalid Frequency Value Received");
             return;
         }
+    } 
+    else if(message.startsWith("temperature:")) {
+        // Print the message and its topic to Serial
+        Serial.print("Message sent in ");
+        Serial.print(topic);
+        Serial.print(": ");
+        Serial.println(message);
+
+        String value = message.substring(10); // Extract the value from the message
     }
 }
 
@@ -106,10 +109,6 @@ void monitoringTaskCode(void *argument) {
     TickType_t _lastWakeTime, _frequency;
 
     for(;;) {
-        //_frequency = pdMS_TO_TICKS(frequency);
-        //monitoring->eventLoop();
-        //vTaskDelayUntil(&_lastWakeTime, _frequency);
-
         _frequency = pdMS_TO_TICKS(frequency);
         if (_frequency > 0) {
             monitoring->eventLoop();

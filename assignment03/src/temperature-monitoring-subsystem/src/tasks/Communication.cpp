@@ -35,8 +35,6 @@ void Communication::setupMQTT() {
     Serial.println("Setting up MQTT");
 
     _mqtt->setServer(CONFIG_MQTT_SERVER, CONFIG_MQTT_PORT); // Set MQTT Server and Port
-
-    Serial.println("MQTT Connected");
 }
 
 void Communication::reconnect() {

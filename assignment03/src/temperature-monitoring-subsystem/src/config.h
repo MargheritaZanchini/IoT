@@ -1,7 +1,10 @@
 #pragma once
 
-#define CONFIG_SSID "TIM-29820711" /** WiFi SSID */
-#define CONFIG_PASSWORD "casa2020" /** WiFi Password */
+//#define CONFIG_SSID "TIM-29820711" /** WiFi SSID */
+//#define CONFIG_PASSWORD "casa2020" /** WiFi Password */
+
+#define CONFIG_SSID "Sofia's Galaxy A52s 5G" /** WiFi SSID */
+#define CONFIG_PASSWORD "ciaociao" /** WiFi Password */
 
 #define CONFIG_MQTT_SERVER "broker.mqtt-dashboard.com" /** MQTT Server */
 #define CONFIG_MQTT_TOPIC "a03monitoring" /** MQTT Topic */
@@ -15,8 +18,5 @@
 #define CONFIG_LED_OK_PIN 16 /** LED OK Pin */
 #define CONFIG_LED_ERROR_PIN 17 /** LED Error Pin */
 #define CONFIG_THERMISTOR_PIN 18 /** Thermistor Pin */
-
-#define CONFIG_TEMPERATURE_HOT_ALARM_THRESHOLD 27 /** Temperature Hot Alarm Threshold */
-#define CONFIG_TEMPERATURE_TOO_HOT_ALARM_THRESHOLD 30 /** Temperature Too Hot Alarm Threshold */
 
 #define CONFIG_TASK_DEPTH 10000 /** Task Depth */
