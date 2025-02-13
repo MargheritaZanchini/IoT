@@ -1,5 +1,7 @@
 package control.unit.connections.serial;
 
+import jssc.SerialPort;
+
 /**
  * Interface for Serial Communication
  * 
@@ -34,4 +36,18 @@ public interface CommunicationChannel {
      * Close the Communication Channel
      */
     void closeChannel();
+
+    /**
+     * Check if the Channel is Opened
+     * 
+     * @return If the Channel is Opened
+     */
+    boolean isOpened();
+
+    /**
+     * Get the Serial Port Object
+     * 
+     * @return The Serial Port
+     */
+    SerialPort getSerialPort();
 }

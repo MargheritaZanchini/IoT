@@ -107,4 +107,14 @@ public class SerialChannel implements CommunicationChannel, SerialPortEventListe
             }
         }
     }
+
+    @Override
+    public boolean isOpened() {
+        return serialPort.isOpened();
+    }
+
+    @Override
+    public SerialPort getSerialPort() {
+        return serialPort;
+    }
 }

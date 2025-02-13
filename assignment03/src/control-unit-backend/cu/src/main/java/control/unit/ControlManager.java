@@ -2,6 +2,7 @@ package control.unit;
 
 import control.unit.TemperatureManager.TemperatureState;
 import control.unit.connections.mqtt.MQTTAgent;
+import control.unit.connections.serial.SerialChannel;
 
 import io.vertx.core.Vertx;
 
@@ -13,8 +14,12 @@ public class ControlManager extends Thread {
     private Vertx vertx;
     
     private MQTTAgent mqttAgent;
+    private SerialChannel serialChannel;
 
     private TemperatureManager temperatureManager = new TemperatureManager();
+
+    private final static int SERIAL_BAUD_RATE = 115200;
+    private final static String SERIAL_PORT = "COM8";
 
     private final static int F1 = 3000;
     private final static int F2 = 1000;
@@ -33,6 +38,8 @@ public class ControlManager extends Thread {
 
         vertx.setPeriodic(1000, id -> this.run());
 
+        serialChannel = new SerialChannel(SERIAL_PORT, SERIAL_BAUD_RATE);
+
         state = TemperatureState.NORMAL;
         
         hotStartTime = 0;
@@ -43,6 +50,10 @@ public class ControlManager extends Thread {
 
         if(mqttAgent.getClient() == null) {
             System.out.println("MQTT Client Null");
+            return;
+        }
+        if(serialChannel == null) {
+            System.out.println("Serial Channel Null");
             return;
         }
 

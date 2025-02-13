@@ -23,17 +23,13 @@ public class TemperatureManager {
             this.temperatures.remove(0);
         }
         this.temperatures.add(temperature);
-
-        //System.out.println("Temperatures: " + this.temperatures);
     }
 
     public double getTemperature(int index) {
-        if(this.temperatures.isEmpty()) {
-            // throw new IndexOutOfBoundsException("No temperatures available");
+        if(this.temperatures.isEmpty()) { // No temperatures
             return -1;
         }
-        if(index < 0 || index >= this.temperatures.size()) {
-            // throw new IndexOutOfBoundsException("Index out of bounds");
+        if(index < 0 || index >= this.temperatures.size()) { // Index out of bounds
             return -1;
         }
 
