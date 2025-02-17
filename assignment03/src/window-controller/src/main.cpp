@@ -45,10 +45,10 @@ void setup() {
     servo = new ServoMotor(CONFIG_SERVO_PIN);
     window = new Window(servo);
 
-    windowManager = new WindowTask(window);
+    windowManager = new WindowTask(window, systemMode);
     windowManager->init(500);
 
-    displayManager = new DisplayTask(window);
+    displayManager = new DisplayTask(window, systemMode);
     displayManager->init(1000);
 
     modeManager = new ModeTask(modeButton, systemMode);
