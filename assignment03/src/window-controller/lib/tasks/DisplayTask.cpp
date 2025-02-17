@@ -21,7 +21,7 @@ DisplayTask::DisplayTask(Window* window) {
  * - current temperature value (MANUAL)
  */
 void DisplayTask::tick() {
-
+    updateDisplay("MIAO");
 }
 
 void DisplayTask::updateDisplay(const char* msg) {

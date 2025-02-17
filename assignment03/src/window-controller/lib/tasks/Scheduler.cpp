@@ -1,5 +1,5 @@
 #include <TimerOne.h>
-#include "../lib/tasks/Scheduler.h"
+#include "Scheduler.h"
 
 volatile bool timerFlag;
 
