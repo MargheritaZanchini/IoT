@@ -1,11 +1,11 @@
-#include "Door.h"
+#include "Window.h"
 
-Door::Door(ServoMotor* servoMotor) {
+Window::Window(ServoMotor* servoMotor) {
     _servoMotor = servoMotor;
     _angle = CONFIG_WINDOW_CLOSED;   
 }
 
-void Door::setDoorPosition(int angle) {
+void Window::setDoorPosition(int angle) {
     _angle = map(angle, 0, 100, CONFIG_WINDOW_CLOSED, CONFIG_WINDOW_OPEN);
     _servoMotor->on();
     _servoMotor->setPosition(_angle);
@@ -13,10 +13,10 @@ void Door::setDoorPosition(int angle) {
     _servoMotor->off();
 }
 
-int Door::getDoorPosition() {
+int Window::getDoorPosition() {
     return _angle;
 }
 
-bool Door::isOpen() {
+bool Window::isOpen() {
     return (_angle == CONFIG_WINDOW_CLOSED);
 }

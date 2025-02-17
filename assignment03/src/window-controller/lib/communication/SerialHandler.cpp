@@ -4,22 +4,9 @@ String content; /** Serial Content Buffer */
 
 SerialHelperObject SerialHelper; /** Global Serial Helper Object */
 
-bool SerialHelperObject::emptyActionAvailable() {
-    if (SerialHelper.hasEmptyAction) {
-        SerialHelper.hasEmptyAction = false;
-        return true;
-    }
-    return false;
-}
-
-bool SerialHelperObject::restoreActionAvailable() {
-    if (SerialHelper.hasRestoreAction) {
-        SerialHelper.hasRestoreAction = false;
-        return true;
-    }
-    return false;
-}
-
+/**
+ * \brief Initializes the Serial Helper Object
+ */
 void SerialHelperObject::init() {
     content.reserve(256);
     content = "";
@@ -33,16 +20,18 @@ void SerialHelperObject::init() {
 void serialEvent() {
     content = "";
 
-    while (Serial.available()) {
-        char ch = (char)Serial.read();
+    while(Serial.available()) {
+        char ch = (char) Serial.read();
 
         if (ch == 10 || ch == 0 || ch == 13) {
-            if (content == "[Action:Empty]") {
-                SerialHelper.hasEmptyAction = true;
-            } else if (content == "[Action:Restore]") {
-                SerialHelper.hasRestoreAction = true;
+            if(content.startsWith("aperture:")) {
+                SerialHelper.aperture = content.substring(9).toFloat();
             }
-        } else {
+            else if(content.startsWith("mode:")) {
+                String mode = content.substring(5);
+            }
+        }
+        else {
             content += ch;
         }
     }

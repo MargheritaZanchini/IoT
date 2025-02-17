@@ -2,19 +2,19 @@
 
 #include <Arduino.h>
 
-#include "config.h"
+#include "../../src/config.h"
 #include "./physical/ServoMotor.h"
 
 /**
  * \brief Door Component Helper Class
  */
-class Door {
+class Window {
 public:
     /**
      * \brief Creates New Door Controller
      * \param servoMotor Reference to a ServoMotor Object
      */
-    Door(ServoMotor* servoMotor);
+    Window(ServoMotor* servoMotor);
 
     /**
      * \brief Sets the Door Position
@@ -33,12 +33,6 @@ public:
      * \return True if the Door is Open, False Otherwise
      */
     bool isOpen();
-
-    /**
-     * \brief Checks if the Door is Operator Open
-     * \return True if the Door is Operator Open, False Otherwise
-     */
-    bool isOperatorOpen();
 
 private:
     ServoMotor* _servoMotor; /** Reference to the ServoMotor Object */

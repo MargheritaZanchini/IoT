@@ -9,24 +9,15 @@
  */
 class SerialHelperObject {
 public:
-    float temperature; /** Temperature Value */    
+    float aperture; /** Temperature Value */
 
     /**
      * \brief Initializes the Serial Helper Object
      */
     void init();
 
-    /**
-     * \brief Checks if Empty Action is Available
-     * \return True if Empty Action is Available, False Otherwise
-     */
-    bool emptyActionAvailable();
-
-    /**
-     * \brief Checks if Restore Action is Available
-     * \return True if Restore Action is Available, False Otherwise
-     */
-    bool restoreActionAvailable();
+    float getAperture();
+    void getMode();
 };
 
 extern SerialHelperObject SerialHelper; /** Global Serial Helper Object \note See SerialHandler */

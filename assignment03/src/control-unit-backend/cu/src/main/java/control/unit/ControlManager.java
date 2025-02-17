@@ -57,6 +57,8 @@ public class ControlManager extends Thread {
             return;
         }
 
+        serialChannel.sendMessage("serial:test");
+
         switch(state) {
             case NORMAL: {
                 if(temperatureManager.getCurrentTemperature() > T1) {
@@ -106,7 +108,7 @@ public class ControlManager extends Thread {
                 System.out.println("Case TOO HOT");
                 break;
             }
-            case ALARM: { // TO-DO Modify
+            case ALARM: { // TODO Modify
                 if(temperatureManager.getCurrentTemperature() <= T2) {
                     state = TemperatureState.TOO_HOT;
                     System.out.println("Case TOO HOT");

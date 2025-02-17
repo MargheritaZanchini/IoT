@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-#include "config.h"
+#include "../../src/config.h"
 
 /**
  * \brief Button Component Helper Class
