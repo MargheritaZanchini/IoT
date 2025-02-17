@@ -21,7 +21,7 @@ Potentiometer* potentiometer; /** [Pointer] Potentiometer */
 ServoMotor* servo; /** [Pointer] Servo Motor */
 Window* window; /** [Pointer] Window (ServoMotor Handler Class) */
 
-SystemMode* systemMode; /** System Mode */
+SystemManager* systemManager; /** System Mode */
 
 WindowTask* windowManager; /** [Pointer] Window Task */
 DisplayTask* displayManager; /** [Pointer] User Display Task */
@@ -36,7 +36,7 @@ void setup() {
     Serial.begin(CONFIG_SERIAL_BAUD_RATE);
     Serial.flush();
 
-    systemMode = new SystemMode();
+    systemManager = new SystemManager();
 
     modeButton = new Button(CONFIG_BUTTON_PIN);
 
@@ -45,13 +45,13 @@ void setup() {
     servo = new ServoMotor(CONFIG_SERVO_PIN);
     window = new Window(servo);
 
-    windowManager = new WindowTask(window, systemMode);
+    windowManager = new WindowTask(window, systemManager);
     windowManager->init(500);
 
-    displayManager = new DisplayTask(window, systemMode);
+    displayManager = new DisplayTask(window, systemManager);
     displayManager->init(1000);
 
-    modeManager = new ModeTask(modeButton, systemMode);
+    modeManager = new ModeTask(modeButton, systemManager);
     modeManager->init(500);
 
     scheduler.init(500);

@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-DisplayTask::DisplayTask(Window* window, SystemMode* mode) {
+DisplayTask::DisplayTask(Window* window, SystemManager* mode) {
     _lcd.init();
     _lcd.backlight();
     _lcd.setCursor(0, 0);
@@ -40,13 +40,13 @@ void DisplayTask::displayMessageBody() {
     _lcd.setCursor(0, 1);
     _lcd.print("Aperture: ");
 
-    if(_currentMode == SystemMode::MANUAL) {
+    if(_currentMode == SystemManager::MANUAL) {
         _lcd.setCursor(0, 2);
         _lcd.print("Temperature: ");
     }
 }
 
-void DisplayTask::displayMode(SystemMode::Mode mode) {
+void DisplayTask::displayMode(SystemManager::Mode mode) {
     if(_currentMode == mode) {
         return;
     }
@@ -58,7 +58,7 @@ void DisplayTask::displayMode(SystemMode::Mode mode) {
     _lcd.setCursor(13, 0);
     _lcd.print(DISPLAY_CLEARING_STRING);
     _lcd.setCursor(13, 0);
-    _lcd.print(_currentMode == SystemMode::MANUAL ? "MANUAL" : "AUTO");
+    _lcd.print(_currentMode == SystemManager::MANUAL ? "MANUAL" : "AUTO");
 }
 
 void DisplayTask::displayAperture(float aperture) {
@@ -80,7 +80,7 @@ void DisplayTask::displayAperture(float aperture) {
 }
 
 void DisplayTask::displayTemperature(float temperature) {
-    if(_temperature == temperature || _currentMode == SystemMode::AUTOMATIC) {
+    if(_temperature == temperature || _currentMode == SystemManager::AUTOMATIC) {
         return;
     }
 

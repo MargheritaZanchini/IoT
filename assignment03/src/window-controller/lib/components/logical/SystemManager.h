@@ -5,7 +5,7 @@
  * 
  * This class is responsible for managing the system mode (manual / automatic).
  */
-class SystemMode {
+class SystemManager {
 public:
     /**
      * \brief System Mode Enumeration
@@ -18,7 +18,7 @@ public:
     /**
      * \brief Creates New System Mode Instance
      */
-    SystemMode();
+    SystemManager();
     
     /**
      * \brief Sets the Current System Mode

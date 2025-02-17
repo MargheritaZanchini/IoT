@@ -1,6 +1,6 @@
 #include "ModeTask.h"
 
-ModeTask::ModeTask(Button* button, SystemMode* mode) {
+ModeTask::ModeTask(Button* button, SystemManager* mode) {
     _button = button;
     _mode = mode;
 }

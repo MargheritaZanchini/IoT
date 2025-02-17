@@ -2,7 +2,7 @@
 
 #include "Task.h"
 #include "../components/physical/Button.h"
-#include "../components/logical/SystemMode.h"
+#include "../components/logical/SystemManager.h"
 
 /**
  * \brief Mode Task Class
@@ -16,7 +16,7 @@ public:
      * \param button Button Instance
      * \param mode System Mode Instance
      */
-    ModeTask(Button* button, SystemMode* mode);
+    ModeTask(Button* button, SystemManager* mode);
     
     /**
      * \brief Initializes the Task
@@ -25,5 +25,5 @@ public:
 
 private:
     Button* _button; /** Button Instance */
-    SystemMode* _mode; /** System Mode Instance */
+    SystemManager* _mode; /** System Mode Instance */
 };
