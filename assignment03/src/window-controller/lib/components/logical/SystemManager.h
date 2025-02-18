@@ -12,7 +12,7 @@ public:
      */
     enum Mode {
         MANUAL, /** Manual Mode */
-        AUTOMATIC /** Automatic Mode */
+        AUTOMATIC/** Automatic Mode */
     };
 
     /**
@@ -22,6 +22,7 @@ public:
     
     /**
      * \brief Sets the Current System Mode
+     * \param mode New System Mode
      */
     void setMode(Mode mode);
 

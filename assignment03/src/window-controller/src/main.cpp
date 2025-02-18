@@ -45,14 +45,14 @@ void setup() {
     servo = new ServoMotor(CONFIG_SERVO_PIN);
     window = new Window(servo);
 
-    windowManager = new WindowTask(window, systemManager);
-    windowManager->init(500);
+    windowManager = new WindowTask(window, potentiometer, systemManager);
+    windowManager->init(2000);
 
     displayManager = new DisplayTask(window, systemManager);
-    displayManager->init(1000);
+    displayManager->init(2000);
 
     modeManager = new ModeTask(modeButton, systemManager);
-    modeManager->init(500);
+    modeManager->init(2000);
 
     scheduler.init(500);
 

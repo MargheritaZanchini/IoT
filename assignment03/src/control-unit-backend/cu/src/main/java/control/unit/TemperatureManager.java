@@ -7,6 +7,9 @@ import java.util.Collections;
 public class TemperatureManager {
     private final List<Double> temperatures;
 
+    public final static float T1 = 22;
+    public final static float T2 = 28;
+
     public static enum TemperatureState {
         NORMAL,
         HOT,
@@ -54,5 +57,9 @@ public class TemperatureManager {
 
     public double getMaxTemperature() {
         return Collections.max(this.temperatures);
+    }
+
+    public int getCorrespondingAperture() {
+        return (int) ((getCurrentTemperature() - T1) / (T2 - T1) * 100);
     }
 }

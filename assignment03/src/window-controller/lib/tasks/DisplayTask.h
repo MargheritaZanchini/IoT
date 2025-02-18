@@ -31,9 +31,8 @@ private:
     Window* _window; /** Pointer to Window Object */
     SystemManager* _mode; /** Pointer to System Mode Object */
 
-    float _aperture; /** Aperture Value */
-    float _temperature; /** Temperature Value */
-    SystemManager::Mode _currentMode; /** Current Mode Value */
+    float _currentAperture; /** Aperture Value */
+    float _currentTemperature; /** Temperature Value */
 
     /**
      * \brief Displays the Body of the Message

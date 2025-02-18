@@ -5,7 +5,7 @@ Window::Window(ServoMotor* servoMotor) {
     _angle = CONFIG_WINDOW_CLOSED;   
 }
 
-void Window::setDoorPosition(int angle) {
+void Window::setWindowAperture(int angle) {
     _angle = map(angle, 0, 100, CONFIG_WINDOW_CLOSED, CONFIG_WINDOW_OPEN);
     _servoMotor->on();
     _servoMotor->setPosition(_angle);

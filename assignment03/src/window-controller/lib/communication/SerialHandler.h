@@ -2,6 +2,8 @@
 
 #include <Arduino.h>
 
+#include "../components/logical/SystemManager.h"
+
 /**
  * \brief Serial Helper Object Class
  * \details Manages Serial Communication and Actions
@@ -9,15 +11,24 @@
  */
 class SerialHelperObject {
 public:
-    float aperture; /** Temperature Value */
-
-    /**
-     * \brief Initializes the Serial Helper Object
-     */
     void init();
 
-    float getAperture();
-    void getMode();
+    void setTemperature(float temperature);
+    void setAperture(int aperture);
+    void setMode(SystemManager::Mode mode);
+
+    float getTemperature();
+    int getAperture();
+    SystemManager::Mode getMode();
+
+private:
+    bool _temperatureAvailable; /** Temperature Available Flag */
+    bool _apertureAvailable; /** Aperture Available Flag */
+    bool _modeAvailable; /** Mode Available Flag */
+
+    float _temperature; /** Temperature Value */
+    int _aperture; /** Aperture Value */
+    SystemManager::Mode _mode; /** Current Mode */
 };
 
 extern SerialHelperObject SerialHelper; /** Global Serial Helper Object \note See SerialHandler */

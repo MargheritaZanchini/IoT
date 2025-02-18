@@ -20,7 +20,7 @@ public:
      * \brief Sets the Door Position
      * \param angle Target Angle in Degrees
      */
-    void setDoorPosition(int angle);
+    void setWindowAperture(int angle);
 
     /**
      * \brief Gets the Current Door Position

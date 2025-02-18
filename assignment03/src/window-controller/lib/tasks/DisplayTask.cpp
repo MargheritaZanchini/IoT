@@ -22,13 +22,12 @@ DisplayTask::DisplayTask(Window* window, SystemManager* mode) {
  * - current temperature value (MANUAL)
  */
 void DisplayTask::tick() {
-    randomSeed(0);
-    float aperture_test = random(0, 100);
-    float temperature_test = random(20, 50);
+    displayMode(SerialHelper.getMode());
+    displayAperture(SerialHelper.getAperture());
 
-    displayMode(_mode->getMode());
-    displayAperture(aperture_test);
-    displayTemperature(temperature_test);
+    if(_mode->getMode() == SystemManager::MANUAL) {
+        displayTemperature(SerialHelper.getTemperature());
+    }
 }
 
 void DisplayTask::displayMessageBody() {
@@ -40,58 +39,58 @@ void DisplayTask::displayMessageBody() {
     _lcd.setCursor(0, 1);
     _lcd.print("Aperture: ");
 
-    if(_currentMode == SystemManager::MANUAL) {
+    if(_mode->getMode() == SystemManager::MANUAL) {
         _lcd.setCursor(0, 2);
         _lcd.print("Temperature: ");
     }
 }
 
 void DisplayTask::displayMode(SystemManager::Mode mode) {
-    if(_currentMode == mode) {
+    if(_mode->getMode() == mode) {
         return;
     }
 
-    _currentMode = mode;
+    _mode->setMode(mode);
 
     displayMessageBody(); // Se la modalità è cambiata, riscrivi il body del messaggio
 
     _lcd.setCursor(13, 0);
     _lcd.print(DISPLAY_CLEARING_STRING);
     _lcd.setCursor(13, 0);
-    _lcd.print(_currentMode == SystemManager::MANUAL ? "MANUAL" : "AUTO");
+    _lcd.print(_mode->getMode() == SystemManager::MANUAL ? "MANUAL" : "AUTO");
 }
 
 void DisplayTask::displayAperture(float aperture) {
-    if(_aperture == aperture) {
+    if(_currentAperture == aperture) {
         return;
     }
 
-    _aperture = aperture;
+    _currentAperture = aperture;
 
     _lcd.setCursor(13, 1);
     _lcd.print(DISPLAY_CLEARING_STRING);
 
     _lcd.setCursor(13, 1);
 
-    String apertureMessage = String(_aperture);
+    String apertureMessage = String(_currentAperture);
     apertureMessage.concat("%");
 
     _lcd.print(apertureMessage.c_str()); // c_str() NECESSARIO! Converte la stringa in un array di caratteri
 }
 
 void DisplayTask::displayTemperature(float temperature) {
-    if(_temperature == temperature || _currentMode == SystemManager::AUTOMATIC) {
+    if(_currentTemperature == temperature || _mode->getMode() == SystemManager::AUTOMATIC) {
         return;
     }
 
-    _temperature = temperature;
+    _currentTemperature = temperature;
 
     _lcd.setCursor(13, 2);
     _lcd.print(DISPLAY_CLEARING_STRING);
 
     _lcd.setCursor(13, 2);
 
-    String temperatureMessage = String(_temperature);
+    String temperatureMessage = String(_currentTemperature);
     temperatureMessage.concat("^C"); // Il carattere del grado '°' non è supportato
 
     _lcd.print(temperatureMessage.c_str()); // c_str() NECESSARIO! Converte la stringa in un array di caratteri

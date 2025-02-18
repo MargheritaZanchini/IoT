@@ -19,13 +19,10 @@ public class ControlManager extends Thread {
     private TemperatureManager temperatureManager = new TemperatureManager();
 
     private final static int SERIAL_BAUD_RATE = 115200;
-    private final static String SERIAL_PORT = "COM8";
+    private final static String SERIAL_PORT = "COM9";
 
     private final static int F1 = 3000;
     private final static int F2 = 1000;
-
-    private final static float T1 = 24;
-    private final static float T2 = 26;
 
     private final static long DT = 5000;
 
@@ -57,11 +54,13 @@ public class ControlManager extends Thread {
             return;
         }
 
-        serialChannel.sendMessage("serial:test");
+        // TODO Place the following code correctly
+        serialChannel.sendMessage("temperature:" + temperatureManager.getCurrentTemperature());
+        serialChannel.sendMessage("aperture:" + temperatureManager.getCorrespondingAperture());
 
         switch(state) {
             case NORMAL: {
-                if(temperatureManager.getCurrentTemperature() > T1) {
+                if(temperatureManager.getCurrentTemperature() > TemperatureManager.T1) {
                     state = TemperatureState.HOT;
                     System.out.println("Case HOT");
                     mqttAgent.sendFrequency(F2);
@@ -75,13 +74,13 @@ public class ControlManager extends Thread {
                 break;
             }
             case HOT: {
-                if(temperatureManager.getCurrentTemperature() <= T1) {
+                if(temperatureManager.getCurrentTemperature() <= TemperatureManager.T1) {
                     state = TemperatureState.NORMAL;
                     System.out.println("Case NORMAL");
                     mqttAgent.sendFrequency(F1);
                     break;
                 }
-                if(temperatureManager.getCurrentTemperature() > T2) {
+                if(temperatureManager.getCurrentTemperature() > TemperatureManager.T2) {
                     state = TemperatureState.TOO_HOT;
                     System.out.println("Case TOO HOT");
                     hotStartTime = 0;
@@ -91,7 +90,7 @@ public class ControlManager extends Thread {
                 break;
             }
             case TOO_HOT: {
-                if(temperatureManager.getCurrentTemperature() <= T2) {
+                if(temperatureManager.getCurrentTemperature() <= TemperatureManager.T2) {
                     state = TemperatureState.HOT;
                     System.out.println("Case HOT");
                     break;
@@ -109,7 +108,7 @@ public class ControlManager extends Thread {
                 break;
             }
             case ALARM: { // TODO Modify
-                if(temperatureManager.getCurrentTemperature() <= T2) {
+                if(temperatureManager.getCurrentTemperature() <= TemperatureManager.T2) {
                     state = TemperatureState.TOO_HOT;
                     System.out.println("Case TOO HOT");
                     hotStartTime = 0;
@@ -117,6 +116,14 @@ public class ControlManager extends Thread {
                 }
                 System.out.println("Case ALARM");
                 break;
+            }
+        }
+
+        if(serialChannel.isMessageAvailable()) {
+            try {
+                System.out.println(serialChannel.receiveMessage());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
