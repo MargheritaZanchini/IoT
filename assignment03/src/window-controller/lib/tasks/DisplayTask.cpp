@@ -10,6 +10,11 @@ DisplayTask::DisplayTask(Window* window, SystemManager* mode) {
     _window = window;
     _mode = mode;
 
+    _currentAperture = -1;
+    _currentTemperature = -1;
+
+    SerialHelper.setMode(_mode->getMode());
+
     displayMessageBody();
 }
 
@@ -51,6 +56,7 @@ void DisplayTask::displayMode(SystemManager::Mode mode) {
     }
 
     _mode->setMode(mode);
+    SerialHelper.setMode(mode);
 
     displayMessageBody(); // Se la modalità è cambiata, riscrivi il body del messaggio
 
@@ -67,13 +73,21 @@ void DisplayTask::displayAperture(float aperture) {
 
     _currentAperture = aperture;
 
+    Serial.print("Current Aperture: ");
+    Serial.println(_currentAperture);
+
     _lcd.setCursor(13, 1);
     _lcd.print(DISPLAY_CLEARING_STRING);
 
     _lcd.setCursor(13, 1);
 
-    String apertureMessage = String(_currentAperture);
-    apertureMessage.concat("%");
+    String apertureMessage = "";
+    if(_currentAperture < 0 || _currentAperture > 100) {
+        apertureMessage = String("N/A");
+    } else {
+        apertureMessage = String(_currentAperture);
+        apertureMessage.concat("%");
+    }
 
     _lcd.print(apertureMessage.c_str()); // c_str() NECESSARIO! Converte la stringa in un array di caratteri
 }
@@ -90,8 +104,13 @@ void DisplayTask::displayTemperature(float temperature) {
 
     _lcd.setCursor(13, 2);
 
-    String temperatureMessage = String(_currentTemperature);
-    temperatureMessage.concat("^C"); // Il carattere del grado '°' non è supportato
+    String temperatureMessage = "";
+    if(_currentTemperature < 0) {
+        temperatureMessage = String("N/A");
+    } else {
+        temperatureMessage = String(_currentTemperature);
+        temperatureMessage.concat("^C"); // Il carattere del grado '°' non è supportato
+    }
 
     _lcd.print(temperatureMessage.c_str()); // c_str() NECESSARIO! Converte la stringa in un array di caratteri
 }

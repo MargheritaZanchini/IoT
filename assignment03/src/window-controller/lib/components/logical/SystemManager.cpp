@@ -1,7 +1,7 @@
 #include "SystemManager.h"
 
 SystemManager::SystemManager() {
-    _currentMode = MANUAL;
+    _currentMode = AUTOMATIC;
 }
 
 void SystemManager::setMode(SystemManager::Mode mode) {

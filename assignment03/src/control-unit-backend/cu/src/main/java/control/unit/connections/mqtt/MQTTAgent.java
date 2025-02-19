@@ -53,7 +53,7 @@ public class MQTTAgent extends AbstractVerticle {
 
         try {
             t = Double.parseDouble(message.replace("temperature:", ""));
-            System.out.println("Received temperature: " + t);
+            // System.out.println("Received temperature: " + t);
         } catch (NumberFormatException e) {
             System.out.println("Can't parse: " + message);
         }

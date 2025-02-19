@@ -10,8 +10,8 @@ import java.util.Collections;
 public class TemperatureManager {
     private final List<Double> temperatures;
 
-    public final static float T1 = 22; /** First Temperature Alert */
-    public final static float T2 = 28; /** Second Temperature Alert */
+    public final static float T1 = 30; /** First Temperature Alert */
+    public final static float T2 = 40; /** Second Temperature Alert */
 
     /**
      * TemperatureState Enum

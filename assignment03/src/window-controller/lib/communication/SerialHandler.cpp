@@ -11,9 +11,9 @@ void SerialHelperObject::init() {
     content.reserve(256);
     content = "";
 
-    _temperature = 0.0f;
-    _aperture = 0;
-    _mode = SystemManager::Mode::MANUAL;
+    _temperature = -1.0f;
+    _aperture = -1;
+    _mode = SystemManager::Mode::AUTOMATIC;
 
     _temperatureAvailable = false;
     _apertureAvailable = false;
@@ -53,7 +53,7 @@ SystemManager::Mode SerialHelperObject::getMode() {
         return _mode;
     }
 
-    return SystemManager::Mode::MANUAL;
+    return (SystemManager::Mode) -1;
 }
 
 /**
@@ -92,9 +92,6 @@ void serialEvent() {
         char ch = (char) Serial.read();
 
         if (ch == 10 || ch == 0 || ch == 13) {
-            Serial.print("Received: ");
-            Serial.println(content);
-
             if(content.startsWith("temperature:")) {
                 SerialHelper.setTemperature(content.substring(12).toFloat());
                 content = "";

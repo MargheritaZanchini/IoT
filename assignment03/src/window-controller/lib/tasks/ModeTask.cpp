@@ -6,10 +6,9 @@ ModeTask::ModeTask(Button* button, SystemManager* mode) {
 }
 
 void ModeTask::tick() {
-    Serial.print("ModeTask tick - Button State: ");
-    Serial.println(_button->isPressed() ? "PRESSED" : "RELEASED");
+    bool pressed = _button->isPressed();
 
-    if(_button->isPressed()) {
+    if(pressed) {
         _mode->switchMode();
     }
 }

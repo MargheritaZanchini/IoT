@@ -52,7 +52,7 @@ void setup() {
     displayManager->init(2000);
 
     modeManager = new ModeTask(modeButton, systemManager);
-    modeManager->init(2000);
+    modeManager->init(500);
 
     scheduler.init(500);
 
