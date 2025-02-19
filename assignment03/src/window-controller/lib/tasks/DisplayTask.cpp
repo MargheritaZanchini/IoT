@@ -8,12 +8,14 @@ DisplayTask::DisplayTask(Window* window, SystemManager* mode) {
     _lcd.setCursor(0, 0);
 
     _window = window;
-    _mode = mode;
+
+    //_mode = mode;
 
     _currentAperture = -1;
     _currentTemperature = -1;
 
-    SerialHelper.setMode(_mode->getMode());
+    _currentMode = SystemManager::AUTOMATIC;
+    SerialHelper.setMode(_currentMode);
 
     displayMessageBody();
 }
@@ -27,12 +29,23 @@ DisplayTask::DisplayTask(Window* window, SystemManager* mode) {
  * - current temperature value (MANUAL)
  */
 void DisplayTask::tick() {
-    displayMode(SerialHelper.getMode());
+    SystemManager::Mode tempMode = SerialHelper.getMode();
+
+    if(tempMode != (SystemManager::Mode) -1) {
+        _currentMode = tempMode;
+    }
+
+    displayMode(_currentMode); // displayMode(SerialHelper.getMode());
+
     displayAperture(SerialHelper.getAperture());
 
-    if(_mode->getMode() == SystemManager::MANUAL) {
-        displayTemperature(SerialHelper.getTemperature());
-    }
+    // if(_currentMode == SystemManager::AUTOMATIC) { // if(_mode->getMode() == SystemManager::AUTOMATIC) {
+    //     displayAperture(SerialHelper.getAperture());
+    // }
+    // else if(_currentMode == SystemManager::MANUAL) {
+    //     // displayAperture(pot);
+    //     displayTemperature(SerialHelper.getTemperature());
+    // }
 }
 
 void DisplayTask::displayMessageBody() {
@@ -44,26 +57,23 @@ void DisplayTask::displayMessageBody() {
     _lcd.setCursor(0, 1);
     _lcd.print("Aperture: ");
 
-    if(_mode->getMode() == SystemManager::MANUAL) {
+    if(_currentMode == SystemManager::MANUAL) {
         _lcd.setCursor(0, 2);
         _lcd.print("Temperature: ");
     }
 }
 
 void DisplayTask::displayMode(SystemManager::Mode mode) {
-    if(_mode->getMode() == mode) {
+    if(_currentMode == mode) {
         return;
     }
-
-    _mode->setMode(mode);
-    SerialHelper.setMode(mode);
 
     displayMessageBody(); // Se la modalità è cambiata, riscrivi il body del messaggio
 
     _lcd.setCursor(13, 0);
     _lcd.print(DISPLAY_CLEARING_STRING);
     _lcd.setCursor(13, 0);
-    _lcd.print(_mode->getMode() == SystemManager::MANUAL ? "MANUAL" : "AUTO");
+    _lcd.print(_currentMode == SystemManager::MANUAL ? "MANUAL" : "AUTO");
 }
 
 void DisplayTask::displayAperture(float aperture) {
@@ -93,7 +103,7 @@ void DisplayTask::displayAperture(float aperture) {
 }
 
 void DisplayTask::displayTemperature(float temperature) {
-    if(_currentTemperature == temperature || _mode->getMode() == SystemManager::AUTOMATIC) {
+    if(_currentTemperature == temperature || _currentMode == SystemManager::AUTOMATIC) {
         return;
     }
 

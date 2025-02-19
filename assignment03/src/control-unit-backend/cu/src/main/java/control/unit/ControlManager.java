@@ -1,6 +1,7 @@
 package control.unit;
 
-import control.unit.TemperatureManager.TemperatureState;
+import control.unit.ValueManager.Mode;
+import control.unit.ValueManager.TemperatureState;
 import control.unit.connections.mqtt.MQTTAgent;
 import control.unit.connections.serial.SerialChannel;
 
@@ -16,34 +17,55 @@ public class ControlManager extends Thread {
     private MQTTAgent mqttAgent;
     private SerialChannel serialChannel;
 
-    private TemperatureManager temperatureManager = new TemperatureManager();
+    private final ValueManager valueManager;
 
     private final static int SERIAL_BAUD_RATE = 115200;
     private final static String SERIAL_PORT = "COM9";
 
-    private final static int F1 = 3000;
-    private final static int F2 = 1000;
-
-    private final static long DT = 5000;
-
     public ControlManager() throws Exception {
         vertx = Vertx.vertx();
-        
-        mqttAgent = new MQTTAgent(temperatureManager);
 
+        valueManager = new ValueManager();
+
+        serialChannel = new SerialChannel(SERIAL_PORT, SERIAL_BAUD_RATE, valueManager);
+
+        mqttAgent = new MQTTAgent(valueManager);
         vertx.deployVerticle(mqttAgent);
-
         vertx.setPeriodic(1000, id -> this.run());
-
-        serialChannel = new SerialChannel(SERIAL_PORT, SERIAL_BAUD_RATE);
 
         state = TemperatureState.NORMAL;
         
         hotStartTime = 0;
     }
 
+    public void doSerialTask() {
+        // if(!serialChannel.isOpened()) {
+        //     return;
+        // }
+
+        // if(serialChannel.isMessageAvailable()) {
+        //     try {
+        //         String msg = serialChannel.receiveMessage();
+        //         System.out.println("Received: " + msg);
+        //     } catch (InterruptedException e) {
+        //         e.printStackTrace();
+        //     }
+        // }
+
+        serialChannel.receiveMode();
+
+        System.out.println("Mode: " + serialChannel.getMode());
+
+        serialChannel.sendMode();
+
+        serialChannel.sendAperture();
+        if(serialChannel.getMode() == Mode.MANUAL) {
+            serialChannel.sendTemperature();
+        }
+    }
+
     public void run() {
-        System.out.println("ControlManager running...");
+        // System.out.println("ControlManager running...");
 
         if(mqttAgent.getClient() == null) {
             System.out.println("MQTT Client Null");
@@ -54,43 +76,39 @@ public class ControlManager extends Thread {
             return;
         }
 
-        // TODO Place the following code correctly
-        serialChannel.sendMessage("temperature:" + temperatureManager.getCurrentTemperature());
-        serialChannel.sendMessage("aperture:" + temperatureManager.getCorrespondingAperture());
-
         switch(state) {
             case NORMAL: {
-                if(temperatureManager.getCurrentTemperature() > TemperatureManager.T1) {
+                if(valueManager.getCurrentTemperature() > ValueManager.T1) {
                     state = TemperatureState.HOT;
-                    System.out.println("Case HOT");
-                    mqttAgent.sendFrequency(F2);
+                    // System.out.println("Case HOT");
+                    mqttAgent.sendFrequency(ValueManager.F2);
                     break;
                 }
                 if(firstRun) {
                     firstRun = false;
-                    mqttAgent.sendFrequency(F1);
+                    mqttAgent.sendFrequency(ValueManager.F1);
                 }
-                System.out.println("Case NORMAL");
+                // System.out.println("Case NORMAL");
                 break;
             }
             case HOT: {
-                if(temperatureManager.getCurrentTemperature() <= TemperatureManager.T1) {
+                if(valueManager.getCurrentTemperature() <= ValueManager.T1) {
                     state = TemperatureState.NORMAL;
-                    System.out.println("Case NORMAL");
-                    mqttAgent.sendFrequency(F1);
+                    // System.out.println("Case NORMAL");
+                    mqttAgent.sendFrequency(ValueManager.F1);
                     break;
                 }
-                if(temperatureManager.getCurrentTemperature() > TemperatureManager.T2) {
+                if(valueManager.getCurrentTemperature() > ValueManager.T2) {
                     state = TemperatureState.TOO_HOT;
-                    System.out.println("Case TOO HOT");
+                    // System.out.println("Case TOO HOT");
                     hotStartTime = 0;
                     break;
                 }
-                System.out.println("Case HOT");
+                // System.out.println("Case HOT");
                 break;
             }
             case TOO_HOT: {
-                if(temperatureManager.getCurrentTemperature() <= TemperatureManager.T2) {
+                if(valueManager.getCurrentTemperature() <= ValueManager.T2) {
                     state = TemperatureState.HOT;
                     System.out.println("Case HOT");
                     break;
@@ -99,7 +117,7 @@ public class ControlManager extends Thread {
                 if(hotStartTime == 0) {
                     hotStartTime = System.currentTimeMillis();
                 }
-                else if((System.currentTimeMillis() - hotStartTime) >= DT) {
+                else if((System.currentTimeMillis() - hotStartTime) >= ValueManager.DT) {
                     state = TemperatureState.ALARM;
                     System.out.println("Case ALARM");
                     break;
@@ -108,7 +126,7 @@ public class ControlManager extends Thread {
                 break;
             }
             case ALARM: { // TODO Modify
-                if(temperatureManager.getCurrentTemperature() <= TemperatureManager.T2) {
+                if(valueManager.getCurrentTemperature() <= ValueManager.T2) {
                     state = TemperatureState.TOO_HOT;
                     System.out.println("Case TOO HOT");
                     hotStartTime = 0;
@@ -119,12 +137,6 @@ public class ControlManager extends Thread {
             }
         }
 
-        if(serialChannel.isMessageAvailable()) {
-            try {
-                System.out.println(serialChannel.receiveMessage());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        doSerialTask();
     }
 }

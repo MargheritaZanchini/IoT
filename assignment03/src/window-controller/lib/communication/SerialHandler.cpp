@@ -76,6 +76,25 @@ void SerialHelperObject::setAperture(int aperture) {
  * \brief Sets the System Mode
  */
 void SerialHelperObject::setMode(SystemManager::Mode mode) {
+    String message = "mode:";
+    message.concat(mode == SystemManager::Mode::MANUAL ? "manual" : "automatic");
+    
+    Serial.println(message); // TODO Change to SerialHelper function
+}
+
+/**
+ * \brief Switches the System Mode
+ */
+void SerialHelperObject::switchMode() {
+    if(SerialHelper.getMode() == SystemManager::Mode::AUTOMATIC) {
+        setMode(SystemManager::Mode::MANUAL);
+    }
+    else {
+        setMode(SystemManager::Mode::AUTOMATIC);
+    }
+}
+
+void SerialHelperObject::setLocalMode(SystemManager::Mode mode) {
     _mode = mode;
     _modeAvailable = true;
 }
@@ -101,10 +120,14 @@ void serialEvent() {
                 mode.toLowerCase();
 
                 if(mode == "manual") {
-                    SerialHelper.setMode(SystemManager::Mode::MANUAL);
+                    SerialHelper.setLocalMode(SystemManager::Mode::MANUAL);
                 }
-                else if(mode == "auto") {
-                    SerialHelper.setMode(SystemManager::Mode::AUTOMATIC);
+                else if(mode == "automatic") {
+                    SerialHelper.setLocalMode(SystemManager::Mode::AUTOMATIC);
+                }
+                else {
+                    Serial.print("Invalid Mode: ");
+                    Serial.println(mode);
                 }
 
                 content = "";

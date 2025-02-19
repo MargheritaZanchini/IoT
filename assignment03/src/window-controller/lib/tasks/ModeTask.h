@@ -4,6 +4,8 @@
 #include "../components/physical/Button.h"
 #include "../components/logical/SystemManager.h"
 
+#include "../communication/SerialHandler.h"
+
 /**
  * \brief Mode Task Class
  * 

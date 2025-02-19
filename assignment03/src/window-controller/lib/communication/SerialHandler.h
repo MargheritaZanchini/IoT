@@ -16,6 +16,8 @@ public:
     void setTemperature(float temperature);
     void setAperture(int aperture);
     void setMode(SystemManager::Mode mode);
+    void switchMode();
+    void setLocalMode(SystemManager::Mode mode);
 
     float getTemperature();
     int getAperture();

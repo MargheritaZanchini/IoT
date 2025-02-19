@@ -7,11 +7,17 @@ import java.util.Collections;
 /**
  * TemperatureManager Class
  */
-public class TemperatureManager {
-    private final List<Double> temperatures;
-
+public class ValueManager {
     public final static float T1 = 30; /** First Temperature Alert */
     public final static float T2 = 40; /** Second Temperature Alert */
+
+    public final static int F1 = 3000; /** First Frequency */
+    public final static int F2 = 1000; /** Second Frequency */
+
+    public final static long DT = 5000; /** Time Interval */
+
+    private final List<Double> temperatures;
+    private Mode mode;
 
     /**
      * TemperatureState Enum
@@ -28,11 +34,17 @@ public class TemperatureManager {
         ALARM /** Alarm */
     }
 
+    public static enum Mode {
+        MANUAL, /** Manual Mode */
+        AUTOMATIC /** Auto Mode */
+    }
+
     /**
      * TemperatureManager Constructor
      */
-    public TemperatureManager() {
+    public ValueManager() {
         this.temperatures = new ArrayList<>();
+        this.mode = Mode.AUTOMATIC;
     }
 
     /**
@@ -130,5 +142,25 @@ public class TemperatureManager {
         }
 
         return aperture;
+    }
+
+    /**
+     * Get Mode
+     * 
+     * @return Mode
+     * @see #mode
+     */
+    public Mode getMode() {
+        return this.mode;
+    }
+
+    /**
+     * Set Mode
+     * 
+     * @param mode Mode
+     * @see #mode
+     */
+    public void setMode(String mode) {
+        this.mode = mode == "manual" ? Mode.MANUAL : Mode.AUTOMATIC;
     }
 }

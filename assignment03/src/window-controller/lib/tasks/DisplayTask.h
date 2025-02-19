@@ -31,6 +31,8 @@ private:
     Window* _window; /** Pointer to Window Object */
     SystemManager* _mode; /** Pointer to System Mode Object */
 
+    SystemManager::Mode _currentMode; /** Current Mode Value */
+
     float _currentAperture; /** Aperture Value */
     float _currentTemperature; /** Temperature Value */
 

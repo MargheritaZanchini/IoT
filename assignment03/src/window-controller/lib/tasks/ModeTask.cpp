@@ -9,6 +9,6 @@ void ModeTask::tick() {
     bool pressed = _button->isPressed();
 
     if(pressed) {
-        _mode->switchMode();
+        SerialHelper.switchMode();
     }
 }

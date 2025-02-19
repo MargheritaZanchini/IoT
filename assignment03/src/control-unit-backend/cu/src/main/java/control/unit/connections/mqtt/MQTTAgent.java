@@ -1,6 +1,6 @@
 package control.unit.connections.mqtt;
 
-import control.unit.TemperatureManager;
+import control.unit.ValueManager;
 import io.netty.handler.codec.mqtt.MqttQoS;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.AsyncResult;
@@ -21,10 +21,10 @@ public class MQTTAgent extends AbstractVerticle {
 
     private MqttClient client;
 
-    private final TemperatureManager temperatureManager;
+    private final ValueManager valueManager;
 
-    public MQTTAgent(TemperatureManager temperatureManager) {
-        this.temperatureManager = temperatureManager;
+    public MQTTAgent(ValueManager valueManager) {
+        this.valueManager = valueManager;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class MQTTAgent extends AbstractVerticle {
             System.out.println("Can't parse: " + message);
         }
 
-        this.temperatureManager.addTemperature(t);
+        this.valueManager.addTemperature(t);
     }
 
     public void sendFrequency(int frequency) {
