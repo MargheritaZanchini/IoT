@@ -1,8 +1,7 @@
 #include "ModeTask.h"
 
-ModeTask::ModeTask(Button* button, SystemManager* mode) {
+ModeTask::ModeTask(Button* button) {
     _button = button;
-    _mode = mode;
 }
 
 void ModeTask::tick() {
@@ -10,5 +9,6 @@ void ModeTask::tick() {
 
     if(pressed) {
         SerialHelper.switchMode();
+        SerialHelper.sendMode();
     }
 }

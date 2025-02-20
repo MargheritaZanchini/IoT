@@ -1,20 +1,21 @@
 #include "WindowTask.h"
 
-WindowTask::WindowTask(Window* window, Potentiometer* pot, SystemManager* mode) {
+WindowTask::WindowTask(Window* window, Potentiometer* pot) {
     _window = window;
     _pot = pot;
-    _mode = mode;
 }
 
 void WindowTask::tick() {
-    SerialHelper.getMode();
+    SerialHelperObject::Mode mode = SerialHelper.getMode();
 
-    switch(_mode->getMode()) {
-        case SystemManager::Mode::MANUAL:
+    switch(mode) {
+        case SerialHelperObject::Mode::MANUAL:
             _window->setWindowAperture(_pot->readValue());
             break;
-        case SystemManager::Mode::AUTOMATIC:
+        case SerialHelperObject::Mode::AUTOMATIC:
             _window->setWindowAperture(SerialHelper.getAperture());
+            break;
+        default:
             break;
     }
 }

@@ -17,16 +17,16 @@ public:
     Window(ServoMotor* servoMotor);
 
     /**
-     * \brief Sets the Door Position
+     * \brief Sets the Window Aperture
      * \param angle Target Angle in Degrees
      */
     void setWindowAperture(int angle);
 
     /**
-     * \brief Gets the Current Door Position
+     * \brief Gets the Current Window Aperture
      * \return Current Angle in Degrees
      */
-    int getDoorPosition();
+    int getWindowAperture();
 
     /**
      * \brief Checks if the Door is Open

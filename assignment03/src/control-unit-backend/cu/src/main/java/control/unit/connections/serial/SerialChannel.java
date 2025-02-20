@@ -145,7 +145,7 @@ public class SerialChannel implements CommunicationChannel, SerialPortEventListe
      * @return true if message was sent successfully
      */
     public boolean sendMode() {
-        String mode = this.valueManager.getMode().toString().toLowerCase();
+        String mode = this.valueManager.getMode() == ValueManager.Mode.AUTOMATIC ? "automatic" : "manual";
 
         return this.sendMessage(MODE_TAG + mode);
     }
@@ -153,21 +153,26 @@ public class SerialChannel implements CommunicationChannel, SerialPortEventListe
     /**
      * Get Mode from serial port
      */
-    public void receiveMode() {
+    public boolean receiveMode() {
         if(!this.isMessageAvailable()) {
-            return;
+            return false;
         }
 
         try {
             String message = this.receiveMessage().replace("\n", "").replace("\r", "");
             if(message.startsWith(MODE_TAG)) {
                 String mode = message.substring(MODE_TAG.length());
-                System.out.println("Received Mode: " + mode);
+                System.out.println("Mode Received: " + mode);
                 this.valueManager.setMode(mode);
+            }
+            else {
+                return false;
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        return true;
     }
 
     /**

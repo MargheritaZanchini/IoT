@@ -2,20 +2,16 @@
 
 #include <Arduino.h>
 
-DisplayTask::DisplayTask(Window* window, SystemManager* mode) {
+DisplayTask::DisplayTask(Window* window) {
     _lcd.init();
     _lcd.backlight();
     _lcd.setCursor(0, 0);
 
     _window = window;
 
-    //_mode = mode;
-
-    _currentAperture = -1;
-    _currentTemperature = -1;
-
-    _currentMode = SystemManager::AUTOMATIC;
-    SerialHelper.setMode(_currentMode);
+    _currentMode = (SerialHelperObject::Mode) -1;
+    _currentAperture = 0;
+    _currentTemperature = 0;
 
     displayMessageBody();
 }
@@ -29,23 +25,16 @@ DisplayTask::DisplayTask(Window* window, SystemManager* mode) {
  * - current temperature value (MANUAL)
  */
 void DisplayTask::tick() {
-    SystemManager::Mode tempMode = SerialHelper.getMode();
+    SerialHelperObject::Mode newMode = SerialHelper.getMode();
+    float newTemperature = SerialHelper.getTemperature();
+    int newAperture = SerialHelper.getAperture();
 
-    if(tempMode != (SystemManager::Mode) -1) {
-        _currentMode = tempMode;
+    displayMode(newMode);
+    displayAperture(newAperture);
+
+    if(newMode == SerialHelperObject::Mode::MANUAL) {
+        displayTemperature(newTemperature);
     }
-
-    displayMode(_currentMode); // displayMode(SerialHelper.getMode());
-
-    displayAperture(SerialHelper.getAperture());
-
-    // if(_currentMode == SystemManager::AUTOMATIC) { // if(_mode->getMode() == SystemManager::AUTOMATIC) {
-    //     displayAperture(SerialHelper.getAperture());
-    // }
-    // else if(_currentMode == SystemManager::MANUAL) {
-    //     // displayAperture(pot);
-    //     displayTemperature(SerialHelper.getTemperature());
-    // }
 }
 
 void DisplayTask::displayMessageBody() {
@@ -57,34 +46,42 @@ void DisplayTask::displayMessageBody() {
     _lcd.setCursor(0, 1);
     _lcd.print("Aperture: ");
 
-    if(_currentMode == SystemManager::MANUAL) {
+    if(_currentMode == SerialHelperObject::Mode::MANUAL) {
         _lcd.setCursor(0, 2);
         _lcd.print("Temperature: ");
     }
 }
 
-void DisplayTask::displayMode(SystemManager::Mode mode) {
+void DisplayTask::displayMode(SerialHelperObject::Mode mode) {
     if(_currentMode == mode) {
         return;
     }
+
+    _currentMode = mode;
 
     displayMessageBody(); // Se la modalità è cambiata, riscrivi il body del messaggio
 
     _lcd.setCursor(13, 0);
     _lcd.print(DISPLAY_CLEARING_STRING);
     _lcd.setCursor(13, 0);
-    _lcd.print(_currentMode == SystemManager::MANUAL ? "MANUAL" : "AUTO");
+    
+    if(_currentMode == SerialHelperObject::Mode::MANUAL) {
+        _lcd.print("MANUAL");
+    }
+    else if(_currentMode == SerialHelperObject::Mode::AUTOMATIC) {
+        _lcd.print("AUTO");
+    }
+    else {
+        _lcd.print("N/A");
+    }
 }
 
-void DisplayTask::displayAperture(float aperture) {
+void DisplayTask::displayAperture(int aperture) {
     if(_currentAperture == aperture) {
         return;
     }
 
     _currentAperture = aperture;
-
-    Serial.print("Current Aperture: ");
-    Serial.println(_currentAperture);
 
     _lcd.setCursor(13, 1);
     _lcd.print(DISPLAY_CLEARING_STRING);
@@ -92,6 +89,7 @@ void DisplayTask::displayAperture(float aperture) {
     _lcd.setCursor(13, 1);
 
     String apertureMessage = "";
+
     if(_currentAperture < 0 || _currentAperture > 100) {
         apertureMessage = String("N/A");
     } else {
@@ -103,7 +101,10 @@ void DisplayTask::displayAperture(float aperture) {
 }
 
 void DisplayTask::displayTemperature(float temperature) {
-    if(_currentTemperature == temperature || _currentMode == SystemManager::AUTOMATIC) {
+    if(_currentMode == SerialHelperObject::Mode::AUTOMATIC) {
+        return;
+    }
+    if(_currentTemperature == temperature) {
         return;
     }
 

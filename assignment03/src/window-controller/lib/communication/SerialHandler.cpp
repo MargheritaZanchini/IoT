@@ -11,13 +11,9 @@ void SerialHelperObject::init() {
     content.reserve(256);
     content = "";
 
-    _temperature = -1.0f;
-    _aperture = -1;
-    _mode = SystemManager::Mode::AUTOMATIC;
-
-    _temperatureAvailable = false;
-    _apertureAvailable = false;
-    _modeAvailable = false;
+    _mode = SerialHelperObject::Mode::AUTOMATIC;
+    _temperature = 0.0f;
+    _aperture = 0;
 }
 
 /**
@@ -47,19 +43,14 @@ int SerialHelperObject::getAperture() {
 /**
  * \brief Gets the Current System Mode
  */
-SystemManager::Mode SerialHelperObject::getMode() {
-    if(_modeAvailable) {
-        _modeAvailable = false;
-        return _mode;
-    }
-
-    return (SystemManager::Mode) -1;
+SerialHelperObject::Mode SerialHelperObject::getMode() {
+    return _mode;
 }
 
 /**
  * \brief Sets the Temperature Value
  */ 
-void SerialHelperObject::setTemperature(float temperature) {
+void SerialHelperObject::receiveTemperature(float temperature) {
     _temperature = temperature;
     _temperatureAvailable = true;
 }
@@ -67,7 +58,7 @@ void SerialHelperObject::setTemperature(float temperature) {
 /**
  * \brief Sets the Window Aperture Value
  */
-void SerialHelperObject::setAperture(int aperture) {
+void SerialHelperObject::receiveAperture(int aperture) {
     _aperture = aperture;
     _apertureAvailable = true;
 }
@@ -75,28 +66,42 @@ void SerialHelperObject::setAperture(int aperture) {
 /**
  * \brief Sets the System Mode
  */
-void SerialHelperObject::setMode(SystemManager::Mode mode) {
-    String message = "mode:";
-    message.concat(mode == SystemManager::Mode::MANUAL ? "manual" : "automatic");
-    
-    Serial.println(message); // TODO Change to SerialHelper function
+void SerialHelperObject::receiveMode(SerialHelperObject::Mode mode) {
+    _mode = mode;
+    _modeAvailable = true;
+}
+
+/**
+ * \brief Sends a Message to the Serial Port
+ */
+void SerialHelperObject::sendAperture() {
+    Serial.print("aperture:");
+    Serial.println(_aperture);
+}
+
+/**
+ * \brief Sends a Message to the Serial Port
+ */
+void SerialHelperObject::sendMode() {
+    Serial.print("mode:");
+    if(_mode == Mode::MANUAL) {
+        Serial.println("manual");
+    }
+    else if(_mode == Mode::AUTOMATIC) {
+        Serial.println("automatic");
+    }
 }
 
 /**
  * \brief Switches the System Mode
  */
 void SerialHelperObject::switchMode() {
-    if(SerialHelper.getMode() == SystemManager::Mode::AUTOMATIC) {
-        setMode(SystemManager::Mode::MANUAL);
+    if(_mode == SerialHelperObject::Mode::AUTOMATIC) {
+        _mode = SerialHelperObject::Mode::MANUAL;
     }
     else {
-        setMode(SystemManager::Mode::AUTOMATIC);
+        _mode = SerialHelperObject::Mode::AUTOMATIC;
     }
-}
-
-void SerialHelperObject::setLocalMode(SystemManager::Mode mode) {
-    _mode = mode;
-    _modeAvailable = true;
 }
 
 /**
@@ -112,7 +117,7 @@ void serialEvent() {
 
         if (ch == 10 || ch == 0 || ch == 13) {
             if(content.startsWith("temperature:")) {
-                SerialHelper.setTemperature(content.substring(12).toFloat());
+                SerialHelper.receiveTemperature(content.substring(12).toFloat());
                 content = "";
             }
             else if(content.startsWith("mode:")) {
@@ -120,10 +125,10 @@ void serialEvent() {
                 mode.toLowerCase();
 
                 if(mode == "manual") {
-                    SerialHelper.setLocalMode(SystemManager::Mode::MANUAL);
+                    SerialHelper.receiveMode(SerialHelperObject::Mode::MANUAL);
                 }
                 else if(mode == "automatic") {
-                    SerialHelper.setLocalMode(SystemManager::Mode::AUTOMATIC);
+                    SerialHelper.receiveMode(SerialHelperObject::Mode::AUTOMATIC);
                 }
                 else {
                     Serial.print("Invalid Mode: ");
@@ -133,7 +138,7 @@ void serialEvent() {
                 content = "";
             }
             else if(content.startsWith("aperture:")) {
-                SerialHelper.setAperture(content.substring(9).toInt());
+                SerialHelper.receiveAperture(content.substring(9).toInt());
                 content = "";
             }
         }

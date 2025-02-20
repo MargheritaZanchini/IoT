@@ -161,6 +161,6 @@ public class ValueManager {
      * @see #mode
      */
     public void setMode(String mode) {
-        this.mode = mode == "manual" ? Mode.MANUAL : Mode.AUTOMATIC;
+        this.mode = mode.equals("manual") ? Mode.MANUAL : Mode.AUTOMATIC;
     }
 }

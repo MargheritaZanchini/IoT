@@ -10,7 +10,6 @@
 #include "../tasks/Task.h"
 #include "../communication/SerialHandler.h"
 #include "../components/logical/Window.h"
-#include "../components/logical/SystemManager.h"
 
 /**
  * \brief User Display Task Class
@@ -22,19 +21,17 @@ public:
      * \brief Creates New User Display Task
      * \param window Pointer to Window Object
      */
-    DisplayTask(Window* window, SystemManager* mode);
+    DisplayTask(Window* window);
 
     void tick() override;
 
 private:
     LiquidCrystal_I2C _lcd = LiquidCrystal_I2C(0x27, 20, 4); /** LCD Display Object */
     Window* _window; /** Pointer to Window Object */
-    SystemManager* _mode; /** Pointer to System Mode Object */
 
-    SystemManager::Mode _currentMode; /** Current Mode Value */
-
-    float _currentAperture; /** Aperture Value */
+    SerialHelperObject::Mode _currentMode; /** Current Mode Value */
     float _currentTemperature; /** Temperature Value */
+    int _currentAperture; /** Aperture Value */
 
     /**
      * \brief Displays the Body of the Message
@@ -48,14 +45,14 @@ private:
      * 
      * \param mode The Mode Value
      */
-    void displayMode(SystemManager::Mode mode);
+    void displayMode(SerialHelperObject::Mode mode);
 
     /**
      * \brief Displays the Aperture Value
      * 
      * \param aperture The Aperture Value
      */
-    void displayAperture(float aperture);
+    void displayAperture(int aperture);
 
     /**
      * \brief Displays the Temperature Value

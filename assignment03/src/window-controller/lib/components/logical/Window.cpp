@@ -13,7 +13,7 @@ void Window::setWindowAperture(int angle) {
     _servoMotor->off();
 }
 
-int Window::getDoorPosition() {
+int Window::getWindowAperture() {
     return _angle;
 }
 

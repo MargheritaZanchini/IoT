@@ -38,49 +38,36 @@ public class ControlManager extends Thread {
         hotStartTime = 0;
     }
 
-    public void doSerialTask() {
-        // if(!serialChannel.isOpened()) {
-        //     return;
-        // }
+    private boolean sendModeExecuted = false;
 
-        // if(serialChannel.isMessageAvailable()) {
-        //     try {
-        //         String msg = serialChannel.receiveMessage();
-        //         System.out.println("Received: " + msg);
-        //     } catch (InterruptedException e) {
-        //         e.printStackTrace();
-        //     }
-        // }
-
-        serialChannel.receiveMode();
-
-        System.out.println("Mode: " + serialChannel.getMode());
-
-        serialChannel.sendMode();
-
-        serialChannel.sendAperture();
-        if(serialChannel.getMode() == Mode.MANUAL) {
-            serialChannel.sendTemperature();
+    private void sendModeOnce() {
+        if(sendModeExecuted) {
+            return;
         }
+        serialChannel.sendMode();
+        sendModeExecuted = true;
     }
 
-    public void run() {
-        // System.out.println("ControlManager running...");
+    public void doSerialTask() {
+        if(serialChannel.receiveMode()) {
+            // send to HTTP
+            sendModeExecuted = false;
+        }
+        else {
+            sendModeOnce(); // Else, send it to Serial
+        }
 
-        if(mqttAgent.getClient() == null) {
-            System.out.println("MQTT Client Null");
-            return;
-        }
-        if(serialChannel == null) {
-            System.out.println("Serial Channel Null");
-            return;
-        }
+        serialChannel.sendAperture();
+        serialChannel.sendTemperature();
+    }
+
+    private void stateLoop() {
+        double currentTemperature = valueManager.getCurrentTemperature();
 
         switch(state) {
             case NORMAL: {
-                if(valueManager.getCurrentTemperature() > ValueManager.T1) {
+                if(currentTemperature > ValueManager.T1) {
                     state = TemperatureState.HOT;
-                    // System.out.println("Case HOT");
                     mqttAgent.sendFrequency(ValueManager.F2);
                     break;
                 }
@@ -88,27 +75,23 @@ public class ControlManager extends Thread {
                     firstRun = false;
                     mqttAgent.sendFrequency(ValueManager.F1);
                 }
-                // System.out.println("Case NORMAL");
                 break;
             }
             case HOT: {
-                if(valueManager.getCurrentTemperature() <= ValueManager.T1) {
+                if(currentTemperature <= ValueManager.T1) {
                     state = TemperatureState.NORMAL;
-                    // System.out.println("Case NORMAL");
                     mqttAgent.sendFrequency(ValueManager.F1);
                     break;
                 }
-                if(valueManager.getCurrentTemperature() > ValueManager.T2) {
+                if(currentTemperature > ValueManager.T2) {
                     state = TemperatureState.TOO_HOT;
-                    // System.out.println("Case TOO HOT");
                     hotStartTime = 0;
                     break;
                 }
-                // System.out.println("Case HOT");
                 break;
             }
             case TOO_HOT: {
-                if(valueManager.getCurrentTemperature() <= ValueManager.T2) {
+                if(currentTemperature <= ValueManager.T2) {
                     state = TemperatureState.HOT;
                     System.out.println("Case HOT");
                     break;
@@ -126,7 +109,7 @@ public class ControlManager extends Thread {
                 break;
             }
             case ALARM: { // TODO Modify
-                if(valueManager.getCurrentTemperature() <= ValueManager.T2) {
+                if(currentTemperature <= ValueManager.T2) {
                     state = TemperatureState.TOO_HOT;
                     System.out.println("Case TOO HOT");
                     hotStartTime = 0;
@@ -136,7 +119,19 @@ public class ControlManager extends Thread {
                 break;
             }
         }
+    }
 
+    public void run() {
+        if(mqttAgent.getClient() == null) {
+            System.out.println("MQTT Client Null");
+            return;
+        }
+        if(serialChannel == null) {
+            System.out.println("Serial Channel Null");
+            return;
+        }
+
+        stateLoop();
         doSerialTask();
     }
 }

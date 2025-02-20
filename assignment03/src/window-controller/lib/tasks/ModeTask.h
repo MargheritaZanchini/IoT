@@ -2,7 +2,6 @@
 
 #include "Task.h"
 #include "../components/physical/Button.h"
-#include "../components/logical/SystemManager.h"
 
 #include "../communication/SerialHandler.h"
 
@@ -18,7 +17,7 @@ public:
      * \param button Button Instance
      * \param mode System Mode Instance
      */
-    ModeTask(Button* button, SystemManager* mode);
+    ModeTask(Button* button);
     
     /**
      * \brief Initializes the Task
@@ -27,5 +26,4 @@ public:
 
 private:
     Button* _button; /** Button Instance */
-    SystemManager* _mode; /** System Mode Instance */
 };
