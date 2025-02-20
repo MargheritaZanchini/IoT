@@ -89,9 +89,15 @@ public class HTTPServer extends AbstractVerticle {
         .put("minTemperature", valueManager.getMinTemperature())
         .put("maxTemperature", valueManager.getMaxTemperature())
         .put("avgTemperature", valueManager.getAverageTemperature())
-        .put("mode", valueManager.getMode().toString())
+        .put("mode", valueManager.getMode().toString());
         // .put("state", valueManager.getState().toString())
-        .put("aperture", valueManager.getCorrespondingAperture());
+        
+        if(valueManager.getMode() == ValueManager.Mode.AUTOMATIC) {
+            data.put("aperture", valueManager.getCorrespondingAperture());
+        }
+        else if(valueManager.getMode() == ValueManager.Mode.MANUAL) {
+            data.put("aperture", valueManager.getAperture());
+        }
     
         return data;
     }

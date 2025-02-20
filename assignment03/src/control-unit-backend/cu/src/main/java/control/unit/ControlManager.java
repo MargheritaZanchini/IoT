@@ -60,7 +60,8 @@ public class ControlManager extends Thread {
     }
 
     public void doSerialTask() {
-        if(serialChannel.receiveMode()) {
+        if(serialChannel.receiveData()) {
+            System.out.println("Data received from Serial");
             sendModeExecuted = false; // send to HTTP
         }
         else {

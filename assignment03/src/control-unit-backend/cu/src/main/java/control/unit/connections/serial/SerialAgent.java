@@ -153,19 +153,28 @@ public class SerialAgent implements CommunicationChannel, SerialPortEventListene
     /**
      * Get Mode from serial port
      */
-    public boolean receiveMode() {
+    public boolean receiveData() {
         if(!this.isMessageAvailable()) {
             return false;
         }
 
+        System.out.println("Data received from Serial Port!");
+
         try {
             String message = this.receiveMessage().replace("\n", "").replace("\r", "");
+            
+            System.out.println("Message: " + message);
+
             if(message.startsWith(MODE_TAG)) {
                 String mode = message.substring(MODE_TAG.length());
                 this.valueManager.setMode(mode);
             }
-            else {
-                return false;
+            else if(message.startsWith(APERTURE_TAG)) {
+                int aperture = Integer.parseInt(message.substring(APERTURE_TAG.length()));
+                
+                System.out.println("Aperture received! " + aperture);
+
+                this.valueManager.setAperture(aperture);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

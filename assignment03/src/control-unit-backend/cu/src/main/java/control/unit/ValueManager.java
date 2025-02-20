@@ -19,6 +19,8 @@ public class ValueManager {
     private final List<Double> temperatures;
     private Mode mode;
 
+    private int aperture;
+
     /**
      * TemperatureState Enum
      * 
@@ -45,6 +47,7 @@ public class ValueManager {
     public ValueManager() {
         this.temperatures = new ArrayList<>();
         this.mode = Mode.AUTOMATIC;
+        this.aperture = 0;
     }
 
     /**
@@ -168,5 +171,25 @@ public class ValueManager {
      */
     public void setMode(String mode) {
         this.mode = mode.equals("manual") ? Mode.MANUAL : Mode.AUTOMATIC;
+    }
+
+        /**
+     * Get Aperture
+     * 
+     * @return Aperture
+     * @see #aperture
+     */
+    public int getAperture() {
+        return this.aperture;
+    }
+
+    /**
+     * Set Aperture
+     * 
+     * @param aperture Aperture
+     * @see #aperture
+     */
+    public void setAperture(int aperture) {
+        this.aperture = aperture;
     }
 }

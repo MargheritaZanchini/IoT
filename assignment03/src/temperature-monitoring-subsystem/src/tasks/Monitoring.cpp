@@ -19,7 +19,6 @@ bool Monitoring::hasProblem() {
     return _problem;
 }
 
-
 float Monitoring::getTemperature() {
     float currentTemperature = _thermistor.read();
     return currentTemperature;
