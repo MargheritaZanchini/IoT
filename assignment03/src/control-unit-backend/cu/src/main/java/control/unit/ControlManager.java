@@ -50,15 +50,18 @@ public class ControlManager extends Thread {
 
     public void doSerialTask() {
         if(serialChannel.receiveMode()) {
-            // send to HTTP
-            sendModeExecuted = false;
+            sendModeExecuted = false; // send to HTTP
         }
         else {
             sendModeOnce(); // Else, send it to Serial
         }
 
-        serialChannel.sendAperture();
-        serialChannel.sendTemperature();
+        if(serialChannel.getMode() == Mode.MANUAL) {
+            serialChannel.sendTemperature();
+        }
+        else if(serialChannel.getMode() == Mode.AUTOMATIC) {
+            serialChannel.sendAperture();
+        }
     }
 
     private void stateLoop() {
