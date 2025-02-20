@@ -26,13 +26,13 @@ DisplayTask::DisplayTask(Window* window) {
  */
 void DisplayTask::tick() {
     SerialHelperObject::Mode newMode = SerialHelper.getMode();
-    float newTemperature = SerialHelper.getTemperature();
-    int newAperture = SerialHelper.getAperture();
-
     displayMode(newMode);
+
+    int newAperture = _window->getPercentage();
     displayAperture(newAperture);
 
     if(newMode == SerialHelperObject::Mode::MANUAL) {
+        float newTemperature = SerialHelper.getTemperature();
         displayTemperature(newTemperature);
     }
 }

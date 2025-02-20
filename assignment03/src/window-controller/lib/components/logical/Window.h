@@ -29,6 +29,12 @@ public:
     int getWindowAperture();
 
     /**
+     * \brief Gets the Current Window Aperture Percentage
+     * \return Current Percentage
+     */
+    int getPercentage();
+
+    /**
      * \brief Checks if the Door is Open
      * \return True if the Door is Open, False Otherwise
      */
@@ -37,4 +43,5 @@ public:
 private:
     ServoMotor* _servoMotor; /** Reference to the ServoMotor Object */
     int _angle; /** Current Angle of the Door */
+    int _percentage; /** Current Percentage of the Door */
 };

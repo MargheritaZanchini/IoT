@@ -59,8 +59,15 @@ void SerialHelperObject::receiveTemperature(float temperature) {
  * \brief Sets the Window Aperture Value
  */
 void SerialHelperObject::receiveAperture(int aperture) {
-    _aperture = aperture;
+    setAperture(aperture);
     _apertureAvailable = true;
+}
+
+/**
+ * \brief Sets the Window Aperture Value
+ */
+void SerialHelperObject::setAperture(int aperture) {
+    _aperture = aperture;
 }
 
 /**

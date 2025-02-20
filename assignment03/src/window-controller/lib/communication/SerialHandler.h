@@ -20,6 +20,7 @@ public:
     float getTemperature();
     
     void receiveAperture(int aperture);
+    void setAperture(int aperture);
     int getAperture();
     void sendAperture();
     
