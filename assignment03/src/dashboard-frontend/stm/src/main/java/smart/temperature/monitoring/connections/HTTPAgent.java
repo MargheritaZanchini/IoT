@@ -7,6 +7,7 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.client.WebClient;
 import io.vertx.ext.web.client.WebClientOptions;
+import smart.temperature.monitoring.GraphicalController;
 
 public class HTTPAgent extends AbstractVerticle {
     private final static String DATA_SENDING_PATH = "/data/to/server";
@@ -17,10 +18,14 @@ public class HTTPAgent extends AbstractVerticle {
     private final String server;
     private WebClient client;
 
-    public HTTPAgent(int port, String server) {
+    private GraphicalController guiController;
+
+    public HTTPAgent(int port, String server, GraphicalController guiController) {
         this.port = port;
         this.server = server;
         this.vertx = Vertx.vertx();
+
+        this.guiController = guiController;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class HTTPAgent extends AbstractVerticle {
     
     private void handleReceivedData(JsonObject data) {
         System.out.println("Received data: " + data.encodePrettily());
-        // Add your data processing logic here
+        this.guiController.setCurrentData(data);
     }
 
     public void sendData(JsonObject data) {

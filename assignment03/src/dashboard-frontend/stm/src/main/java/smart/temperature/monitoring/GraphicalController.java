@@ -3,10 +3,13 @@ package smart.temperature.monitoring;
 import java.util.Queue;
 
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -38,25 +41,53 @@ public class GraphicalController {
     private Vertx vertx;
     private HTTPAgent agent;
 
-    //private Queue<Integer> temperatureData;
+    @FXML public void setCurrentData(JsonObject data) {
+        Platform.runLater(() -> {
+            // Update temperature labels
+            minTemperature.setText(String.format("Min: %.2f°C", data.getDouble("minTemperature")));
+            maxTemperature.setText(String.format("Max: %.2f°C", data.getDouble("maxTemperature")));
+            avgTemperature.setText(String.format("Avg: %.2f°C", data.getDouble("avgTemperature")));
+            
+            // Update current state (mode)
+            currentState.setText("Mode: " + data.getString("mode"));
+            
+            // Update spinner value with current aperture
+            openingSpinner.getValueFactory().setValue(data.getInteger("aperture"));
+            
+            xAxis.setAutoRanging(false);
+            xAxis.setLowerBound(0);
+            xAxis.setUpperBound(9);
+            xAxis.setTickUnit(1);
+    
+            yAxis.setAutoRanging(false);
+            yAxis.setLowerBound(Math.floor(10));  // 5 gradi sotto il minimo
+            yAxis.setUpperBound(Math.ceil(50));   // 5 gradi sopra il massimo
+            yAxis.setTickUnit(5);
 
-    //private int minTemp = Integer.MAX_VALUE;
-    //private int avgTemp = 0;
-    //private int maxTemp = Integer.MIN_VALUE;
+            temperatureChart.setAnimated(false);
+
+            // Update chart with temperature array
+            temperatureChart.getData().clear();
+            XYChart.Series<Number, Number> series = new XYChart.Series<>();
+            series.setName("Temperature");
+            
+            // Get temperature array from JSON
+            JsonArray temperatures = data.getJsonArray("temperatures");
+            for(int i = 0; i < temperatures.size(); i++) {
+                series.getData().add(new XYChart.Data<>(i, temperatures.getDouble(i)));
+            }
+            
+            temperatureChart.getData().add(series);
+        });
+    }
 
     @FXML private void initialize() {
         this.vertx = Vertx.vertx();
-        this.agent = new HTTPAgent(HTTP_PORT, HTTP_SERVER);
+        this.agent = new HTTPAgent(HTTP_PORT, HTTP_SERVER, this);
         this.vertx.deployVerticle(agent);
     }
 
     @FXML private void handleManualButton() {
-        JsonObject data = new JsonObject()
-            .put("command", "manual")
-            .put("value", openingSpinner.getValue())
-            .put("timestamp", System.currentTimeMillis());
-
-        agent.sendData(data);
     }
 
     /*
