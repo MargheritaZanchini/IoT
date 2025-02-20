@@ -1,11 +1,13 @@
 package smart.temperature.monitoring;
 
+import io.vertx.core.Vertx;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import smart.temperature.monitoring.connections.HTTPAgent;
 
 /**
  *  Main Class of the JavaFX Application (Smart Temperature Monitoring)
@@ -22,9 +24,13 @@ public class Launcher extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        final Parent root = FXMLLoader.load(getClass().getResource(APPLICATION_LAYOUT));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(APPLICATION_LAYOUT));
+        GraphicalController controller = new GraphicalController();
+        loader.setController(controller);
+
+        final Parent root = loader.load();
         final Scene scene = new Scene(root);
-        
+
         primaryStage.setScene(scene);
         primaryStage.setTitle(APPLICATION_NAME);
         primaryStage.setResizable(APPLICATION_RESIZABLE);

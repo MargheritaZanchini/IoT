@@ -6,6 +6,9 @@ module smart.temperature.monitoring {
     requires javafx.base;
     requires javafx.fxml;
 
+    requires io.vertx.web;
+    requires io.vertx.web.client;
+
     requires transitive javafx.graphics;
 
     opens smart.temperature.monitoring to javafx.fxml;

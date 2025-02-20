@@ -36,7 +36,7 @@
             <Label text="Window Opening Control" styleClass="section-title" />
             <HBox spacing="10" alignment="CENTER_LEFT">
                 <Spinner fx:id="openingSpinner" min="0" max="100" editable="true" prefWidth="100" styleClass="spinner" />
-                <Button fx:id="manualButton" text="Manual" styleClass="custom-button" />
+                <Button fx:id="manualButton" text="Manual" styleClass="custom-button" onAction="#handleManualButton" />
             </HBox>
         </VBox>
         

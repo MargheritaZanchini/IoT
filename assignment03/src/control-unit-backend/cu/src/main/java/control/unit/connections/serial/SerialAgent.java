@@ -14,7 +14,7 @@ import jssc.*;
  * @see SerialPortEventListener SerialPortEventListener (Implemented Interface)
  * @see https://github.com/aricci303/ Author's GitHub Profile
  */
-public class SerialChannel implements CommunicationChannel, SerialPortEventListener {
+public class SerialAgent implements CommunicationChannel, SerialPortEventListener {
     private static final int QUEUE_SIZE = 100; /** Queue Size for Storing Messages */
 
     private static final String TEMPERATURE_TAG = "temperature:"; /** Temperature Tag */
@@ -35,7 +35,7 @@ public class SerialChannel implements CommunicationChannel, SerialPortEventListe
      * 
      * @throws SerialPortException
      */
-    public SerialChannel(String port, int rate, ValueManager valueManager) throws SerialPortException {
+    public SerialAgent(String port, int rate, ValueManager valueManager) throws SerialPortException {
         this.queue = new ArrayBlockingQueue<String>(QUEUE_SIZE);
         
         this.serialPort = new SerialPort(port);

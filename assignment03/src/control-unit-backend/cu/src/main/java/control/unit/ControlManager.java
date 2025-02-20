@@ -3,9 +3,11 @@ package control.unit;
 import control.unit.ValueManager.Mode;
 import control.unit.ValueManager.TemperatureState;
 import control.unit.connections.mqtt.MQTTAgent;
-import control.unit.connections.serial.SerialChannel;
+import control.unit.connections.serial.SerialAgent;
+import control.unit.connections.http.HTTPServer;
 
 import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
 
 public class ControlManager extends Thread {
     private TemperatureState state;
@@ -15,23 +17,33 @@ public class ControlManager extends Thread {
     private Vertx vertx;
     
     private MQTTAgent mqttAgent;
-    private SerialChannel serialChannel;
+    private SerialAgent serialChannel;
+    private HTTPServer dataService;
 
     private final ValueManager valueManager;
 
     private final static int SERIAL_BAUD_RATE = 115200;
     private final static String SERIAL_PORT = "COM9";
+    private final static int HTTP_PORT = 8080;
+    private final static String HTTP_SERVER= "localhost";
+
+    private final static int LOOP_PERIOD = 1000;
 
     public ControlManager() throws Exception {
         vertx = Vertx.vertx();
 
         valueManager = new ValueManager();
 
-        serialChannel = new SerialChannel(SERIAL_PORT, SERIAL_BAUD_RATE, valueManager);
+        serialChannel = new SerialAgent(SERIAL_PORT, SERIAL_BAUD_RATE, valueManager);
 
         mqttAgent = new MQTTAgent(valueManager);
         vertx.deployVerticle(mqttAgent);
-        vertx.setPeriodic(1000, id -> this.run());
+
+        dataService = new HTTPServer(HTTP_PORT, HTTP_SERVER);
+        vertx.deployVerticle(dataService);
+        dataService.start();
+
+        vertx.setPeriodic(LOOP_PERIOD, id -> this.run());
 
         state = TemperatureState.NORMAL;
         
@@ -136,5 +148,11 @@ public class ControlManager extends Thread {
 
         stateLoop();
         doSerialTask();
+
+        dataService.sendData(new JsonObject()
+            .put("temperature", valueManager.getCurrentTemperature())
+            .put("state", state.toString())
+            .put("mode", serialChannel.getMode().toString())
+        );
     }
 }
