@@ -135,6 +135,6 @@ public class ControlManager extends Thread {
         }
 
         stateLoop();
-        doSerialTask();
+        // doSerialTask();
     }
 }

@@ -162,7 +162,6 @@ public class SerialChannel implements CommunicationChannel, SerialPortEventListe
             String message = this.receiveMessage().replace("\n", "").replace("\r", "");
             if(message.startsWith(MODE_TAG)) {
                 String mode = message.substring(MODE_TAG.length());
-                System.out.println("Mode Received: " + mode);
                 this.valueManager.setMode(mode);
             }
             else {

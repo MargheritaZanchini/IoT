@@ -7,6 +7,10 @@ Window::Window(ServoMotor* servoMotor) {
 
 void Window::setWindowAperture(int angle) {
     _angle = map(angle, 0, 100, CONFIG_WINDOW_CLOSED, CONFIG_WINDOW_OPEN);
+
+    Serial.print("Angle: ");
+    Serial.println(_angle);
+
     _servoMotor->on();
     _servoMotor->setPosition(_angle);
     delay(80);

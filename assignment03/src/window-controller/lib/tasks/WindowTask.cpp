@@ -8,12 +8,14 @@ WindowTask::WindowTask(Window* window, Potentiometer* pot) {
 void WindowTask::tick() {
     SerialHelperObject::Mode mode = SerialHelper.getMode();
 
+    int aperture = _pot->readValue();
+
     switch(mode) {
         case SerialHelperObject::Mode::MANUAL:
-            _window->setWindowAperture(_pot->readValue());
+            _window->setWindowAperture(aperture);
             break;
         case SerialHelperObject::Mode::AUTOMATIC:
-            _window->setWindowAperture(SerialHelper.getAperture());
+            // _window->setWindowAperture(SerialHelper.getAperture());
             break;
         default:
             break;
