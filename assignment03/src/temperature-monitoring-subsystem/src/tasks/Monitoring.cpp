@@ -32,7 +32,8 @@ void Monitoring::eventLoop() {
     bool _isCommunicating = communication->connected(); // Check if the device is connected to the network
     if(!_isCommunicating) { // If not, raise a problem
         _problem = true;
-    } else {
+    }
+    else {
         _problem = false;
     }
 

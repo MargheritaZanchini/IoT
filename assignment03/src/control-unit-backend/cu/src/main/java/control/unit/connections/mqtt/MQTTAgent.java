@@ -53,7 +53,6 @@ public class MQTTAgent extends AbstractVerticle {
 
         try {
             t = Double.parseDouble(message.replace("temperature:", ""));
-            // System.out.println("Received temperature: " + t);
         } catch (NumberFormatException e) {
             System.out.println("Can't parse: " + message);
         }
@@ -67,7 +66,6 @@ public class MQTTAgent extends AbstractVerticle {
             return;
         }
         this.client.publish(MQTT_TOPIC, Buffer.buffer("frequency:" + String.valueOf(frequency)), QUALITY_OF_SERVICE, false, true);
-        System.out.println("Sent frequency: " + frequency);
     }
 
     public MqttClient getClient() {

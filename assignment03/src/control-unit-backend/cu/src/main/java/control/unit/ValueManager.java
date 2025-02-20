@@ -102,6 +102,9 @@ public class ValueManager {
      * @see Collections#min
      */
     public double getMinTemperature() {
+        if(this.temperatures.isEmpty()) {
+            return -1;
+        }
         return Collections.min(this.temperatures);
     }
 
@@ -121,6 +124,9 @@ public class ValueManager {
      * @see Collections#max
      */
     public double getMaxTemperature() {
+        if(this.temperatures.isEmpty()) {
+            return -1;
+        }
         return Collections.max(this.temperatures);
     }
 

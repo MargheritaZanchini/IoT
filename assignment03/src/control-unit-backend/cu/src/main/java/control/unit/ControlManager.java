@@ -7,7 +7,6 @@ import control.unit.connections.serial.SerialAgent;
 import control.unit.connections.http.HTTPServer;
 
 import io.vertx.core.Vertx;
-import io.vertx.core.json.JsonObject;
 
 public class ControlManager extends Thread {
     private TemperatureState state;
@@ -39,7 +38,7 @@ public class ControlManager extends Thread {
         mqttAgent = new MQTTAgent(valueManager);
         vertx.deployVerticle(mqttAgent);
 
-        dataService = new HTTPServer(HTTP_PORT, HTTP_SERVER);
+        dataService = new HTTPServer(HTTP_PORT, HTTP_SERVER, valueManager);
         vertx.deployVerticle(dataService);
         dataService.start();
 
@@ -136,7 +135,7 @@ public class ControlManager extends Thread {
         }
     }
 
-    public void run() {
+    public void run() throws RuntimeException {
         if(mqttAgent.getClient() == null) {
             System.out.println("MQTT Client Null");
             return;
@@ -148,11 +147,7 @@ public class ControlManager extends Thread {
 
         stateLoop();
         doSerialTask();
-
-        dataService.sendData(new JsonObject()
-            .put("temperature", valueManager.getCurrentTemperature())
-            .put("state", state.toString())
-            .put("mode", serialChannel.getMode().toString())
-        );
+        
+        dataService.sendData(dataService.prepareData());
     }
 }
