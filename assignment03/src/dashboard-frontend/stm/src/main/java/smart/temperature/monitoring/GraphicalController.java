@@ -1,7 +1,5 @@
 package smart.temperature.monitoring;
 
-import java.util.Queue;
-
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -48,12 +46,23 @@ public class GraphicalController {
             maxTemperature.setText(String.format("Max: %.2f°C", data.getDouble("maxTemperature")));
             avgTemperature.setText(String.format("Avg: %.2f°C", data.getDouble("avgTemperature")));
             
+            // TODO Set State
             // Update current state (mode)
-            currentState.setText("Mode: " + data.getString("mode"));
-            
+            // currentState.setText("State: " + data.getString("state"));
+
+            String mode = data.getString("mode").toLowerCase();
+
             // Update spinner value with current aperture
             openingSpinner.getValueFactory().setValue(data.getInteger("aperture"));
-            
+
+            // Should disable only controls, but buttons still enabled
+            // with openingSpinner.setEditable(mode.equals("manual"));
+            // So, disable everything.
+            openingSpinner.setDisable(mode.equals("automatic"));
+
+            // Manual / Auto button
+            manualButton.setText(mode.equals("manual") ? "MANUAL" : "AUTO");
+
             xAxis.setAutoRanging(false);
             xAxis.setLowerBound(0);
             xAxis.setUpperBound(9);

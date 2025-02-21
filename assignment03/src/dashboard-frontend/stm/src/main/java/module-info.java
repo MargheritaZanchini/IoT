@@ -1,6 +1,6 @@
 module smart.temperature.monitoring {
-    requires io.vertx.core;
     requires io.vertx.mqtt;
+    requires transitive io.vertx.core;
 
     requires javafx.controls;
     requires javafx.base;
