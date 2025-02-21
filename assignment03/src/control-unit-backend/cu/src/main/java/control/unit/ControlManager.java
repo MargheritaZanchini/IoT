@@ -9,7 +9,6 @@ import control.unit.connections.http.HTTPServer;
 import io.vertx.core.Vertx;
 
 public class ControlManager extends Thread {
-    private TemperatureState state;
     private boolean firstRun = true;
     private long hotStartTime;
 
@@ -44,8 +43,6 @@ public class ControlManager extends Thread {
 
         vertx.setPeriodic(LOOP_PERIOD, id -> this.run());
 
-        state = TemperatureState.NORMAL;
-        
         hotStartTime = 0;
     }
 
@@ -78,11 +75,12 @@ public class ControlManager extends Thread {
 
     private void stateLoop() {
         double currentTemperature = valueManager.getCurrentTemperature();
-
-        switch(state) {
+        TemperatureState currentState = valueManager.getState();
+ 
+        switch(currentState) {
             case NORMAL: {
                 if(currentTemperature > ValueManager.T1) {
-                    state = TemperatureState.HOT;
+                    valueManager.setState(TemperatureState.HOT);
                     mqttAgent.sendFrequency(ValueManager.F2);
                     break;
                 }
@@ -94,12 +92,12 @@ public class ControlManager extends Thread {
             }
             case HOT: {
                 if(currentTemperature <= ValueManager.T1) {
-                    state = TemperatureState.NORMAL;
+                    valueManager.setState(TemperatureState.NORMAL);
                     mqttAgent.sendFrequency(ValueManager.F1);
                     break;
                 }
                 if(currentTemperature > ValueManager.T2) {
-                    state = TemperatureState.TOO_HOT;
+                    valueManager.setState(TemperatureState.TOO_HOT);
                     hotStartTime = 0;
                     break;
                 }
@@ -107,8 +105,7 @@ public class ControlManager extends Thread {
             }
             case TOO_HOT: {
                 if(currentTemperature <= ValueManager.T2) {
-                    state = TemperatureState.HOT;
-                    System.out.println("Case HOT");
+                    valueManager.setState(TemperatureState.HOT);
                     break;
                 }
 
@@ -116,21 +113,12 @@ public class ControlManager extends Thread {
                     hotStartTime = System.currentTimeMillis();
                 }
                 else if((System.currentTimeMillis() - hotStartTime) >= ValueManager.DT) {
-                    state = TemperatureState.ALARM;
-                    System.out.println("Case ALARM");
+                    valueManager.setState(TemperatureState.ALARM);
                     break;
                 }
-                System.out.println("Case TOO HOT");
                 break;
             }
-            case ALARM: { // TODO Modify
-                if(currentTemperature <= ValueManager.T2) {
-                    state = TemperatureState.TOO_HOT;
-                    System.out.println("Case TOO HOT");
-                    hotStartTime = 0;
-                    break;
-                }
-                System.out.println("Case ALARM");
+            case ALARM: {
                 break;
             }
         }

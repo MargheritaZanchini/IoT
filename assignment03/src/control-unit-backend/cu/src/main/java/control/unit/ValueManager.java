@@ -17,6 +17,7 @@ public class ValueManager {
     public final static long DT = 5000; /** Time Interval */
 
     private final List<Double> temperatures;
+    private TemperatureState state;
     private Mode mode;
 
     private int aperture;
@@ -46,6 +47,7 @@ public class ValueManager {
      */
     public ValueManager() {
         this.temperatures = new ArrayList<>();
+        this.state = TemperatureState.NORMAL;
         this.mode = Mode.AUTOMATIC;
         this.aperture = 0;
     }
@@ -191,5 +193,26 @@ public class ValueManager {
      */
     public void setAperture(int aperture) {
         this.aperture = aperture;
+    }
+
+    /**
+     * Get State
+     * 
+     * @return State
+     * @see #state
+     */
+    public TemperatureState getState() {
+        return this.state;
+    }
+
+    /**
+     * Set State
+     * 
+     * @param state State
+     * @see #state
+     */
+    public void setState(TemperatureState state) {
+        System.out.println("State changed to: " + state);
+        this.state = state;
     }
 }

@@ -39,30 +39,44 @@ public class GraphicalController {
     private Vertx vertx;
     private HTTPAgent agent;
 
+    /***
+     * Platform.runLater() needed to update JavaFX components
+     * because the method is called from a different thread !
+     * Move the execution from Java thread to JavaFX thread !
+    ***/
+
     @FXML public void setCurrentData(JsonObject data) {
         Platform.runLater(() -> {
+            String minTemperatureValue = String.format("Min: %.2f°C", data.getDouble("minTemperature"));
+            String maxTemperatureValue = String.format("Max: %.2f°C", data.getDouble("maxTemperature"));
+            String avgTemperatureValue = String.format("Avg: %.2f°C", data.getDouble("avgTemperature"));
+
+            String modeValue = data.getString("mode").toLowerCase();
+            String stateValue = data.getString("state").toLowerCase();
+
             // Update temperature labels
-            minTemperature.setText(String.format("Min: %.2f°C", data.getDouble("minTemperature")));
-            maxTemperature.setText(String.format("Max: %.2f°C", data.getDouble("maxTemperature")));
-            avgTemperature.setText(String.format("Avg: %.2f°C", data.getDouble("avgTemperature")));
+            minTemperature.setText(minTemperatureValue);
+            maxTemperature.setText(maxTemperatureValue);
+            avgTemperature.setText(avgTemperatureValue);
             
-            // TODO Set State
-            // Update current state (mode)
-            // currentState.setText("State: " + data.getString("state"));
-
-            String mode = data.getString("mode").toLowerCase();
-
             // Update spinner value with current aperture
             openingSpinner.getValueFactory().setValue(data.getInteger("aperture"));
 
             // Should disable only controls, but buttons still enabled
             // with openingSpinner.setEditable(mode.equals("manual"));
             // So, disable everything.
-            openingSpinner.setDisable(mode.equals("automatic"));
+            openingSpinner.setDisable(modeValue.equals("automatic"));
 
             // Manual / Auto button
-            manualButton.setText(mode.equals("manual") ? "MANUAL" : "AUTO");
+            manualButton.setText(modeValue.equals("manual") ? "MANUAL" : "AUTO");
 
+            // Update current state (mode)
+            currentState.setText("State: " + stateValue.toUpperCase().replace("_", " "));
+
+            // State Button
+            problemSolver.setDisable(!stateValue.equals("alarm"));
+
+            // Chart
             xAxis.setAutoRanging(false);
             xAxis.setLowerBound(0);
             xAxis.setUpperBound(9);
@@ -96,22 +110,15 @@ public class GraphicalController {
         this.vertx.deployVerticle(agent);
     }
 
-    @FXML private void handleManualButton() {
+    @FXML private void modeHandler() {
+        Platform.runLater(() -> {
+            System.out.println("Mode Handler");
+        });
     }
 
-    /*
-    private void updateMinTemperature(int temp) {
-        if(temp < minTemp) {
-            minTemp = temp;
-            minTemperature.setText("Min: " + String.valueOf(minTemp));
-        }
+    @FXML private void alarmHandler() {
+        Platform.runLater(() -> {
+            System.out.println("Alarm Handler");
+        });
     }
-
-    private void updateAvgTemperature() {
-        avgTemp = temperatureData.stream().mapToInt(Integer::intValue).sum() / temperatureData.size();
-        avgTemperature.setText("Avg: " + String.valueOf(avgTemp));
-    }
-
-    private void updateMaxTemperature() {}
-    */
 }
