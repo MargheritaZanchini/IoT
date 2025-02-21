@@ -175,7 +175,16 @@ public class ValueManager {
         this.mode = mode.equals("manual") ? Mode.MANUAL : Mode.AUTOMATIC;
     }
 
-        /**
+    /**
+     * Switch Mode
+     * 
+     * @see #mode
+     */
+    public void switchMode() {
+        this.mode = this.mode == Mode.MANUAL ? Mode.AUTOMATIC : Mode.MANUAL;
+    }
+
+    /**
      * Get Aperture
      * 
      * @return Aperture

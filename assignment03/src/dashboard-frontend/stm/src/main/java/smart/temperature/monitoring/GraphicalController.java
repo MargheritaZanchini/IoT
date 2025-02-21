@@ -112,13 +112,13 @@ public class GraphicalController {
 
     @FXML private void modeHandler() {
         Platform.runLater(() -> {
-            System.out.println("Mode Handler");
+            agent.sendSwitchMode();
         });
     }
 
     @FXML private void alarmHandler() {
         Platform.runLater(() -> {
-            System.out.println("Alarm Handler");
+            agent.sendResolveAlarm();
         });
     }
 }

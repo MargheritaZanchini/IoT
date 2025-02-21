@@ -10,7 +10,7 @@ import io.vertx.core.Vertx;
 
 public class ControlManager extends Thread {
     private boolean firstRun = true;
-    private long hotStartTime;
+    private long hotStartTime = 0;
 
     private Vertx vertx;
     
@@ -39,15 +39,11 @@ public class ControlManager extends Thread {
 
         dataService = new HTTPServer(HTTP_PORT, HTTP_SERVER, valueManager);
         vertx.deployVerticle(dataService);
-        dataService.start();
-
+        
         vertx.setPeriodic(LOOP_PERIOD, id -> this.run());
-
-        hotStartTime = 0;
     }
 
     private boolean sendModeExecuted = false;
-
     private void sendModeOnce() {
         if(sendModeExecuted) {
             return;
@@ -137,6 +133,6 @@ public class ControlManager extends Thread {
         stateLoop();
         doSerialTask();
         
-        dataService.sendData(dataService.prepareData());
+        // dataService.sendData(dataService.prepareData());
     }
 }
