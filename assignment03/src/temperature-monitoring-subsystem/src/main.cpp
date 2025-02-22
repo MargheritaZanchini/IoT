@@ -5,8 +5,6 @@
 
 #include "config.h"
 
-
-
 WiFiClient* wifiClient; /** WiFi Client */
 PubSubClient* pubSubClient; /** MQTT Client */
 
@@ -16,8 +14,6 @@ Monitoring* monitoring;
 TaskHandle_t taskHandle; /** Task Handle */
 
 int frequency = 5000; /** Frequency (Normal = F1, Hot = F2) */
-
-
 
 /**
  * \brief Check if a string is convertible to an integer
@@ -42,8 +38,6 @@ void callback(char* topic, byte* payload, unsigned int length);
  * \param argument Task Arguments
  */
 void monitoringTaskCode(void *argument);
-
-
 
 bool isInteger(String value) {
     if(value.isEmpty()) return false; // If Empty String, return False
@@ -121,8 +115,6 @@ void monitoringTaskCode(void *argument) {
         }
     }
 }
-
-
 
 /**
  * \brief Setup Function

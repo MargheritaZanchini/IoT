@@ -28,12 +28,13 @@ float Monitoring::getTemperature() {
 void Monitoring::eventLoop() {
     float _currentTemperature = getTemperature();
     
-    bool _isCommunicating = communication->connected(); // Check if the device is connected to the network
-    if(!_isCommunicating) { // If not, raise a problem
-        _problem = true;
+    bool _isCommunicating = communication->connected(); // Check if the device is connected to the network, if not, raise a problem
+
+    if(!_isCommunicating) {
+        _problem = true; // Same as writing "_problem = !_isCommunicating",
     }
     else {
-        _problem = false;
+        _problem = false; // but we want to make it explicit for the reader ;)
     }
 
     if(hasProblem()) {

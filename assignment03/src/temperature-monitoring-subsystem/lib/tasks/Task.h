@@ -4,6 +4,9 @@
 
 #include "config.h"
 
+/**
+ * \brief Task Interface
+ */
 class Task {
 public:
     /**

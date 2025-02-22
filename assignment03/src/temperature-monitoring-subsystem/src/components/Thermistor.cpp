@@ -3,7 +3,6 @@
 Thermistor::Thermistor(int pin) : Sensor(pin) { }
 
 float Thermistor::read() {
-
     // Read the analog value from the pin
     float temperature = analogRead(_pin);
     
