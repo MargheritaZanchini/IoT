@@ -27,7 +27,7 @@ public:
      */
     bool updateAndCheckTime(int basePeriod) {
         timeElapsed += basePeriod;
-        if (timeElapsed >= myPeriod){
+        if(timeElapsed >= myPeriod){
             timeElapsed = 0;
             return true;
         }

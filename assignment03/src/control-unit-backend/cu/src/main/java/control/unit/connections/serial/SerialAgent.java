@@ -51,14 +51,15 @@ public class SerialAgent implements CommunicationChannel, SerialPortEventListene
     public boolean sendMessage(String msg) {
 		char[] array = (msg+"\n").toCharArray();
 		byte[] bytes = new byte[array.length];
-		for (int i = 0; i < array.length; i++){
+		for(int i = 0; i < array.length; i++){
 			bytes[i] = (byte) array[i];
 		}
 		try {
 			synchronized (serialPort) {
                 return serialPort.writeBytes(bytes);
 			}
-		} catch(Exception ex){
+		}
+        catch(Exception ex){
 			ex.printStackTrace();
             return false;
 		}
@@ -77,18 +78,19 @@ public class SerialAgent implements CommunicationChannel, SerialPortEventListene
     @Override
     public void closeChannel() {
         try {
-            if (serialPort != null) {
+            if(serialPort != null) {
                 serialPort.removeEventListener();
                 serialPort.closePort();
             }
-        } catch (Exception ex) {
+        }
+        catch(Exception ex) {
             ex.printStackTrace();
         }
     }
 
     @Override
     public void serialEvent(SerialPortEvent event) {
-        if (event.isRXCHAR()) {
+        if(event.isRXCHAR()) {
             try {
                 String msg = serialPort.readString(event.getEventValue());
                 msg = msg.replaceAll("\r", "");
@@ -100,18 +102,20 @@ public class SerialAgent implements CommunicationChannel, SerialPortEventListene
                 while(goAhead) {
                     String msg2 = currentMessage.toString();
                     int index = msg2.indexOf("\n");
-                    if (index >= 0) {
+                    if(index >= 0) {
                         queue.put(msg2.substring(0, index));
                         currentMessage = new StringBuffer("");
-                        if (index + 1 < msg2.length()) {
+                        if(index + 1 < msg2.length()) {
                             currentMessage.append(msg2.substring(index + 1)); 
                         }
-                    } else {
+                    }
+                    else {
                         goAhead = false;
                     }
                 }
 
-            } catch (Exception ex) {
+            }
+            catch(Exception ex) {
                 ex.printStackTrace();
                 System.out.println("Error in receiving string from COM-port: " + ex);
             }
@@ -152,6 +156,8 @@ public class SerialAgent implements CommunicationChannel, SerialPortEventListene
 
     /**
      * Get Mode from serial port
+     * 
+     * @return if message was received successfully
      */
     public boolean receiveData() {
         if(!this.isMessageAvailable()) {
@@ -161,22 +167,21 @@ public class SerialAgent implements CommunicationChannel, SerialPortEventListene
         System.out.println("Data received from Serial Port!");
 
         try {
+            // Get clear message, remove new line and carriage return characters
             String message = this.receiveMessage().replace("\n", "").replace("\r", "");
-            
+
             System.out.println("Message: " + message);
 
-            if(message.startsWith(MODE_TAG)) {
-                String mode = message.substring(MODE_TAG.length());
-                this.valueManager.setMode(mode);
+            if(message.startsWith(MODE_TAG)) { // If the message is a mode message
+                String mode = message.substring(MODE_TAG.length()); // Get value and
+                this.valueManager.setMode(mode); // Set current mode
             }
-            else if(message.startsWith(APERTURE_TAG)) {
-                int aperture = Integer.parseInt(message.substring(APERTURE_TAG.length()));
-                
-                System.out.println("Aperture received! " + aperture);
-
-                this.valueManager.setAperture(aperture);
+            else if(message.startsWith(APERTURE_TAG)) { // If the message is an aperture message
+                int aperture = Integer.parseInt(message.substring(APERTURE_TAG.length())); // Get value and
+                this.valueManager.setAperture(aperture); // Set current aperture
             }
-        } catch (InterruptedException e) {
+        }
+        catch(InterruptedException e) {
             e.printStackTrace();
         }
 

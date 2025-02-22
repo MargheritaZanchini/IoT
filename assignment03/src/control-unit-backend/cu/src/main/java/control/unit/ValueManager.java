@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * TemperatureManager Class
+ * ValueManager class
+ * 
+ * This class is responsible for managing the values of the control unit
  */
 public class ValueManager {
     public final static float T1 = 39; /** First Temperature Alert */
@@ -16,7 +18,7 @@ public class ValueManager {
 
     public final static long DT = 3000; /** Time Interval to go to Alarm */
 
-    private final List<Double> temperatures;
+    private final List<Double> temperatures; /** Temperature List */
     private TemperatureState state;
     private Mode mode;
 
@@ -221,7 +223,6 @@ public class ValueManager {
      * @see #state
      */
     public void setState(TemperatureState state) {
-        System.out.println("State changed to: " + state);
         this.state = state;
     }
 }

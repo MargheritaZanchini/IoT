@@ -80,12 +80,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
         // Convert it and store it in the frequency variable
         if(isInteger(value)) {
             int newFrequency = value.toInt();
-            if (newFrequency > 0) {
+            if(newFrequency > 0) {
                 frequency = newFrequency;
                 // Print the new frequency to Serial
                 Serial.print("Frequency Changed to: ");
                 Serial.println(frequency);
-            } else {
+            }
+            else {
                 Serial.println("Invalid Frequency Value Received: Must be greater than 0");
             }
         }
@@ -110,10 +111,11 @@ void monitoringTaskCode(void *argument) {
 
     for(;;) {
         _frequency = pdMS_TO_TICKS(frequency);
-        if (_frequency > 0) {
+        if(_frequency > 0) {
             monitoring->eventLoop();
             vTaskDelayUntil(&_lastWakeTime, _frequency);
-        } else {
+        }
+        else {
             Serial.println("Frequency is zero, skipping delay");
             vTaskDelay(1000 / portTICK_PERIOD_MS); // Delay for 1 second to avoid busy loop
         }

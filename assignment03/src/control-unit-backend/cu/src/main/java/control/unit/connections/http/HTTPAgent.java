@@ -10,22 +10,33 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
-public class HTTPServer extends AbstractVerticle {
-    private final static String DATA_PATH = "/api/data";
+/**
+ * HTTPAgent is a Verticle that listens for incoming HTTP requests and sends responses.
+ * It is used to receive data from the sensors and send data to the actuators.
+ * 
+ * @see AbstractVerticle
+ */
+public class HTTPAgent extends AbstractVerticle {
+    private final static String DATA_PATH = "/api/data"; // Path for sending and receiving data
 
     private final int port;
-    private final String server;
     private final ValueManager valueManager;
 
-	public HTTPServer(int port, String server, ValueManager valueManager) {
+    /**
+     * Constructor for the HTTPAgent class.
+     * 
+     * @param port
+     * @param valueManager
+     */
+	public HTTPAgent(int port, ValueManager valueManager) {
         this.port = port;
-        this.server = server;
 
         this.valueManager = valueManager;
 	}
 
     @Override
     public void start(Promise<Void> startPromise) {
+        // Create a new router
         Router router = Router.router(vertx);
         router.route().handler(BodyHandler.create());
         
@@ -45,6 +56,11 @@ public class HTTPServer extends AbstractVerticle {
         });
     }
 
+    /**
+     * Handler for receiving data (actions) from the dashboard.
+     * 
+     * @param context routing context
+     */
     private void receiverHandler(RoutingContext context) {
         HttpServerResponse response = context.response();
         JsonObject body = context.body().asJsonObject();
@@ -67,14 +83,24 @@ public class HTTPServer extends AbstractVerticle {
         }
     }
 
+    /**
+     * Handler for sending data to the dashboard.
+     * 
+     * @param context routing context
+     */
     private void senderHandler(RoutingContext context) {
-        System.out.println("SENDER HANDLER!");
         context
         .response()
         .putHeader("content-type", "application/json")
         .end(prepareData().encode());
     }
 
+    /**
+     * Prepares the data to be sent to the dashboard.
+     * 
+     * @return value data in JSON format
+     * @see ValueManager
+     */
     public JsonObject prepareData() {
         JsonObject data = new JsonObject()
         .put("temperatures", valueManager.getTemperatures())
@@ -84,6 +110,8 @@ public class HTTPServer extends AbstractVerticle {
         .put("mode", valueManager.getMode().toString())
         .put("state", valueManager.getState().toString());
         
+        // If the mode is set to automatic, send the aperture value that corresponds to the current temperature
+        // If the mode is set to manual, send the current aperture value from the potentiometer
         if(valueManager.getMode() == ValueManager.Mode.AUTOMATIC) {
             data.put("aperture", valueManager.getCorrespondingAperture());
         }
@@ -94,50 +122,3 @@ public class HTTPServer extends AbstractVerticle {
         return data;
     }
 }
-
-
-
-/*
-    public void sendData(JsonObject data) {
-        this.client.post(this.port, this.server, DATA_PATH).sendJsonObject(data, ar -> {
-            if(!ar.succeeded()) {
-                System.out.println("Couldn't send data successfully: " + ar.result().bodyAsString());
-            }
-            else {
-                System.out.println("Data sent successfully: " + ar.result().bodyAsString());
-            }
-        });
-    }
-
-    private void handleDataSending(RoutingContext context) {
-        JsonObject body = context.body().asJsonObject();
-        System.out.println("Data received on sending endpoint: " + body.encodePrettily());
-        
-        // Send response back
-        context.response()
-        .putHeader("content-type", "application/json")
-        .end(new JsonObject().put("status", "success").encode());
-    }
-
-    private void handleDataReceiving(RoutingContext context) {
-        JsonObject body = context.body().asJsonObject();
-        System.out.println("Data received on receiving endpoint: " + body.encodePrettily());
-
-        if(body.containsKey("actionName")) {
-            if(body.getString("actionName").equals("setMode")) {
-                valueManager.switchMode();
-            }
-            // TODO Aperture
-            // else if(body.getString("actionName").equals("setAperture")) {
-            //     valueManager.setAperture(body.getInteger("aperture"));
-            // }
-            else if(body.getString("actionName").equals("resolveAlarm")) {   
-                valueManager.setState(TemperatureState.NORMAL);
-            }
-        }
-
-        context.response()
-        .putHeader("content-type", "application/json")
-        .end(new JsonObject().put("status", "received").encode());
-    }
-    */

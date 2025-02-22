@@ -92,7 +92,8 @@ void DisplayTask::displayAperture(int aperture) {
 
     if(_currentAperture < 0 || _currentAperture > 100) {
         apertureMessage = String("N/A");
-    } else {
+    }
+    else {
         apertureMessage = String(_currentAperture);
         apertureMessage.concat("%");
     }
@@ -118,7 +119,8 @@ void DisplayTask::displayTemperature(float temperature) {
     String temperatureMessage = "";
     if(_currentTemperature < 0) {
         temperatureMessage = String("N/A");
-    } else {
+    }
+    else {
         temperatureMessage = String(_currentTemperature);
         temperatureMessage.concat("^C"); // Il carattere del grado '°' non è supportato
     }

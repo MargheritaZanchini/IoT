@@ -122,7 +122,7 @@ void serialEvent() {
     while(Serial.available()) {
         char ch = (char) Serial.read();
 
-        if (ch == 10 || ch == 0 || ch == 13) {
+        if(ch == 10 || ch == 0 || ch == 13) {
             if(content.startsWith("temperature:")) {
                 SerialHelper.receiveTemperature(content.substring(12).toFloat());
                 content = "";
