@@ -4,46 +4,61 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.geometry.Insets?>
 <?import java.net.URL?>
 
+<!-- Root container: AnchorPane that fills the entire window -->
 <AnchorPane fx:id="main" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefHeight="500" prefWidth="800">
+    <!-- Link to external CSS file for styling -->
     <stylesheets> <URL value="@styles.css"/> </stylesheets>
     
+    <!-- Left Panel: Contains temperature statistics and chart -->
     <VBox spacing="20" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20">
+        <!-- Statistics Container: Shows min, max, and average temperatures -->
         <HBox spacing="60" alignment="CENTER" styleClass="stats-container">
+            <!-- Temperature labels with placeholder values -->
             <Label fx:id="maxTemperature" text="Max: XX" styleClass="stats-label" />
             <Label fx:id="avgTemperature" text="Avg: XX" styleClass="stats-label" />
             <Label fx:id="minTemperature" text="Min: XX" styleClass="stats-label" />
         </HBox>
 
+        <!-- Temperature Chart: Displays temperature trends over time -->
         <LineChart fx:id="temperatureChart" prefHeight="450" prefWidth="450" createSymbols="false">
+            <!-- X-Axis: Time axis -->
             <xAxis>
                 <NumberAxis fx:id="xAxis" />
             </xAxis>
+            <!-- Y-Axis: Temperature axis -->
             <yAxis>
                 <NumberAxis fx:id="yAxis" />
             </yAxis>
         </LineChart>
     </VBox>
     
+    <!-- Right Panel: Control panel for system management -->
     <VBox spacing="30" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="100" styleClass="right-panel" prefWidth="280">
+        <!-- Window Control Section -->
         <VBox spacing="10">
             <Label text="Window Opening Control" styleClass="section-title" />
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <Spinner fx:id="openingSpinner" min="0" max="100" editable="true" prefWidth="100" styleClass="spinner" />
+                <!-- Read-only field showing current window aperture -->
+                <TextField fx:id="apertureLabel" editable="false" focusTraversable="false" prefWidth="100" styleClass="aperture-label" />
+                <!-- Toggle button for Manual/Auto mode -->
                 <Button fx:id="manualButton" text="Manual" styleClass="custom-button" onAction="#modeHandler" />
             </HBox>
         </VBox>
         
+        <!-- System Status Section -->
         <VBox spacing="10">
             <Label text="System Status" styleClass="section-title" />
             <HBox spacing="10" alignment="CENTER_LEFT">
+                <!-- Label showing current system state -->
                 <Label fx:id="currentState" text="Current State: N/A" styleClass="state-label" />
+                <!-- Alarm resolution button (disabled by default) -->
                 <Button fx:id="problemSolver" text="Resolve" disable="true" styleClass="custom-button" onAction="#alarmHandler" />
             </HBox>
         </VBox>

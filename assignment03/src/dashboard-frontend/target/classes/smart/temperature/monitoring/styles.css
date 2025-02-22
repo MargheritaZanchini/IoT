@@ -41,8 +41,10 @@
     -fx-font-size: 14px;
 }
 
-.spinner {
+.aperture-label {
     -fx-base: #C8E6C9;
+    -fx-border-color: #2E7D32;
+    -fx-border-width: 1px;
 }
 
 .custom-button {

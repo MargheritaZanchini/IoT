@@ -43,15 +43,6 @@ public class ControlManager extends Thread {
         vertx.setPeriodic(LOOP_PERIOD, id -> this.run());
     }
 
-    private boolean sendModeExecuted = false;
-    private void sendModeOnce() {
-        if(sendModeExecuted) {
-            return;
-        }
-        serialChannel.sendMode();
-        sendModeExecuted = true;
-    }
-
     public void doSerialTask() {
         try {
             if(this.serialChannel.receiveData()) {

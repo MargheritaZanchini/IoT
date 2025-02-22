@@ -10,7 +10,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Spinner;
+import javafx.scene.control.TextField;
 import smart.temperature.monitoring.connections.HTTPAgent;
 
 /**
@@ -28,7 +28,7 @@ public class GraphicalController {
     @FXML private Label maxTemperature;
     @FXML private Label currentState;
 
-    @FXML private Spinner<Integer> openingSpinner;
+    @FXML private TextField apertureLabel;
 
     @FXML private Button manualButton;
     @FXML private Button problemSolver;
@@ -59,13 +59,8 @@ public class GraphicalController {
             maxTemperature.setText(maxTemperatureValue);
             avgTemperature.setText(avgTemperatureValue);
             
-            // Update spinner value with current aperture
-            openingSpinner.getValueFactory().setValue(data.getInteger("aperture"));
-
-            // Should disable only controls, but buttons still enabled
-            // with openingSpinner.setEditable(mode.equals("manual"));
-            // So, disable everything.
-            openingSpinner.setDisable(modeValue.equals("automatic"));
+            // Update textfield value with current aperture
+            apertureLabel.setText(data.getInteger("aperture").toString());
 
             // Manual / Auto button
             manualButton.setText(modeValue.equals("manual") ? "MANUAL" : "AUTO");
