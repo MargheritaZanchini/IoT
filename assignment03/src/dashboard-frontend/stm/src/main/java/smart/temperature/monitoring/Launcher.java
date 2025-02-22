@@ -17,12 +17,9 @@ public class Launcher extends Application {
     public static final String APPLICATION_LAYOUT = "STM.fxml"; /** Application Layout Filename (resources) */
     public static final boolean APPLICATION_RESIZABLE = false; /** Application Resizable Flag */
 
-    // public static final String SERIAL_PORT = "COM8"; /** Serial Port Name */
-    // public static final int BAUD_RATE = 9600; /** Baud Rate */
-
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(APPLICATION_LAYOUT));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(APPLICATION_LAYOUT)); // Load the FXML file
         GraphicalController controller = new GraphicalController();
         loader.setController(controller);
 
@@ -32,11 +29,12 @@ public class Launcher extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle(APPLICATION_NAME);
         primaryStage.setResizable(APPLICATION_RESIZABLE);
-        primaryStage.setOnCloseRequest((closeRequest) -> {
+
+        primaryStage.setOnCloseRequest((closeRequest) -> { // Close the application when the window is closed
             Platform.exit();
             System.exit(0);
         });
 
-        primaryStage.show();
+        primaryStage.show(); // Show the application window
     }
 }

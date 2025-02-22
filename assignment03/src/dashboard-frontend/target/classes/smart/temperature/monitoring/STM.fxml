@@ -45,7 +45,7 @@
         <VBox spacing="10">
             <Label text="Window Opening Control" styleClass="section-title" />
             <HBox spacing="10" alignment="CENTER_LEFT">
-                <!-- Read-only field showing current window aperture -->
+                <!-- Read-only field (and not focusable!) showing current window aperture -->
                 <TextField fx:id="apertureLabel" editable="false" focusTraversable="false" prefWidth="100" styleClass="aperture-label" />
                 <!-- Toggle button for Manual/Auto mode -->
                 <Button fx:id="manualButton" text="Manual" styleClass="custom-button" onAction="#modeHandler" />

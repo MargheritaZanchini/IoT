@@ -13,44 +13,53 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import smart.temperature.monitoring.connections.HTTPAgent;
 
+/***
+ * 
+ * Platform.runLater() needed to update JavaFX components
+ * because the method is called from a different thread !
+ * Move the execution from Java thread to JavaFX thread !
+ * 
+***/
+
 /**
  * Graphical Controller Class
  * 
  * @see FXML
  */
 public class GraphicalController {
-    @FXML private LineChart<Number, Number> temperatureChart;
-    @FXML private NumberAxis xAxis;
-    @FXML private NumberAxis yAxis;
+    @FXML private LineChart<Number, Number> temperatureChart; // Temperature Chart Component
+    @FXML private NumberAxis xAxis; // Chart X-Axis
+    @FXML private NumberAxis yAxis; // Chart Y-Axis
 
-    @FXML private Label minTemperature;
-    @FXML private Label avgTemperature;
-    @FXML private Label maxTemperature;
-    @FXML private Label currentState;
+    @FXML private Label minTemperature; // Minimum Temperature Component
+    @FXML private Label avgTemperature; // Average Temperature Component
+    @FXML private Label maxTemperature; // Maximum Temperature Component
+    @FXML private Label currentState; // Current State Component
 
-    @FXML private TextField apertureLabel;
+    @FXML private TextField apertureLabel; // Aperture TextField Component
 
-    @FXML private Button manualButton;
-    @FXML private Button problemSolver;
+    @FXML private Button manualButton; // Manual/Auto Button Component
+    @FXML private Button problemSolver; // Alarm Solver Button Component
 
-    private final static int HTTP_PORT = 8080;
-    private final static String HTTP_SERVER = "localhost";
+    private final static int HTTP_PORT = 8080; // HTTP Server Port
+    private final static String HTTP_SERVER = "localhost"; // HTTP Server Address
 
     private Vertx vertx;
     private HTTPAgent agent;
-
-    /***
-     * Platform.runLater() needed to update JavaFX components
-     * because the method is called from a different thread !
-     * Move the execution from Java thread to JavaFX thread !
-    ***/
-
+    
+    /**
+     * Method to set the current data to the GUI.
+     * 
+     * @param data received data (JSON)
+     */
     @FXML public void setCurrentData(JsonObject data) {
         Platform.runLater(() -> {
+            // Update temperature values
             String minTemperatureValue = String.format("Min: %.2f°C", data.getDouble("minTemperature"));
             String maxTemperatureValue = String.format("Max: %.2f°C", data.getDouble("maxTemperature"));
             String avgTemperatureValue = String.format("Avg: %.2f°C", data.getDouble("avgTemperature"));
 
+            // Get mode and state values
             String modeValue = data.getString("mode").toLowerCase();
             String stateValue = data.getString("state").toLowerCase();
 
@@ -71,19 +80,6 @@ public class GraphicalController {
             // State Button
             problemSolver.setDisable(!stateValue.equals("alarm"));
 
-            // Chart
-            xAxis.setAutoRanging(false);
-            xAxis.setLowerBound(0);
-            xAxis.setUpperBound(9);
-            xAxis.setTickUnit(1);
-    
-            yAxis.setAutoRanging(false);
-            yAxis.setLowerBound(Math.floor(10));  // 5 gradi sotto il minimo
-            yAxis.setUpperBound(Math.ceil(50));   // 5 gradi sopra il massimo
-            yAxis.setTickUnit(5);
-
-            temperatureChart.setAnimated(false);
-
             // Update chart with temperature array
             temperatureChart.getData().clear();
             XYChart.Series<Number, Number> series = new XYChart.Series<>();
@@ -99,18 +95,41 @@ public class GraphicalController {
         });
     }
 
+    /**
+     * Initialize the Graphical Controller
+     * and all the components.
+     */
     @FXML private void initialize() {
         this.vertx = Vertx.vertx();
         this.agent = new HTTPAgent(HTTP_PORT, HTTP_SERVER, this);
         this.vertx.deployVerticle(agent);
+
+        // Chart settings
+        xAxis.setAutoRanging(false);
+        xAxis.setLowerBound(0);
+        xAxis.setUpperBound(9);
+        xAxis.setTickUnit(1);
+            
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(Math.floor(10));
+        yAxis.setUpperBound(Math.ceil(50));
+        yAxis.setTickUnit(5);
+        
+        temperatureChart.setAnimated(false); // Disable animation for the chart
     }
 
+    /**
+     * Method to handle the manual/auto mode switch.
+     */
     @FXML private void modeHandler() {
         Platform.runLater(() -> {
             agent.sendSwitchMode();
         });
     }
 
+    /**
+     * Method to handle the alarm resolve.
+     */
     @FXML private void alarmHandler() {
         Platform.runLater(() -> {
             agent.sendResolveAlarm();
