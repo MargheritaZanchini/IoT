@@ -9,12 +9,12 @@ import java.util.Collections;
  */
 public class ValueManager {
     public final static float T1 = 39; /** First Temperature Alert */
-    public final static float T2 = 42; /** Second Temperature Alert */
+    public final static float T2 = 41; /** Second Temperature Alert */
 
     public final static int F1 = 3000; /** First Frequency */
     public final static int F2 = 1000; /** Second Frequency */
 
-    public final static long DT = 3000; /** Time Interval */
+    public final static long DT = 3000; /** Time Interval to go to Alarm */
 
     private final List<Double> temperatures;
     private TemperatureState state;
