@@ -10,8 +10,6 @@
 
 #include "../lib/tasks/Scheduler.h"
 
-
-
 Scheduler scheduler; /** Schedule Object for Managing Tasks */
 
 Button* modeButton; /** [Pointer] Close Button */
@@ -24,8 +22,6 @@ Window* window; /** [Pointer] Window (ServoMotor Handler Class) */
 WindowTask* windowManager; /** [Pointer] Window Task */
 DisplayTask* displayManager; /** [Pointer] User Display Task */
 ModeTask* modeManager; /** [Pointer] Mode Task */
-
-
 
 /**
  * \brief Setup Function

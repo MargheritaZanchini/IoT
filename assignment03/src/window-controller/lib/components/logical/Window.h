@@ -6,25 +6,25 @@
 #include "./physical/ServoMotor.h"
 
 /**
- * \brief Door Component Helper Class
+ * \brief Window Component Helper Class
  */
 class Window {
 public:
     /**
-     * \brief Creates New Door Controller
+     * \brief Creates New Window Controller
      * \param servoMotor Reference to a ServoMotor Object
      */
     Window(ServoMotor* servoMotor);
 
     /**
      * \brief Sets the Window Aperture
-     * \param angle Target Angle in Degrees
+     * \param aperture Target Aperture in Degrees
      */
-    void setWindowAperture(int angle);
+    void setWindowAperture(int aperture);
 
     /**
      * \brief Gets the Current Window Aperture
-     * \return Current Angle in Degrees
+     * \return Current Aperture in Degrees
      */
     int getWindowAperture();
 
@@ -35,13 +35,13 @@ public:
     int getPercentage();
 
     /**
-     * \brief Checks if the Door is Open
-     * \return True if the Door is Open, False Otherwise
+     * \brief Checks if the Window is Open
+     * \return True if the Window is Open, False Otherwise
      */
     bool isOpen();
 
 private:
     ServoMotor* _servoMotor; /** Reference to the ServoMotor Object */
-    int _angle; /** Current Angle of the Door */
-    int _percentage; /** Current Percentage of the Door */
+    int _aperture; /** Current aperture of the Window */
+    int _percentage; /** Current Percentage of the Window */
 };
