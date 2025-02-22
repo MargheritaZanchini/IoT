@@ -4,7 +4,7 @@
 - Margherita Zanchini 0001081989
 
 ## Descrizione del Sistema
-Il sistema è progettato per monitorare la temperatura di un ambiente chiuso e controllare l'apertura della finestra in base alla temperatura rilevata. Il sistema può operare in due modalità: AUTOMATICO e MANUALE. In modalità AUTOMATICO, il sistema decide automaticamente quanto aprire la finestra in base alla temperatura corrente. In modalità MANUALE, l'apertura è controllata manualmente da un operatore. La modalità iniziale all'avvio è AUTOMATICO.
+Il sistema è progettato per monitorare la temperatura di un ambiente chiuso e controllare l'apertura della finestra in base alla temperatura rilevata. Il sistema può operare in due modalità: AUTOMATIC e MANUAL. In modalità AUTOMATIC, il sistema decide automaticamente quanto aprire la finestra in base alla temperatura corrente. In modalità MANUAL, l'apertura è controllata manualmente da un operatore. La modalità iniziale all'avvio è AUTOMATIC.
 
 Il sistema di monitoraggio della temperatura è composto da quattro sottosistemi principali: 
 - Control Unit: centro di controllo principale del sistema che gestisce la comunicazione con i vari sottosistemi.
@@ -27,7 +27,7 @@ Il sistema di monitoraggio della temperatura è composto da quattro sottosistemi
 Il Control Unit governa e coordina l'intero sistema. Contiene la logica che gestisce tutti i sottosistemi scritta in Java.
 
 <div style="text-align: center;">
-    <img src="Control_Unit_FSM.png" alt="CU FSM" width="650"/>
+    <img src="Control_Unit_FSM.png" alt="CU FSM" width="600"/>
 </div>
 
 Questo sottosistema si basa su una FSM sincrona composta da quattro stati principali:
@@ -75,4 +75,8 @@ La Dashboard ha due funzionalità principali: visualizzare lo stato del sistema 
 
 <div style="text-align: center;">
     <img src="Dashboard_FSM.png" alt="DB FSM" width="400"/>
+</div>
+
+<div style="text-align: center;">
+    <img src="dashboard_screen.png" alt="DB SCREEN" width="600"/>
 </div>
