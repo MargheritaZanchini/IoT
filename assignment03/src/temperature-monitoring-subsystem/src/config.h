@@ -3,14 +3,14 @@
 // #define CONFIG_SSID "TIM-29820711" /** WiFi SSID */
 // #define CONFIG_PASSWORD "casa2020" /** WiFi Password */
 
-// #define CONFIG_SSID "TIM-49596935" /** WiFi SSID */
-// #define CONFIG_PASSWORD "4Ph9bQRGcdXtfEESGTDuA7Tf" /** WiFi Password */
+#define CONFIG_SSID "TIM-49596935" /** WiFi SSID */
+#define CONFIG_PASSWORD "4Ph9bQRGcdXtfEESGTDuA7Tf" /** WiFi Password */
 
 // #define CONFIG_SSID "iPhone di Marghe"
 // #define CONFIG_PASSWORD "miao.ciao"
 
-#define CONFIG_SSID "Sofia's Galaxy A52s 5G"
-#define CONFIG_PASSWORD "ciaociao"
+// #define CONFIG_SSID "Sofia's Galaxy A52s 5G"
+// #define CONFIG_PASSWORD "ciaociao"
 
 #define CONFIG_MQTT_SERVER "broker.mqtt-dashboard.com" /** MQTT Server */
 #define CONFIG_MQTT_TOPIC "a03monitoring" /** MQTT Topic */

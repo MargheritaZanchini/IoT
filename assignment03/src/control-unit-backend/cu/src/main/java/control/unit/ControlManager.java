@@ -53,19 +53,25 @@ public class ControlManager extends Thread {
     }
 
     public void doSerialTask() {
-        if(serialChannel.receiveData()) {
-            System.out.println("Data received from Serial");
-            sendModeExecuted = false; // send to HTTP
-        }
-        else {
-            sendModeOnce(); // Else, send it to Serial
-        }
+        try {
+            if(this.serialChannel.receiveData()) {
+                this.serialChannel.receiveMessage();
+            }
+            else {
+                this.serialChannel.sendMode();
+            }
 
-        if(serialChannel.getMode() == Mode.MANUAL) {
-            serialChannel.sendTemperature();
+            if(this.serialChannel.getMode() == Mode.MANUAL) {
+                this.serialChannel.sendTemperature();
+            }
+            else if(this.serialChannel.getMode() == Mode.AUTOMATIC) {
+                this.serialChannel.sendAperture();
+            }
         }
-        else if(serialChannel.getMode() == Mode.AUTOMATIC) {
-            serialChannel.sendAperture();
+        catch(Exception e) {
+            System.out.println("Exception in Serial Loop: " + e.getMessage());
+            System.out.println("Stack Trace: ");
+            e.printStackTrace();
         }
     }
 
@@ -90,13 +96,12 @@ public class ControlManager extends Thread {
                 if(currentTemperature <= ValueManager.T1) {
                     valueManager.setState(TemperatureState.NORMAL);
                     mqttAgent.sendFrequency(ValueManager.F1);
-                    break;
                 }
-                if(currentTemperature > ValueManager.T2) {
+                else if(currentTemperature > ValueManager.T2) {
                     valueManager.setState(TemperatureState.TOO_HOT);
                     hotStartTime = 0;
-                    break;
                 }
+
                 break;
             }
             case TOO_HOT: {
@@ -132,7 +137,5 @@ public class ControlManager extends Thread {
 
         stateLoop();
         doSerialTask();
-        
-        // dataService.sendData(dataService.prepareData());
     }
 }

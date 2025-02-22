@@ -10,8 +10,8 @@ DisplayTask::DisplayTask(Window* window) {
     _window = window;
 
     _currentMode = (SerialHelperObject::Mode) -1;
-    _currentAperture = 0;
-    _currentTemperature = 0;
+    _currentAperture = -1;
+    _currentTemperature = -1;
 
     displayMessageBody();
 }

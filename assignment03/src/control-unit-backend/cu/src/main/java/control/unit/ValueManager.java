@@ -8,13 +8,13 @@ import java.util.Collections;
  * TemperatureManager Class
  */
 public class ValueManager {
-    public final static float T1 = 30; /** First Temperature Alert */
-    public final static float T2 = 40; /** Second Temperature Alert */
+    public final static float T1 = 39; /** First Temperature Alert */
+    public final static float T2 = 42; /** Second Temperature Alert */
 
     public final static int F1 = 3000; /** First Frequency */
     public final static int F2 = 1000; /** Second Frequency */
 
-    public final static long DT = 5000; /** Time Interval */
+    public final static long DT = 3000; /** Time Interval */
 
     private final List<Double> temperatures;
     private TemperatureState state;
@@ -145,10 +145,10 @@ public class ValueManager {
     public int getCorrespondingAperture() {
         int aperture = (int) ((getCurrentTemperature() - T1) / (T2 - T1) * 100);
 
-        if(aperture < 0) {
+        if(aperture < 0 || this.state == TemperatureState.NORMAL) {
             return 0;
         }
-        else if(aperture > 100) {
+        else if(aperture > 100 || this.state == TemperatureState.ALARM) {
             return 100;
         }
 

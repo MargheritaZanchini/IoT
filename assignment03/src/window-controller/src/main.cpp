@@ -47,7 +47,7 @@ void setup() {
     windowManager->init(2000);
 
     displayManager = new DisplayTask(window);
-    displayManager->init(2000);
+    displayManager->init(3000);
 
     modeManager = new ModeTask(modeButton);
     modeManager->init(500);
