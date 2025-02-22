@@ -1,9 +1,9 @@
-# Assignment 03 - Smart Temperature Monitoring
+# **Assignment 03 - Smart Temperature Monitoring**
 - Caberletti Sofia 0001071417
 - Marrelli Marco 0001079192
 - Margherita Zanchini 0001081989
 
-## Descrizione del Sistema
+## **Descrizione del Sistema**
 Il sistema è progettato per monitorare la temperatura di un ambiente chiuso e controllare l'apertura della finestra in base alla temperatura rilevata. Il sistema può operare in due modalità: AUTOMATIC e MANUAL. In modalità AUTOMATIC, il sistema decide automaticamente quanto aprire la finestra in base alla temperatura corrente. In modalità MANUAL, l'apertura è controllata manualmente da un operatore. La modalità iniziale all'avvio è AUTOMATIC.
 
 Il sistema di monitoraggio della temperatura è composto da quattro sottosistemi principali: 
@@ -23,7 +23,7 @@ Il sistema di monitoraggio della temperatura è composto da quattro sottosistemi
 </div>
 
 
-## Control Unit Subsystem
+## **Control Unit Subsystem**
 Il Control Unit governa e coordina l'intero sistema. Contiene la logica che gestisce tutti i sottosistemi scritta in Java.
 
 <div style="text-align: center;">
@@ -46,7 +46,7 @@ Il Control Unit utilizza diversi protocolli per comunicare con gli altri sottosi
 - **HTTP**: Utilizzato per la comunicazione con la Dashboard. Il sottosistema di controllo invia i dati di monitoraggio della temperatura e riceve i comandi per risolvere gli allarmi o cambiare modalità.
 
 
-## Temperature Monitoring Subsystem
+## **Temperature Monitoring Subsystem**
 Questo sottosistema è composto da ESP32-S3, da un led rosso, uno verde e da un thermistor. Il Temperature Monitoring rileva con una frequenza F, decisa dal Control Unit, la temperatura della stanza. Le temperature rilevate vengono poi mandate al Control Unit tramite protocollo MQTT.
 
 <div style="text-align: center;">
@@ -58,7 +58,7 @@ Il sottosistema è basato su una FSM sincrona composta da due stati:
 - **ERROR**: Se si verifica un problema di connessione si entra in questo stato e il led rosso viene acceso. 
 
 
-## Window Controller Subsystem
+## **Window Controller Subsystem**
 Questo sottosistema è composto da Arduino UNO, da un servo motore, da un potenziometro, da un bottone e da un LCD. Il Window Controller si occupa dell'apertura e della chiusura fisica della finestra e permette grazie al bottone di cambiare la modalità. LCD mostra alcune informazioni sullo stato attuale del sistema.
 
 <div style="text-align: center;">
@@ -70,7 +70,7 @@ Il Window Controller è basato su una FSM sincrona composta da due stati:
 - **MANUAL**: L'apertura della finestra è decisa dall'operatore tramite il potenziometro. In questo stato l'LCD mostra anche il valore corrente della temperatura. Premendo il bottone si torna alla modalità automatica.
 
 
-## Dashboard Subsystem
+## **Dashboard Subsystem**
 La Dashboard ha due funzionalità principali: visualizzare lo stato del sistema mostrando alcune informazioni chiave e consentire agli operatori di interagire con il sistema. La Dashboard visualizza un grafico della temperatura considerando le ultime 10 misurazioni, il valore medio/massimo/minimo corrente, lo stato del sistema (NORMAL, HOT, TOO-HOT, ALARM) e il livello di apertura della finestra in percentuale. Inoltre, permette di cambiare la modalità da AUTOMATIC a MANUAL (e viceversa) e di gestire lo stato di ALARM premendo un pulsante per riportare il sistema allo stato NORMAL. La Dashboard è stata implementata usando JavaFX.
 
 <div style="text-align: center;">
