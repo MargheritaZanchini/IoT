@@ -14,12 +14,12 @@ Il sistema di monitoraggio della temperatura è composto da quattro sottosistemi
 
 #### Schema di Arduino
 <div style="text-align: center;">
-    <img src="arduino-schema.png" alt="Arduino Schema" width="800"/>
+    <img src="img/arduino-schema.png" alt="Arduino Schema" width="800"/>
 </div>
 
 #### Schema dell'ESP32S3
 <div style="text-align: center;">
-    <img src="esp32s3-schema.png" alt="ESP32S3 Schema" width="800"/>
+    <img src="img/esp32s3-schema.png" alt="ESP32S3 Schema" width="800"/>
 </div>
 
 
@@ -27,7 +27,7 @@ Il sistema di monitoraggio della temperatura è composto da quattro sottosistemi
 Il Control Unit governa e coordina l'intero sistema. Contiene la logica che gestisce tutti i sottosistemi scritta in Java.
 
 <div style="text-align: center;">
-    <img src="Control_Unit_FSM.png" alt="CU FSM" width="600"/>
+    <img src="img/Control_Unit_FSM.png" alt="CU FSM" width="600"/>
 </div>
 
 Questo sottosistema si basa su una FSM sincrona composta da quattro stati principali:
@@ -50,7 +50,7 @@ Il Control Unit utilizza diversi protocolli per comunicare con gli altri sottosi
 Questo sottosistema è composto da ESP32-S3, da un led rosso, uno verde e da un thermistor. Il Temperature Monitoring rileva con una frequenza F, decisa dal Control Unit, la temperatura della stanza. Le temperature rilevate vengono poi mandate al Control Unit tramite protocollo MQTT.
 
 <div style="text-align: center;">
-    <img src="Temperature_Monitoring_FSM.png" alt="TM FSM" width="400"/>
+    <img src="img/Temperature_Monitoring_FSM.png" alt="TM FSM" width="400"/>
 </div>
 
 Il sottosistema è basato su una FSM sincrona composta da due stati:
@@ -62,7 +62,7 @@ Il sottosistema è basato su una FSM sincrona composta da due stati:
 Questo sottosistema è composto da Arduino UNO, da un servo motore, da un potenziometro, da un bottone e da un LCD. Il Window Controller si occupa dell'apertura e della chiusura fisica della finestra e permette grazie al bottone di cambiare la modalità. LCD mostra alcune informazioni sullo stato attuale del sistema.
 
 <div style="text-align: center;">
-    <img src="Window_Controller_FSM.png" alt="WC FSM" width="400"/>
+    <img src="img/Window_Controller_FSM.png" alt="WC FSM" width="400"/>
 </div>
 
 Il Window Controller è basato su una FSM sincrona composta da due stati:
@@ -74,9 +74,12 @@ Il Window Controller è basato su una FSM sincrona composta da due stati:
 La Dashboard ha due funzionalità principali: visualizzare lo stato del sistema mostrando alcune informazioni chiave e consentire agli operatori di interagire con il sistema. La Dashboard visualizza un grafico della temperatura considerando le ultime 10 misurazioni, il valore medio/massimo/minimo corrente, lo stato del sistema (NORMAL, HOT, TOO-HOT, ALARM) e il livello di apertura della finestra in percentuale. Inoltre, permette di cambiare la modalità da AUTOMATIC a MANUAL (e viceversa) e di gestire lo stato di ALARM premendo un pulsante per riportare il sistema allo stato NORMAL. La Dashboard è stata implementata usando JavaFX.
 
 <div style="text-align: center;">
-    <img src="Dashboard_FSM.png" alt="DB FSM" width="400"/>
+    <img src="img/Dashboard_FSM.png" alt="DB FSM" width="400"/>
 </div>
 
+Ecco come si presenterà la schermata della dashboard:
 <div style="text-align: center;">
-    <img src="dashboard_screen.png" alt="DB SCREEN" width="600"/>
+    <img src="img/dashboard_screen.png" alt="DB SCREEN" width="600"/>
 </div>
+
+Link al [video](https://drive.google.com/file/d/1zFMQRDV3f7y4PuaLd18FSjevrmnzzVdM/view).
